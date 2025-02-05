@@ -1,5 +1,8 @@
 miniRT
 
+lib/lift/build/**/**
+Makefile.gen
+
 build/
 .DS_Store
 .cache
