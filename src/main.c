@@ -18,6 +18,9 @@ typedef struct {
 
 static Image image_new(Point2 sz, void* mlx);
 static void image_put_pixel(Image* img, Point2 position, int color);
+static unsigned int Color(int r, int g, int b) {
+    return (r << 16) + (g << 8) + b;
+}
 
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
@@ -28,7 +31,7 @@ int main(void) {
     void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
 
     Image screen = image_new(sz, mlx);
-    image_put_pixel(&screen, (Point2){.x = 100, .y = 20}, 0x00FF0000);
+    image_put_pixel(&screen, (Point2){.x = 100, .y = 20}, Color(0, 255, 0));
     mlx_put_image_to_window(mlx, window, screen.img, 0, 0);
 
     mlx_hook(window, DestroyNotify, StructureNotifyMask, exit_hook, mlx);
