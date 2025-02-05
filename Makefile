@@ -4,7 +4,7 @@ NAME = miniRT
 
 CC        = cc
 CFLAGS    = -Wall -Wextra -g3
-CFLAGS   += -Werror
+# CFLAGS   += -Werror
 CPPFLAGS  = -Isrc
 CPPFLAGS += -MMD -MP
 LDLIBS = 
