@@ -22,7 +22,7 @@ LIBFT_MAKE_DIR = $(LIBFT_DIR)
 LIBFT_INCLUDE_DIR = $(LIBFT_DIR)/include
 
 CPPFLAGS += -I$(LIBFT_INCLUDE_DIR)
-LDFLAGS += $(LIBFT)
+LDLIBS += $(LIBFT)
 
 MLX_DIR = ./lib/minilibx-linux
 MLX = $(MLX_DIR)/libmlx.a
@@ -30,8 +30,7 @@ MLX_MAKE_DIR = $(MLX_DIR)
 MLX_INCLUDE_DIR = $(MLX_DIR)
 
 CPPFLAGS += -I$(MLX_INCLUDE_DIR)
-LDFLAGS += $(MLX)
-LDLIBS += -lXext -lX11
+LDLIBS += $(MLX) -lXext -lX11
 
 ### targets
 
