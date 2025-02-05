@@ -1,5 +1,7 @@
-#include <stdio.h>
+#include "libft/ft_io.h"
+#include "mlx.h"
 
 int main(void) {
-	printf("yo\n");
+    ft_putstr_fd("hi\n", 1);
+    void* mlx = mlx_init();
 }
