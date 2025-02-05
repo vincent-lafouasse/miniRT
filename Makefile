@@ -7,7 +7,7 @@ CFLAGS    = -Wall -Wextra -g3
 # CFLAGS   += -Werror
 CPPFLAGS  = -Isrc
 CPPFLAGS += -MMD -MP
-LDLIBS = 
+LDLIBS = -lm
 LDFLAGS =
 
 SRCS  = $(shell find src -name '*.c')
