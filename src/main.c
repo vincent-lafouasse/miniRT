@@ -22,6 +22,26 @@ static unsigned int Color(int r, int g, int b) {
     return (r << 16) + (g << 8) + b;
 }
 
+static unsigned int fColor(double r, double g, double b) {
+    int r_byte = r * 255.999;
+    int g_byte = g * 255.999;
+    int b_byte = b * 255.999;
+    return Color(r_byte, g_byte, b_byte);
+}
+
+static void draw_gradient(Image* image) {
+    for (int x = 0; x < image->sz.x; x++) {
+        for (int y = 0; y < image->sz.y; y++) {
+            double r = (double)x / (double)image->sz.x;
+            double g = 0.0;
+            double b = (double)y / (double)image->sz.y;
+
+            unsigned int color = fColor(r, g, b);
+            image_put_pixel(image, (Point2){.x = x, .y = y}, color);
+        }
+    }
+}
+
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
@@ -31,7 +51,7 @@ int main(void) {
     void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
 
     Image screen = image_new(sz, mlx);
-    image_put_pixel(&screen, (Point2){.x = 100, .y = 20}, Color(0, 255, 0));
+    draw_gradient(&screen);
     mlx_put_image_to_window(mlx, window, screen.img, 0, 0);
 
     mlx_hook(window, DestroyNotify, StructureNotifyMask, exit_hook, mlx);
