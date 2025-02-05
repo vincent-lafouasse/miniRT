@@ -10,6 +10,7 @@ typedef struct {
 typedef struct {
     void* img;
     char* addr;
+    Point2 sz;
     int bits_per_pixel;
     int line_length;
     int endian;
@@ -52,6 +53,7 @@ static Image image_new(Point2 sz, void* mlx) {
     image.img = mlx_new_image(mlx, sz.x, sz.y);
     image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel,
                                    &image.line_length, &image.endian);
+    image.sz = sz;
     return image;
 }
 
