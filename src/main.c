@@ -19,7 +19,7 @@ typedef struct {
 static Image image_new(Point2 sz, void* mlx);
 static void image_put_pixel(Image* img, Point2 position, int color);
 static unsigned int Color(int r, int g, int b) {
-    return (r << 16) + (g << 8) + b;
+    return (r << 16) | (g << 8) | b;
 }
 
 static unsigned int fColor(double r, double g, double b) {
