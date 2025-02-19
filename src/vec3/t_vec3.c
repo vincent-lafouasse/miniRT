@@ -6,12 +6,14 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 22:09:00 by poss              #+#    #+#             */
-/*   Updated: 2025/02/19 22:15:17 by poss             ###   ########.fr       */
+/*   Updated: 2025/02/19 22:23:06 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_vec3.h"
 #include <math.h>
+
+// half of those could probably be inlined
 
 t_vec3	vec3_new(double x, double y, double z)
 {
