@@ -7,6 +7,12 @@ set_target_properties(libft PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${libft_dir}/include"
 )
 
+find_package(X11 REQUIRED)
+
+message(STATUS "X11_FOUND = ${X11_FOUND}")
+message(STATUS "X11_INCLUDE_DIR = ${X11_INCLUDE_DIR}")
+message(STATUS "X11_LIBRARIES = ${X11_LIBRARIES}")
+
 set(mlx_dir
     ${CMAKE_SOURCE_DIR}/../lib/minilibx-linux
 )

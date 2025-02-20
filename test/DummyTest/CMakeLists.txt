@@ -17,4 +17,6 @@ target_include_directories(DummyTest PUBLIC
 target_link_libraries(DummyTest
 	libgtest
 	libft
+	libmlx
+	${X11_LIBRARIES}
 )
