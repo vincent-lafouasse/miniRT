@@ -1,6 +1,6 @@
 set(tested_source
 )
-list(TRANSFORM tested_source PREPEND ${tested_src_dir}/)
+list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
 
 add_executable(DummyTest
 	${CMAKE_CURRENT_LIST_DIR}/main.cpp
@@ -11,7 +11,7 @@ add_executable(DummyTest
 
 target_include_directories(DummyTest PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}
-	${tested_include_dir}
+	${TESTED_INCLUDE_DIR}
 )
 
 target_link_libraries(DummyTest
