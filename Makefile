@@ -71,6 +71,16 @@ fclean: clean
 	$(RM) $(MLX)
 	make fclean -C $(LIBFT_MAKE_DIR)
 
+.PHONY: test
+test: $(LIBS)
+	cmake -DCMAKE_BUILD_TYPE=DEBUG -S test -B build/test
+	cmake --build build/test
+	GTEST_COLOR=1 ctest --test-dir build/test $(CTEST_OPT)
+
+.PHONY: vtest
+vtest: CTEST_OPT += -V
+vtest: test
+
 # LSP stuff, don't worry about it
 .PHONY: update
 update: fclean
@@ -78,10 +88,12 @@ update: fclean
 	bear --output build/compile_commands.json -- make build
 
 # aliases
-.PHONY: b c u r
+.PHONY: b c u r t vt
 b: build
 c: clean
 u: update
 r: run
+t: test
+vt: vtest
 
 -include $(DEPS)
