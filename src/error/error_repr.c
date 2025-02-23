@@ -16,13 +16,12 @@
 #define OOM_REPR "Out of memory"
 #define UNREACHABLE_REPR "Programming error"
 
-const char	*error_repr(t_error err)
-{
-	if (err == NO_ERROR)
-		return (NO_ERROR_REPR);
-	if (err == E_OOM)
-		return (OOM_REPR);
-	if (err == E_UNREACHABLE)
-		return (UNREACHABLE_REPR);
-	return (UNREACHABLE_REPR);
+const char* error_repr(t_error err) {
+    if (err == NO_ERROR)
+        return (NO_ERROR_REPR);
+    if (err == E_OOM)
+        return (OOM_REPR);
+    if (err == E_UNREACHABLE)
+        return (UNREACHABLE_REPR);
+    return (UNREACHABLE_REPR);
 }

@@ -11,16 +11,15 @@
 /* ************************************************************************** */
 
 #ifndef T_ERROR_H
-# define T_ERROR_H
+#define T_ERROR_H
 
-typedef enum e_error	t_error;
-enum	e_error
-{
-	NO_ERROR,
-	E_OOM,
-	E_UNREACHABLE,
+typedef enum e_error t_error;
+enum e_error {
+    NO_ERROR,
+    E_OOM,
+    E_UNREACHABLE,
 };
 
-const char	*error_repr(t_error err);
+const char* error_repr(t_error err);
 
 #endif

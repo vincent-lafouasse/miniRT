@@ -2,8 +2,8 @@
 #include <X11/keysym.h>
 #include "mlx.h"
 
-#include "math/t_vec3.h"
 #include "math/t_point3.h"
+#include "math/t_vec3.h"
 
 typedef struct {
     int x;
