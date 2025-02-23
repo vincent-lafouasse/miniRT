@@ -12,12 +12,15 @@ include(${CMAKE_SOURCE_DIR}/fetch_gtest.cmake)
 include(${CMAKE_SOURCE_DIR}/fetch_libft_mlx.cmake)
 
 set(TESTED_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../src/)
-set(TESTED_INCLUDE_DIR ${tested_src_dir}/)
+set(TESTED_INCLUDE_DIR ${TESTED_SRC_DIR}/)
 
 add_subdirectory(DummyTest)
+add_subdirectory(MathTest)
 
 include(CTest)
 enable_testing()
 
 add_test(NAME DummyTest
          COMMAND DummyTest)
+add_test(NAME MathTest
+		COMMAND MathTest)
