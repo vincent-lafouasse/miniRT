@@ -6,5 +6,16 @@
 
 typedef t_tuple4 t_vec3;
 
-t_vec3 vec_new(double x, double y, double z);
-bool vec_is_valid(t_vec3 vec);
+t_vec3 vec3_new(double x, double y, double z);
+t_vec3 vec3_add(const t_vec3* v1, const t_vec3* v2);
+t_vec3 vec3_subtract(const t_vec3* v1, const t_vec3* v2);
+t_vec3 vec3_multiply(double x, const t_vec3* v);
+t_vec3 vec3_negate(const t_vec3* v);
+
+double vec3_magnitude(const t_vec3* v);
+t_vec3 vec3_normalize(const t_vec3* v);
+
+double vec3_dot(const t_vec3* v1, const t_vec3* v2);
+t_vec3 vec3_cross(const t_vec3* v1, const t_vec3* v2);
+
+bool vec3_is_valid(t_vec3 vec);
