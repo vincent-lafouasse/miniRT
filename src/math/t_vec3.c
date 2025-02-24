@@ -27,7 +27,7 @@ double vec3_magnitude(t_vec3 v) {
 }
 
 t_vec3 vec3_normalize(t_vec3 v) {
-    if (vec3_magnitude(v) == 0.0) {
+    if (vec3_dot(v, v) == 0.0) {
         return vec3_new(0.0, 0.0, 0.0);
     }
     return vec3_multiply(1 / vec3_magnitude(v), v);
