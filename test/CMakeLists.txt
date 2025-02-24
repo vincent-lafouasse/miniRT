@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE) # LSP stuff, don't worry about it
 include(${CMAKE_SOURCE_DIR}/fetch_gtest.cmake)
 
 # targets: `libft` `libmlx` (static libraries)
-include(${CMAKE_SOURCE_DIR}/fetch_libft_mlx.cmake)
+include(${CMAKE_SOURCE_DIR}/find_libft_mlx.cmake)
 
 set(TESTED_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../src/)
 set(TESTED_INCLUDE_DIR ${TESTED_SRC_DIR}/)
