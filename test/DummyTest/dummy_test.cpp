@@ -1,13 +1,11 @@
 #include "gtest/gtest.h"
 
-extern "C"
-{
-#include "mlx.h"
+extern "C" {
 #include "libft.h"
+#include "mlx.h"
 };
 
-TEST(Dummy, Dummy)
-{
+TEST(Dummy, Dummy) {
     int dummy = ft_strlen("420");
     void* mlx = mlx_init();
     (void)dummy;
