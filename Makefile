@@ -86,6 +86,8 @@ vtest: test
 update: clean
 	mkdir -p build
 	bear --output build/compile_commands.json -- make build
+	# merge with CMake maintained data
+	jq -s add build/**/*.json > build/compile_commands.json
 
 # aliases
 .PHONY: b c u r t vt
