@@ -83,7 +83,7 @@ vtest: test
 
 # LSP stuff, don't worry about it
 .PHONY: update
-update: fclean
+update: clean
 	mkdir -p build
 	bear --output build/compile_commands.json -- make build
 
