@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE) # LSP stuff, don't worry about it
 
+set(CMAKE_C_FLAGS  "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS  "-Wall -Wextra")
+
 # targets: `libgtest` `libgmock` (static libraries)
 include(${CMAKE_SOURCE_DIR}/fetch_gtest.cmake)
 
