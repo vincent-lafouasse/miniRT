@@ -10,7 +10,7 @@ set(tested_source
 )
 list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
 
-message(tested_source="${tested_source}")
+message(-- tested_source="${tested_source}")
 
 add_executable(MathTest
 	${CMAKE_CURRENT_LIST_DIR}/main.cpp
