@@ -9,12 +9,13 @@ set(CMAKE_C_FLAGS  "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS  "-Wall -Wextra")
 
 # targets: `libgtest` `libgmock` (static libraries)
-include(${CMAKE_SOURCE_DIR}/fetch_gtest.cmake)
+include(fetch_gtest.cmake)
 
 # targets: `libft` `libmlx` (static libraries)
-include(${CMAKE_SOURCE_DIR}/find_libft_mlx.cmake)
+include(find_libft_mlx.cmake)
 
-set(TESTED_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../src/)
+set(ROOT ${CMAKE_SOURCE_DIR}/..)
+set(TESTED_SRC_DIR ${ROOT}/src/)
 set(TESTED_INCLUDE_DIR ${TESTED_SRC_DIR}/)
 
 add_subdirectory(DummyTest)
