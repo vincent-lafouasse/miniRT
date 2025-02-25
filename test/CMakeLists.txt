@@ -9,8 +9,8 @@ set(CMAKE_C_FLAGS  "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS  "-Wall -Wextra")
 
 set(ROOT ${CMAKE_SOURCE_DIR}/..)
-set(TESTED_SRC_DIR ${ROOT}/src/)
-set(TESTED_INCLUDE_DIR ${TESTED_SRC_DIR}/)
+set(TESTED_SRC_DIR ${ROOT}/src)
+set(TESTED_INCLUDE_DIR ${TESTED_SRC_DIR})
 
 set(LIB_DIR ${ROOT}/lib)
 
