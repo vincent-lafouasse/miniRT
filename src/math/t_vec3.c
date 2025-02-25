@@ -1,6 +1,6 @@
+#include "math.h"
 #include "t_vec3.h"
 #include <math.h>
-#include "math.h"
 
 t_vec3	vec3_new(double x, double y, double z)
 {

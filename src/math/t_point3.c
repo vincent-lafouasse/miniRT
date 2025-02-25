@@ -1,6 +1,5 @@
-#include "t_point3.h"
-
 #include "math.h"
+#include "t_point3.h"
 
 t_point3	point_new(double x, double y, double z)
 {
