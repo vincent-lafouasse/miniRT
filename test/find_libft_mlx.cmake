@@ -1,5 +1,5 @@
 set(libft_dir
-  ${CMAKE_SOURCE_DIR}/../lib/libft
+  ${LIB_DIR}/libft
 )
 add_library(libft STATIC IMPORTED)
 set_target_properties(libft PROPERTIES
@@ -14,7 +14,7 @@ message(STATUS "X11_INCLUDE_DIR = ${X11_INCLUDE_DIR}")
 message(STATUS "X11_LIBRARIES = ${X11_LIBRARIES}")
 
 set(mlx_dir
-    ${CMAKE_SOURCE_DIR}/../lib/minilibx-linux
+    ${LIB_DIR}/minilibx-linux
 )
 add_library(libmlx STATIC IMPORTED)
 set_target_properties(libmlx PROPERTIES
