@@ -7,6 +7,8 @@ set(tested_source
 		math/t_point3.h
 		math/t_vec3.c
 		math/t_vec3.h
+		math/math.h
+		math/double_cmp.c
 )
 list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
 
