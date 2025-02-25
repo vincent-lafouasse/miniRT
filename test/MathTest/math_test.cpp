@@ -32,7 +32,7 @@ TEST(Tuple, W0_means_point) {
 
 TEST(Tuple, Points_have_W1) {
     t_point3 actual = point_new(4, -4, 3);
-    t_tuple4 expected = tuple4_new(4.3, -4.2, 3.1, 1.0);
+    t_tuple4 expected = tuple4_new(4, -4, 3, 1.0);
 
     ASSERT_EQ(tuple4_compare(actual, expected), 0);
 }
