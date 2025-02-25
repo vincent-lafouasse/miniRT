@@ -25,6 +25,7 @@ t_tuple4	tuple4_multiply(double s, t_tuple4 t)
 	return (tuple4_new(s * t.x, s * t.y, s * t.z, s * t.w));
 }
 
+// this is terrible
 int	tuple4_compare(t_tuple4 t1, t_tuple4 t2)
 {
 	if (t1.x != t2.x)

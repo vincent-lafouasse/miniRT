@@ -1,5 +1,6 @@
 #include "t_vec3.h"
 #include <math.h>
+#include "math.h"
 
 t_vec3	vec3_new(double x, double y, double z)
 {
@@ -33,7 +34,7 @@ double	vec3_magnitude(t_vec3 v)
 
 t_vec3	vec3_normalize(t_vec3 v)
 {
-	if (vec3_dot(v, v) == 0.0)
+	if (double_eq(vec3_dot(v, v), 0.0))
 	{
 		return (vec3_new(0.0, 0.0, 0.0));
 	}
@@ -49,5 +50,5 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
 
 bool	vec3_is_valid(t_vec3 vec)
 {
-	return (vec.w == 0.0);
+	return (double_eq(vec.w, 0.0));
 }
