@@ -1,6 +1,7 @@
 message(TESTED_INCLUDE_DIR="${TESTED_INCLUDE_DIR}")
 
 set(tested_source
+	math/t_vec3/t_vec3.c
 	math/t_vec3/t_vec3.h
 )
 list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
