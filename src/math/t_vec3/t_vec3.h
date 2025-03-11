@@ -26,7 +26,7 @@ double	vec3_dot(t_vec3 self, t_vec3 other);
 t_vec3	vec3_cross(t_vec3 self, t_vec3 other);
 t_vec3	vec3_normalize(t_vec3 self);
 
-bool	vec3_is_normalized(t_vec3 self);
+bool	vec3_is_unit(t_vec3 self);
 bool	vec3_is_bogus(t_vec3 self);
 
 t_vec3	vec3_bogus(void);
