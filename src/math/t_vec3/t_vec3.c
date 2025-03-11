@@ -46,7 +46,17 @@ double	vec3_length(t_vec3 self)
 	return (sqrt(vec3_dot(self, self)));
 }
 
-t_vec3	vec3_normalize(t_vec3 self);
+t_vec3	vec3_normalize(t_vec3 self)
+{
+	double	length;
+
+	length = vec3_length(self);
+	if (length == 0.0)
+	{
+		return (vec3_new(0.0, 0.0, 0.0));
+	}
+	return (vec3_div(self, length));
+}
 
 bool	vec3_is_unit(t_vec3 self)
 {
