@@ -26,13 +26,10 @@ set_target_properties(libft PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${libft_dir}/include"
 )
 
-add_subdirectory(DummyTest)
 add_subdirectory(MathTest)
 
 include(CTest)
 enable_testing()
 
-add_test(NAME DummyTest
-         COMMAND DummyTest)
 add_test(NAME MathTest
 		COMMAND MathTest)
