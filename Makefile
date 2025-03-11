@@ -52,7 +52,7 @@ $(LIBFT):
 	make -C $(LIBFT_MAKE_DIR)
 
 $(MLX):
-	-./$(MLX_DIR)/configure
+	(cd $(MLX_DIR); ./configure)
 	make -C $(MLX_MAKE_DIR)
 
 .PHONY: re
@@ -63,7 +63,6 @@ clean:
 	$(RM) -r build/src
 	make clean -C $(MLX_MAKE_DIR)
 	make clean -C $(LIBFT_MAKE_DIR)
-	$(RM) Makefile.gen
 
 .PHONY: fclean
 fclean: clean
