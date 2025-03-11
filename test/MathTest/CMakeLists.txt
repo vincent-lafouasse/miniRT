@@ -1,14 +1,7 @@
 message(TESTED_INCLUDE_DIR="${TESTED_INCLUDE_DIR}")
 
 set(tested_source
-		math/t_tuple4.c
-		math/t_tuple4.h
-		math/t_point3.c
-		math/t_point3.h
-		math/t_vec3.c
-		math/t_vec3.h
-		math/math.h
-		math/double_cmp.c
+	math/t_vec3/t_vec3.h
 )
 list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
 
