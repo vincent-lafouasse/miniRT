@@ -1,4 +1,4 @@
-#ifdef T_VEC3_H
+#ifndef T_VEC3_H
 # define T_VEC3_H
 
 # include <stdbool.h>
