@@ -17,8 +17,14 @@ set(LIB_DIR ${ROOT}/lib)
 # targets: `libgtest` `libgmock` (static libraries)
 include(fetch_gtest.cmake)
 
-# targets: `libft` `libmlx` (static libraries)
-include(find_libft_mlx.cmake)
+set(libft_dir
+  ${LIB_DIR}/libft
+)
+add_library(libft STATIC IMPORTED)
+set_target_properties(libft PROPERTIES
+  IMPORTED_LOCATION "${libft_dir}/libft.a"
+  INTERFACE_INCLUDE_DIRECTORIES "${libft_dir}/include"
+)
 
 add_subdirectory(DummyTest)
 add_subdirectory(MathTest)
