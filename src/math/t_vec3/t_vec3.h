@@ -22,7 +22,7 @@ t_vec3	vec3_mul(double k, t_vec3 self);
 t_vec3	vec3_div(t_vec3 self, double k);
 double	vec3_length(t_vec3 self);
 t_vec3	vec3_negate(t_vec3 self);
-t_vec3	vec3_dot(t_vec3 self, t_vec3 other);
+double	vec3_dot(t_vec3 self, t_vec3 other);
 t_vec3	vec3_cross(t_vec3 self, t_vec3 other);
 t_vec3	vec3_normalize(t_vec3 self);
 
