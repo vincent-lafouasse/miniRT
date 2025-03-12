@@ -19,6 +19,12 @@ enum e_error {
 
     // input errors
     E_LINE_EMPTY, // non-fatal
+    E_UNKNOWN_ELEMENT,
+    E_MALFORMATTED_ELEMENT,
+    E_MALFORMATTED_COLOR,
+    E_MALFORMATTED_VECTOR,
+    E_INVALID_NUMBER,
+    E_OUT_OF_RANGE,
 
     // library functions errors
     E_OOM,
