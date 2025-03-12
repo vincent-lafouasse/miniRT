@@ -20,6 +20,8 @@ void run_test_memcpy(void);
 void run_test_memcmp(void);
 void run_test_strncmp(void);
 void run_test_strlcat(void);
+void run_test_strlcat(void);
+void run_test_ft_split_charset(void);
 
 int main(void)
 {
@@ -37,5 +39,6 @@ int main(void)
     run_test_memcpy();
     run_test_memcmp();
     run_test_strncmp();
+    run_test_ft_split_charset();
     return (UnityEnd());
 }

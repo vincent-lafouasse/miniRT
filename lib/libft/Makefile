@@ -88,8 +88,11 @@ fclean: clean
 re: fclean update
 
 .PHONY: test
-test: $(LIB)
-	@make -C test
+test: $(LIBS)
+	cmake -DCMAKE_BUILD_TYPE=DEBUG -S test -B build/test
+	cmake --build build/test
+	GTEST_COLOR=1 ctest --test-dir build/test -V
+
 
 .PHONY: fmt
 fmt:

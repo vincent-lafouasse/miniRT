@@ -20,6 +20,7 @@ target_sources(libft_tests PRIVATE
 	./src/test_strlcpy.c
 	./src/test_strlen.c
 	./src/test_strncmp.c
+	./src/test_split_charset.c
 	./src/utils.c
 )
 
