@@ -21,6 +21,7 @@ void	ft_split_destroy(char **split)
 	while (split[i])
 	{
 		free(split[i]);
+		i++;
 	}
 	free(split);
 }
