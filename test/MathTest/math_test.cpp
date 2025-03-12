@@ -32,6 +32,8 @@ TEST(Vec, VecAddHuge) {
 
     t_vec3 v = vec3_add(a, b);
 
+    ASSERT_FALSE(vec3_is_bogus(a));
+    ASSERT_FALSE(vec3_is_bogus(b));
     ASSERT_TRUE(vec3_is_bogus(v));
 }
 
@@ -66,5 +68,7 @@ TEST(Vec, VecSubtractHuge) {
 
     t_vec3 v = vec3_sub(a, b);
 
+    ASSERT_FALSE(vec3_is_bogus(a));
+    ASSERT_FALSE(vec3_is_bogus(b));
     ASSERT_TRUE(vec3_is_bogus(v));
 }
