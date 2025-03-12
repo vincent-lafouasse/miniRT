@@ -13,9 +13,9 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_split_destroy(char** split)
+void	ft_split_destroy(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])

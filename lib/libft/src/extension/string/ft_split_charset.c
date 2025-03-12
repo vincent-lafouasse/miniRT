@@ -13,12 +13,14 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static size_t	get_n_words(char const *s, const char* charset, size_t len);
-static int		seek_next_word(const char *s, const char* charset, int len, int start);
-static int		seek_next_sep(const char *s, const char* charset, int len, int start);
-static void	*ft_free(char **s, int i);
+static size_t	get_n_words(char const *s, const char *charset, size_t len);
+static int		seek_next_word(const char *s, const char *charset, int len,
+					int start);
+static int		seek_next_sep(const char *s, const char *charset, int len,
+					int start);
+static void		*ft_free(char **s, int i);
 
-char	**ft_split_charset(char const *s, const char* charset)
+char	**ft_split_charset(char const *s, const char *charset)
 {
 	char	**out;
 	int		start;
@@ -45,7 +47,7 @@ char	**ft_split_charset(char const *s, const char* charset)
 	return (out);
 }
 
-static size_t	get_n_words(char const *s, const char* charset, size_t len)
+static size_t	get_n_words(char const *s, const char *charset, size_t len)
 {
 	size_t	n;
 	int		start;
@@ -61,7 +63,8 @@ static size_t	get_n_words(char const *s, const char* charset, size_t len)
 	return (n);
 }
 
-static int	seek_next_word(const char *s, const char* charset, int len, int start)
+static int	seek_next_word(const char *s, const char *charset, int len,
+		int start)
 {
 	while (ft_strchr(charset, s[start]) && start < len)
 	{
@@ -73,7 +76,8 @@ static int	seek_next_word(const char *s, const char* charset, int len, int start
 		return (start);
 }
 
-static int	seek_next_sep(const char *s, const char* charset, int len, int start)
+static int	seek_next_sep(const char *s, const char *charset, int len,
+		int start)
 {
 	while (!ft_strchr(charset, s[start]) && start < len)
 	{

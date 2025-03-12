@@ -16,7 +16,7 @@
 static size_t	get_n_words(char const *s, char c, size_t len);
 static int		seek_next_word(const char *s, char c, int len, int start);
 static int		seek_next_sep(const char *s, char c, int len, int start);
-static void	*ft_free(char **s, int i);
+static void		*ft_free(char **s, int i);
 
 char	**ft_split(char const *s, char c)
 {
