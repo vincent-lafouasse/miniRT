@@ -16,6 +16,7 @@
 typedef enum e_error t_error;
 enum e_error {
     NO_ERROR,
+    E_LINE_EMPTY,
     E_OOM,
     E_UNREACHABLE,
 };
