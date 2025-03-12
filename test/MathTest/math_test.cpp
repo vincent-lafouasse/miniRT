@@ -34,3 +34,16 @@ TEST(Vec, VecAddHuge) {
 
     ASSERT_TRUE(vec3_is_bogus(v));
 }
+
+
+TEST(Vec, VecNegate) {
+    t_vec3 v = vec3_new(1.0, 2.0, 3.0);
+
+    t_vec3 expected = vec3_new(-1.0, -2.0, -3.0);
+    t_vec3 actual = vec3_negate(v);
+
+    ASSERT_FALSE(vec3_is_bogus(actual));
+    ASSERT_DOUBLE_EQ(expected.x, actual.x);
+    ASSERT_DOUBLE_EQ(expected.y, actual.y);
+    ASSERT_DOUBLE_EQ(expected.z, actual.z);
+}
