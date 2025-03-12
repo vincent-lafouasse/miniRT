@@ -42,6 +42,8 @@ C_FILES += src/extension/string/ft_str_starts_with.c\
 		   src/extension/string/ft_strjoin.c\
 		   src/extension/string/ft_split.c\
 		   src/extension/string/ft_split_charset.c\
+		   src/extension/string/ft_split_len.c\
+		   src/extension/string/ft_split_destroy.c\
 		   src/extension/string/ft_substr.c\
 		   src/extension/string/ft_strmapi.c\
 		   src/extension/string/ft_strtrim.c\
