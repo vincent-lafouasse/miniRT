@@ -47,3 +47,25 @@ TEST(Vec, VecNegate) {
     ASSERT_DOUBLE_EQ(expected.y, actual.y);
     ASSERT_DOUBLE_EQ(expected.z, actual.z);
 }
+
+TEST(Vec, VecSubtract) {
+    t_vec3 a = vec3_new(1.0, 2.0, 3.0);
+    t_vec3 b = vec3_new(4.0, 5.0, 6.0);
+
+    t_vec3 expected = vec3_new(-3.0, -3.0, -3.0);
+    t_vec3 actual = vec3_sub(a, b);
+
+    ASSERT_FALSE(vec3_is_bogus(actual));
+    ASSERT_DOUBLE_EQ(expected.x, actual.x);
+    ASSERT_DOUBLE_EQ(expected.y, actual.y);
+    ASSERT_DOUBLE_EQ(expected.z, actual.z);
+}
+
+TEST(Vec, VecSubtractHuge) {
+    t_vec3 a = vec3_new(-HUGE_VAL / 0.7, -HUGE_VAL / 0.7, -HUGE_VAL / 0.7);
+    t_vec3 b = vec3_new(HUGE_VAL / 0.7, HUGE_VAL / 0.7, HUGE_VAL / 0.7);
+
+    t_vec3 v = vec3_sub(a, b);
+
+    ASSERT_TRUE(vec3_is_bogus(v));
+}
