@@ -15,18 +15,19 @@
 
 # include "types.h"
 # include <stdbool.h>
+# include <stddef.h>
 
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strtrim(char const *s1, char const *set);
-char	*ft_itoa(int n);
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-bool	ft_str_starts_with(const char *s, const char *pattern);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strtrim(char const *s1, char const *set);
+char		*ft_itoa(int n);
+char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void		ft_striteri(char *s, void (*f)(unsigned int, char *));
+bool		ft_str_starts_with(const char *s, const char *pattern);
 
-char	**ft_split(char const *s, char c);
-char	**ft_split_charset(char const *s, char const* charset);
-int		ft_split_len(char*const * split);
-void	ft_split_destroy(char** split);
+char		**ft_split(char const *s, char c);
+char		**ft_split_charset(char const *s, char const* charset);
+size_t		ft_split_len(char*const * split);
+void		ft_split_destroy(char** split);
 
 #endif
