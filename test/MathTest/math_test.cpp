@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include <cmath>
+#include "gtest/gtest.h"
 
 extern "C" {
 #include "math/t_vec3/t_vec3.h"
@@ -34,7 +34,6 @@ TEST(Vec, VecAddHuge) {
 
     ASSERT_TRUE(vec3_is_bogus(v));
 }
-
 
 TEST(Vec, VecNegate) {
     t_vec3 v = vec3_new(1.0, 2.0, 3.0);
