@@ -26,7 +26,7 @@ bool	ft_str_starts_with(const char *s, const char *pattern);
 
 char	**ft_split(char const *s, char c);
 char	**ft_split_charset(char const *s, char const* charset);
-int		ft_split_len(const char** split);
+int		ft_split_len(char*const * split);
 void	ft_split_destroy(char** split);
 
 #endif

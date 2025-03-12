@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_split_len(const char** split)
+int		ft_split_len(char*const * split)
 {
 	int len;
 
