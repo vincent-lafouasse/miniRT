@@ -27,8 +27,8 @@ TEST(Vec, VecAdd) {
 }
 
 TEST(Vec, VecAddHuge) {
-    t_vec3 a = vec3_new(HUGE_VAL / 0.7, HUGE_VAL / 0.7, HUGE_VAL / 0.7);
-    t_vec3 b = vec3_new(HUGE_VAL / 0.7, HUGE_VAL / 0.7, HUGE_VAL / 0.7);
+    t_vec3 a = vec3_new(DBL_MAX * 0.7, DBL_MAX * 0.7, DBL_MAX * 0.7);
+    t_vec3 b = vec3_new(DBL_MAX * 0.7, DBL_MAX * 0.7, DBL_MAX * 0.7);
 
     t_vec3 v = vec3_add(a, b);
 
@@ -63,8 +63,8 @@ TEST(Vec, VecSubtract) {
 }
 
 TEST(Vec, VecSubtractHuge) {
-    t_vec3 a = vec3_new(-HUGE_VAL / 0.7, -HUGE_VAL / 0.7, -HUGE_VAL / 0.7);
-    t_vec3 b = vec3_new(HUGE_VAL / 0.7, HUGE_VAL / 0.7, HUGE_VAL / 0.7);
+    t_vec3 a = vec3_new(-DBL_MAX * 0.7, -DBL_MAX * 0.7, -DBL_MAX * 0.7);
+    t_vec3 b = vec3_new(DBL_MAX * 0.7, DBL_MAX * 0.7, DBL_MAX * 0.7);
 
     t_vec3 v = vec3_sub(a, b);
 
