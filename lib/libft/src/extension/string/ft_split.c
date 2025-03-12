@@ -6,17 +6,17 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:33:46 by poss              #+#    #+#             */
-/*   Updated: 2023/12/04 17:26:14 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/12 01:33:36 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-size_t	get_n_words(char const *s, char c, size_t len);
-int		seek_next_word(const char *s, char c, int len, int start);
-int		seek_next_sep(const char *s, char c, int len, int start);
-void	*ft_free(char **s, int i);
+static size_t	get_n_words(char const *s, char c, size_t len);
+static int		seek_next_word(const char *s, char c, int len, int start);
+static int		seek_next_sep(const char *s, char c, int len, int start);
+static void	*ft_free(char **s, int i);
 
 char	**ft_split(char const *s, char c)
 {
@@ -45,7 +45,7 @@ char	**ft_split(char const *s, char c)
 	return (out);
 }
 
-size_t	get_n_words(char const *s, char c, size_t len)
+static size_t	get_n_words(char const *s, char c, size_t len)
 {
 	size_t	n;
 	int		start;
@@ -61,7 +61,7 @@ size_t	get_n_words(char const *s, char c, size_t len)
 	return (n);
 }
 
-int	seek_next_word(const char *s, char c, int len, int start)
+static int	seek_next_word(const char *s, char c, int len, int start)
 {
 	while (s[start] == c && start < len)
 	{
@@ -73,7 +73,7 @@ int	seek_next_word(const char *s, char c, int len, int start)
 		return (start);
 }
 
-int	seek_next_sep(const char *s, char c, int len, int start)
+static int	seek_next_sep(const char *s, char c, int len, int start)
 {
 	while (s[start] != c && start < len)
 	{
@@ -82,7 +82,7 @@ int	seek_next_sep(const char *s, char c, int len, int start)
 	return (start);
 }
 
-void	*ft_free(char **s, int i)
+static void	*ft_free(char **s, int i)
 {
 	while (i >= 0)
 	{
