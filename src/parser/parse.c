@@ -59,7 +59,7 @@ static t_error parse_elements(const char *input, t_element_list **elements_out)
 t_error	u8_parse(const char *str, uint8_t *result_out);
 t_error double_parse(const char *str, double *result_out);
 
-t_error vec3_parse(const char *str, t_vec3 *result_out)
+t_error element_vec3_parse(const char *str, t_vec3 *result_out)
 {
 	char **components;
 	t_error x_err;
@@ -84,7 +84,7 @@ t_error vec3_parse(const char *str, t_vec3 *result_out)
 	return (NO_ERROR);
 }
 
-t_error color_parse(const char *str, uint8_t result_out[3])
+t_error element_color_parse(const char *str, uint8_t result_out[3])
 {
 	char **bytes;
 	t_error r_err;

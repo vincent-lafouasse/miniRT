@@ -17,8 +17,8 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 t_error	u8_parse(const char *str, uint8_t *result_out);
 t_error double_parse(const char *str, double *result_out);
 
-t_error vec3_parse(const char *str, t_vec3 *result_out);
-t_error color_parse(const char *str, uint8_t result_out[3]);
+t_error element_vec3_parse(const char *str, t_vec3 *result_out);
+t_error element_color_parse(const char *str, uint8_t result_out[3]);
 
 static char ft_strcmp(const char *s1, const char *s2) {
 	return ft_strncmp(s1, s2, ft_strlen(s1) + 1);
@@ -71,7 +71,7 @@ t_error match_ambient_light(char *const *parts, size_t parts_len, t_element *ele
 	err = double_parse(parts[1], &ambient.lighting_ratio);
 	if (err != NO_ERROR)
 		return (err);
-	err = color_parse(parts[2], ambient.color);
+	err = element_color_parse(parts[2], ambient.color);
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_AMBIENT_LIGHT, .ambient = ambient};
@@ -87,10 +87,10 @@ t_error match_camera(char *const *parts, size_t parts_len, t_element *element_ou
 		return (E_MALFORMATTED_ELEMENT);
 
 	camera = (typeof(camera)){0};
-	err = vec3_parse(parts[1], &camera.coordinates);
+	err = element_vec3_parse(parts[1], &camera.coordinates);
 	if (err != NO_ERROR)
 		return (err);
-	err = vec3_parse(parts[2], &camera.orientation);
+	err = element_vec3_parse(parts[2], &camera.orientation);
 	if (err != NO_ERROR)
 		return (err);
 	err = u8_parse(parts[3], &camera.fov);
@@ -109,13 +109,13 @@ t_error match_light(char *const *parts, size_t parts_len, t_element *element_out
 		return (E_MALFORMATTED_ELEMENT);
 
 	light = (typeof(light)){0};
-	err = vec3_parse(parts[1], &light.coordinates);
+	err = element_vec3_parse(parts[1], &light.coordinates);
 	if (err != NO_ERROR)
 		return (err);
 	err = double_parse(parts[2], &light.brightness_ratio);
 	if (err != NO_ERROR)
 		return (err);
-	err = color_parse(parts[3], light.color);
+	err = element_color_parse(parts[3], light.color);
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_LIGHT, .light = light};
@@ -131,13 +131,13 @@ t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_ou
 		return (E_MALFORMATTED_ELEMENT);
 
 	sphere = (typeof(sphere)){0};
-	err = vec3_parse(parts[1], &sphere.center);
+	err = element_vec3_parse(parts[1], &sphere.center);
 	if (err != NO_ERROR)
 		return (err);
 	err = double_parse(parts[2], &sphere.diameter);
 	if (err != NO_ERROR)
 		return (err);
-	err = color_parse(parts[3], sphere.color);
+	err = element_color_parse(parts[3], sphere.color);
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_SPHERE_PRIMITIVE, .sphere = sphere};
@@ -153,13 +153,13 @@ t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out
 		return (E_MALFORMATTED_ELEMENT);
 
 	plane = (typeof(plane)){0};
-	err = vec3_parse(parts[1], &plane.point);
+	err = element_vec3_parse(parts[1], &plane.point);
 	if (err != NO_ERROR)
 		return (err);
-	err = vec3_parse(parts[2], &plane.normal);
+	err = element_vec3_parse(parts[2], &plane.normal);
 	if (err != NO_ERROR)
 		return (err);
-	err = color_parse(parts[3], plane.color);
+	err = element_color_parse(parts[3], plane.color);
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_PLANE_PRIMITIVE, .plane = plane};
@@ -175,10 +175,10 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 		return (E_MALFORMATTED_ELEMENT);
 
 	cylinder = (typeof(cylinder)){0};
-	err = vec3_parse(parts[1], &cylinder.point);
+	err = element_vec3_parse(parts[1], &cylinder.point);
 	if (err != NO_ERROR)
 		return (err);
-	err = vec3_parse(parts[2], &cylinder.axis);
+	err = element_vec3_parse(parts[2], &cylinder.axis);
 	if (err != NO_ERROR)
 		return (err);
 	err = double_parse(parts[3], &cylinder.diameter);
@@ -187,7 +187,7 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 	err = double_parse(parts[4], &cylinder.height);
 	if (err != NO_ERROR)
 		return (err);
-	err = color_parse(parts[5], cylinder.color);
+	err = element_color_parse(parts[5], cylinder.color);
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_CYLINDER_PRIMITIVE, .cylinder = cylinder};
