@@ -1,5 +1,5 @@
-#[allow(unused)]
-#[allow(dead_code)]
+#![allow(unused)]
+#![allow(dead_code)]
 use std::rc::Rc;
 
 enum AtomKind {
