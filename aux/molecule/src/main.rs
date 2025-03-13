@@ -28,11 +28,13 @@ enum Atom {
 }
 
 struct BigonalAtom {
+    kind: AtomKind,
     a: Option<Rc<Atom>>,
     b: Option<Rc<Atom>>,
 }
 
 struct TrigonalAtom {
+    kind: AtomKind,
     a: Option<Rc<Atom>>,
     b: Option<Rc<Atom>>,
     c: Option<Rc<Atom>>,
