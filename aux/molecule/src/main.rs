@@ -20,6 +20,16 @@ impl AtomKind {
             Nitrogen => 71.0,
         }
     }
+
+    fn color(&self) -> (u8, u8, u8) {
+        use AtomKind::*;
+        match self {
+            Hydrogen => (255, 255, 255),
+            Carbon => (0, 0, 0),
+            Oxygen => (234, 51, 35),
+            Nitrogen => (0, 0, 245),
+        }
+    }
 }
 
 enum Atom {
