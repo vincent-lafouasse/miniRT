@@ -42,6 +42,20 @@ static inline t_error el_push_front(t_element_list **self, t_element element) {
 	return (NO_ERROR);
 }
 
+size_t el_len(t_element_list *const *self) {
+	const t_element_list *head;
+	size_t i;
+
+	head = *self;
+	i = 0;
+	while (head)
+	{
+		head = head->next;
+		i++;
+	}
+	return (i);
+}
+
 void	el_delone(t_element_list **self)
 {
 	t_element_list	*buffer;
