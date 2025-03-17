@@ -1,10 +1,6 @@
 message(TESTED_INCLUDE_DIR="${TESTED_INCLUDE_DIR}")
 
-set(tested_source
-	math/t_vec3/t_vec3.c
-	math/t_vec3/t_vec3.h
-)
-list(TRANSFORM tested_source PREPEND ${TESTED_SRC_DIR}/)
+file(GLOB_RECURSE tested_source ${TESTED_SRC_DIR}/math/*.c)
 
 message(-- tested_source="${tested_source}")
 
