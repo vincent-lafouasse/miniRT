@@ -16,7 +16,7 @@ typedef struct s_viewport
 	t_vec3	delta_v;
 }			t_viewport;
 
-t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
+static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 {
 	t_vec3	viewport_up;
 	t_vec3	viewport_right;
@@ -49,7 +49,7 @@ t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 	};
 }
 
-t_vec3	compute_pixel00(t_point3 camera_position, t_vec3 direction,
+static t_vec3	compute_pixel00(t_point3 camera_position, t_vec3 direction,
 		double fov_deg, t_viewport vp)
 {
 	double		fov_radians;
