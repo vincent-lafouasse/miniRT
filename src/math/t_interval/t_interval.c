@@ -13,13 +13,13 @@
 #include "t_interval.h"
 
 double interval_size(t_interval i) {
-	return i.max - i.min;
+    return i.max - i.min;
 }
 
 bool interval_contains(t_interval i, double x) {
-	return i.min <= x && x <= i.max;
+    return i.min <= x && x <= i.max;
 }
 
 bool interval_surrounds(t_interval i, double x) {
-	return i.min < x && x < i.max;
+    return i.min < x && x < i.max;
 }

@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef T_INTERVAL_H
-# define T_INTERVAL_H
+#define T_INTERVAL_H
 
 #include <math.h>
 #include <stdbool.h>
 
 struct s_interval {
-	double min;
-	double max;
+    double min;
+    double max;
 };
 typedef struct s_interval t_interval;
 
@@ -27,19 +27,19 @@ bool interval_contains(t_interval, double);
 bool interval_surrounds(t_interval, double);
 
 static t_interval interval_new(double min, double max) {
-	return (t_interval){.min = min, .max = max};
+    return (t_interval){.min = min, .max = max};
 }
 
 static t_interval empty_interval(void) {
-	return (t_interval){.min = INFINITY, .max = -INFINITY};
+    return (t_interval){.min = INFINITY, .max = -INFINITY};
 }
 
 static t_interval interval_R(void) {
-	return (t_interval){.min = -INFINITY, .max = INFINITY};
+    return (t_interval){.min = -INFINITY, .max = INFINITY};
 }
 
 static t_interval interval_R_plus(void) {
-	return (t_interval){.min = 0.0, .max = INFINITY};
+    return (t_interval){.min = 0.0, .max = INFINITY};
 }
 
-#endif // T_INTERVAL_H
+#endif  // T_INTERVAL_H
