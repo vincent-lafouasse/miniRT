@@ -7,7 +7,7 @@ void construct_viewport(t_vec3 direction,
                         double aspect_ratio,
                         t_vec3* viewport_u_out,
                         t_vec3* viewport_v_out) {
-    // set up vaguely towards positive y
+    // set "up" vaguely towards positive y
     // if colinear to e_y, set to e_x
     // direction really should be normalized for the colinearity check to work
     t_vec3 viewport_up;
@@ -18,6 +18,7 @@ void construct_viewport(t_vec3 direction,
         viewport_up = vec3_new(0.0, 1.0, 0.0);
     }
 
+    // this yields an orthonormal base
     t_vec3 viewport_right = vec3_cross(direction, viewport_up);
     t_vec3 viewport_down = vec3_cross(direction, viewport_right);
 
