@@ -5,10 +5,10 @@ extern "C" {
 };
 
 TEST(Parser, Minimal) {
-    const char* minimal = "C 1,2,3 1,0,0 90\n"
+    const char* minimal =
+        "C 1,2,3 1,0,0 90\n"
         "A 0.69 4,5,6\n"
-        "L 7,8,9 0.42 10,11,12\n"
-    ;
+        "L 7,8,9 0.42 10,11,12\n";
 
     t_vec3 expected_camera_position = vec3_new(1, 2, 3);
     t_vec3 expected_camera_orientation = vec3_new(1, 0, 0);
@@ -23,5 +23,4 @@ TEST(Parser, Minimal) {
 
     t_camera camera;
     t_scene scene;
-
 }
