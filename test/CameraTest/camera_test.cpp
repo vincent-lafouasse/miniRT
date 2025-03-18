@@ -86,7 +86,7 @@ static void log_camera(t_camera c, const char* name) {
     log_vector(c.delta_v, "Delta v");
 
     std::cout << "\tScreen:\t\t";
-    std::cout << std::format("{{ .height = {}, .width = {}}}\n",
+    std::cout << std::format("{{ .height = {}, .width = {} }}\n",
                              c.screen_height, c.screen_width);
 
     std::cout << "}" << std::endl;
