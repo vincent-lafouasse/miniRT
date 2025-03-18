@@ -1,6 +1,6 @@
 #include <cmath>
-#include <iostream>
 #include <format>
+#include <iostream>
 #include "Vector.hpp"
 #include "gtest/gtest.h"
 
@@ -40,14 +40,12 @@ TEST(Camera, AlongOz_OneByOne) {
     double viewport_h = 2.0;
     double viewport_w = 2.0 * aspect_ratio;
 
-
     Vector origin = Vector::Origin();
     Vector orientation = -Vector::E_Z();
 
     // tan fov/2 = width / 2*focal_length
     double target_focal_length = 1.0;
-    double fov_rad =
-        2.0 * std::atan(0.5 * viewport_w/ target_focal_length);
+    double fov_rad = 2.0 * std::atan(0.5 * viewport_w / target_focal_length);
     double fov_deg = fov_rad * 180.0 / M_PI;
 
     Vector expected_viewport_u = Vector::E_X() * viewport_w;
@@ -88,7 +86,8 @@ static void log_camera(t_camera c, const char* name) {
     log_vector(c.delta_v, "Delta v");
 
     std::cout << "\tScreen:\t\t";
-    std::cout << std::format("{{ .height = {}, .width = {}}}\n", c.screen_height, c.screen_width);
+    std::cout << std::format("{{ .height = {}, .width = {}}}\n",
+                             c.screen_height, c.screen_width);
 
     std::cout << "}" << std::endl;
 }
