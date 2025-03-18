@@ -10,7 +10,6 @@ struct s_vec3 {
 };
 typedef struct s_vec3	t_vec3;
 typedef struct s_vec3	t_point3;
-typedef struct s_vec3	t_rgb;
 
 static inline t_vec3	vec3_new(double x, double y, double z) {
 	return (t_vec3){.x = x, .y = y, .z = z};
