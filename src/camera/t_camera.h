@@ -15,8 +15,15 @@ struct	s_camera
 };
 typedef struct s_camera	t_camera;
 
-t_camera	camera_new(t_point3 position, t_vec3 direction,
-				double fov_deg, size_t screen_width,
+struct s_camera_specs {
+	t_point3	position;
+	t_vec3		direction;
+	double		fov_deg;
+};
+typedef struct s_camera_specs t_camera_specs;
+
+t_camera	camera_new(t_camera_specs specs,
+				size_t screen_width,
 				size_t screen_height);
 
 #endif // T_CAMERA_H

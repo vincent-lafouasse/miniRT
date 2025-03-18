@@ -67,17 +67,17 @@ static t_vec3	compute_pixel00(t_point3 camera_position, t_vec3 direction,
 					vp.delta_v))));
 }
 
-t_camera	camera_new(t_point3 position, t_vec3 direction, double fov_deg,
+t_camera	camera_new(t_camera_specs specs,
 		size_t screen_width, size_t screen_height)
 {
 	t_viewport	vp;
 	t_vec3		pixel00;
 
-	vp = construct_viewport(direction, (t_dimension){.w = screen_width,
+	vp = construct_viewport(specs.direction, (t_dimension){.w = screen_width,
 			.h = screen_height});
-	pixel00 = compute_pixel00(position, direction, fov_deg, vp);
+	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg, vp);
 	return (t_camera){
-		.position = position,
+		.position = specs.position,
 		.pixel00 = pixel00,
 		.delta_u = vp.delta_u,
 		.delta_v = vp.delta_v,
