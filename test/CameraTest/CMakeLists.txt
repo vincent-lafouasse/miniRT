@@ -8,6 +8,7 @@ message(-- tested_source="${tested_source}")
 add_executable(CameraTest
 	${CMAKE_CURRENT_LIST_DIR}/main.cpp
 	${CMAKE_CURRENT_LIST_DIR}/camera_test.cpp
+	${CMAKE_CURRENT_LIST_DIR}/Vector.hpp
 
 	${camera_module}
 	${math_module}
