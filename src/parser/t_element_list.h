@@ -42,6 +42,19 @@ static inline t_error el_push_front(t_element_list **self, t_element element) {
 	return (NO_ERROR);
 }
 
+static inline t_element_list *el_pop_front_link(t_element_list **self) {
+	t_element_list *new_head;
+	t_element_list *link;
+
+	if (!*self)
+		return (NULL);
+	new_head = (*self)->next;
+	link = *self;
+	link->next = NULL;
+	*self = new_head;
+	return (link);
+}
+
 size_t el_len(const t_element_list *self) {
 	size_t i;
 
