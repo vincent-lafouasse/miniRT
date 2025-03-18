@@ -1,9 +1,9 @@
 #ifndef T_HITTABLE_H
 #define T_HITTABLE_H
 
-typedef struct s_sphere t_sphere;
-typedef struct s_plane t_plane;
-typedef struct s_cylinder t_cylinder;
+#include "./t_sphere.h"
+#include "./t_plane.h"
+#include "./t_cylinder.h"
 
 enum e_hittable_type {
 	HITTABLE_SPHERE,
