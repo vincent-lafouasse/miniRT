@@ -7,9 +7,6 @@ extern "C" {
 #include "math/t_vec3/t_vec3.h"
 };
 
-static void assert_vec_eq(t_vec3 expected, t_vec3 actual) {
-}
-
 static void assert_camera_eq(t_camera expected, t_camera actual) {
     ASSERT_DOUBLE_EQ(expected.position.x, actual.position.x);
     ASSERT_DOUBLE_EQ(expected.position.y, actual.position.y);
