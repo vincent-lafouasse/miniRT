@@ -1,4 +1,4 @@
-file(GLOB_RECURSE parse_module ${TESTED_SRC_DIR}/parse/*.c)
+file(GLOB_RECURSE parse_module ${TESTED_SRC_DIR}/parser/*.c)
 
 add_executable(ParserTest
 	${CMAKE_CURRENT_LIST_DIR}/main.cpp
