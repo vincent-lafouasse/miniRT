@@ -14,12 +14,17 @@
 
 t_rgb	rgb_from_bytes(const uint8_t color[3])
 {
-	double r;
-	double g;
-	double b;
+	return rgb_from_elements(color[0], color[1], color[2]);
+}
 
-	r = (double)color[0] / 256.0;
-	g = (double)color[1] / 256.0;
-	b = (double)color[2] / 256.0;
-	return vec3_new(r, g, b);
+t_rgb	rgb_from_elements(uint8_t r, uint8_t g, uint8_t b)
+{
+	double r_double;
+	double g_double;
+	double b_double;
+
+	r_double = (double)r / 256.0;
+	g_double = (double)g / 256.0;
+	b_double = (double)b / 256.0;
+	return vec3_new(r_double, g_double, b_double);
 }
