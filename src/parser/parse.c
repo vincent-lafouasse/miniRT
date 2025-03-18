@@ -2,9 +2,16 @@
 
 #include "error/t_error.h"
 
+#include "math/t_rgb/t_rgb.h"
 #include "math/t_vec3/t_vec3.h"
 #include "parser/t_element_list.h"
 #include "camera/t_camera.h"
+
+#include "scene/lights/t_ambient_light.h"
+#include "scene/lights/t_point_light.h"
+#include "scene/objects/t_hittable.h"
+#include "scene/objects/t_hittable_array.h"
+#include "scene/objects/t_sphere.h"
 #include "scene/t_scene.h"
 
 #include "libft/ft_string.h"
@@ -39,7 +46,9 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 		partitioned_elements_clear(&elements);
 		return (err);
 	}
-	return (NO_ERROR);
+	err = gather_camera_and_scene(&elements, cam_out, scene_out);
+	partitioned_elements_clear(&elements);
+	return (err);
 }
 
 t_error partitioned_elements_validate(const t_partitioned_elements *p)
@@ -84,12 +93,69 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	return (NO_ERROR);
 }
 
+static t_hittable hittable_from_primitive(t_element element) {
+	t_hittable hittable;
+	t_sphere_element s;
+	t_plane_element p;
+	t_cylinder_element c;
+
+	if (element.kind == ELEM_SPHERE_PRIMITIVE)
+	{
+		s = element.sphere;
+		hittable = hittable_sphere_new(sphere_new(s.center, rgb_from_bytes(s.color), s.diameter / 2.0));
+	}
+	else if (element.kind == ELEM_PLANE_PRIMITIVE)
+	{
+		p = element.plane;
+		hittable = hittable_plane_new(plane_new(p.point, p.normal, rgb_from_bytes(p.color)));
+	}
+	else if (element.kind == ELEM_CYLINDER_PRIMITIVE)
+	{
+		c = element.cylinder;
+		hittable = hittable_cylinder_new(cylinder_new(c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color)));
+	}
+#ifndef MINIRT_RELEASE_BUILD  // do not include this in final build
+	else
+	{
+		#include <assert.h>
+		assert(!"unknown primitive");
+	}
+#endif
+	return (hittable);
+}
+
+static t_hittable_array *gather_objects(t_partitioned_elements *p) {
+	t_hittable_array	*objects;
+	t_hittable			hittable;
+	t_element_list		*current;
+
+	objects = hittable_array_new(el_len(p->primitives));
+	if (!objects)
+		return (NULL);
+	while (p->primitives) {
+		current = el_pop_front_link(&p->primitives);
+		hittable = hittable_from_primitive(current->element);
+		hittable_array_push(objects, hittable);
+		free(current);
+	}
+	return (objects);
+}
+
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
 	const t_camera_element camera = p->cameras->element.camera;
+	const t_ambient_light_element ambient = p->ambients->element.ambient;
+	const t_light_element light = p->lights->element.light;
+	t_hittable_array *objects;
 
 	*cam_out = (t_camera_specs){.position = camera.coordinates, \
 		.direction = camera.orientation, .fov_deg = (double)camera.fov};
+	t_ambient_light amb_light = ambient_light(ambient.lighting_ratio, rgb_from_bytes(ambient.color));
+	t_point_light pt_light = point_light(light.coordinates, light.brightness_ratio, rgb_from_bytes(light.color));
+	objects = gather_objects(p);
+	if (!objects)
+		return (E_OOM);
+	*scene_out = scene_new(amb_light, pt_light, objects);
 	return (NO_ERROR);
 }
 
