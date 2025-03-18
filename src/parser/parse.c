@@ -18,13 +18,13 @@ typedef struct s_partitioned_elements {
 
 static t_error parse_elements(const char *input, t_partitioned_elements *out);
 t_error match_element(const char *line, t_element *element_out);
-t_error gather_camera_and_scene(t_partitioned_elements *elements, t_camera *cam_out, t_scene *scene_out);
+t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out);
 
 t_error partitioned_elements_push_front(t_partitioned_elements *p, t_element element);
 void partitioned_elements_clear(t_partitioned_elements *p);
 t_error partitioned_elements_validate(const t_partitioned_elements *p);
 
-t_error	parse(const char *input, t_camera *cam_out, t_scene *scene_out)
+t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 {
 	t_error			err;
 	t_partitioned_elements	elements;
@@ -84,8 +84,12 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	return (NO_ERROR);
 }
 
-t_error gather_camera_and_scene(t_partitioned_elements *elements, t_camera *cam_out, t_scene *scene_out)
+t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
+	const t_camera_element camera = p->cameras->element.camera;
+
+	*cam_out = (t_camera_specs){.position = camera.coordinates, \
+		.direction = camera.orientation, .fov_deg = (double)camera.fov};
 	return (NO_ERROR);
 }
 
