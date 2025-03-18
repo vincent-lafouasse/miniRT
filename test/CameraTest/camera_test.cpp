@@ -67,7 +67,7 @@ TEST(Camera, AlongOz_OneByOne) {
 
 static void log_vector(t_vec3 v, const char* name) {
     std::cout << "\t" << name << ":\t"; 
-    std::cout << "{ .x = " << v.x << ", .y = " << v.y << ", .z = " << v.z << "}\n"; 
+    std::cout << "{ .x = " << v.x << ", .y = " << v.y << ", .z = " << v.z << " }\n"; 
 }
 
 static void log_camera(t_camera c, const char* name) {
@@ -78,7 +78,7 @@ static void log_camera(t_camera c, const char* name) {
     log_vector(c.delta_u, "Delta u");
     log_vector(c.delta_v, "Delta v");
 
-    std::cout << "\tScreen:\t" << "w = " << c.screen_width << ", h = " << c.screen_height << "\n";
+    std::cout << "\tScreen:\t\t" << "{ .w = " << c.screen_width << ", .h = " << c.screen_height << " }\n";
 
     std::cout << "}" << std::endl;
 }
