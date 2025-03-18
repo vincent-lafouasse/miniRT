@@ -7,25 +7,25 @@ extern "C" {
 #include "math/t_vec3/t_vec3.h"
 };
 
-static void assert_camera_eq(t_camera expected, t_camera actual) {
-    ASSERT_DOUBLE_EQ(expected.position.x, actual.position.x);
-    ASSERT_DOUBLE_EQ(expected.position.y, actual.position.y);
-    ASSERT_DOUBLE_EQ(expected.position.z, actual.position.z);
+static void expect_camera_eq(t_camera expected, t_camera actual) {
+    EXPECT_DOUBLE_EQ(expected.position.x, actual.position.x);
+    EXPECT_DOUBLE_EQ(expected.position.y, actual.position.y);
+    EXPECT_DOUBLE_EQ(expected.position.z, actual.position.z);
 
-    ASSERT_DOUBLE_EQ(expected.pixel00.x, actual.pixel00.x);
-    ASSERT_DOUBLE_EQ(expected.pixel00.y, actual.pixel00.y);
-    ASSERT_DOUBLE_EQ(expected.pixel00.z, actual.pixel00.z);
+    EXPECT_DOUBLE_EQ(expected.pixel00.x, actual.pixel00.x);
+    EXPECT_DOUBLE_EQ(expected.pixel00.y, actual.pixel00.y);
+    EXPECT_DOUBLE_EQ(expected.pixel00.z, actual.pixel00.z);
 
-    ASSERT_DOUBLE_EQ(expected.delta_u.x, actual.delta_u.x);
-    ASSERT_DOUBLE_EQ(expected.delta_u.y, actual.delta_u.y);
-    ASSERT_DOUBLE_EQ(expected.delta_u.z, actual.delta_u.z);
+    EXPECT_DOUBLE_EQ(expected.delta_u.x, actual.delta_u.x);
+    EXPECT_DOUBLE_EQ(expected.delta_u.y, actual.delta_u.y);
+    EXPECT_DOUBLE_EQ(expected.delta_u.z, actual.delta_u.z);
 
-    ASSERT_DOUBLE_EQ(expected.delta_v.x, actual.delta_v.x);
-    ASSERT_DOUBLE_EQ(expected.delta_v.y, actual.delta_v.y);
-    ASSERT_DOUBLE_EQ(expected.delta_v.z, actual.delta_v.z);
+    EXPECT_DOUBLE_EQ(expected.delta_v.x, actual.delta_v.x);
+    EXPECT_DOUBLE_EQ(expected.delta_v.y, actual.delta_v.y);
+    EXPECT_DOUBLE_EQ(expected.delta_v.z, actual.delta_v.z);
 
-    ASSERT_EQ(expected.screen_height, actual.screen_height);
-    ASSERT_EQ(expected.screen_width, actual.screen_width);
+    EXPECT_EQ(expected.screen_height, actual.screen_height);
+    EXPECT_EQ(expected.screen_width, actual.screen_width);
 }
 
 TEST(Camera, AlongOz_OneByOne) {
@@ -56,6 +56,6 @@ TEST(Camera, AlongOz_OneByOne) {
     };
     t_camera actual = camera_new(origin.get(), orientation.get(), fov_deg, w, h);
 
-    assert_camera_eq(expected, actual);
+    expect_camera_eq(expected, actual);
 }
 
