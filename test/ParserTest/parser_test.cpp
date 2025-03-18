@@ -4,8 +4,8 @@ extern "C" {
 #include "parser/parse.h"
 };
 
-TEST(Parser, Minimal) {
-    const char* minimal =
+TEST(Parser, BasicSceneWithoutHittablesWorks) {
+    const char* input =
         "C 1,2,3 1,0,0 90\n"
         "A 0.69 4,5,6\n"
         "L 7,8,9 0.42 10,11,12\n";
