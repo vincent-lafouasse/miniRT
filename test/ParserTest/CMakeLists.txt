@@ -5,6 +5,7 @@ file(GLOB_RECURSE error_module ${TESTED_SRC_DIR}/error/*.c)
 
 add_executable(ParserTest
 	${CMAKE_CURRENT_LIST_DIR}/main.cpp
+	${CMAKE_CURRENT_LIST_DIR}/double_parse.cpp
 	${CMAKE_CURRENT_LIST_DIR}/parser_test.cpp
 
 	${parse_module}
