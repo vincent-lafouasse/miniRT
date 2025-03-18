@@ -14,7 +14,7 @@ typedef enum e_hittable_type	t_hittable_type;
 
 typedef struct s_hittable t_hittable;
 struct s_hittable {
-	t_hittable_type object;
+	t_hittable_type type;
 	union {
 		t_sphere sphere;
 		t_plane plane;
