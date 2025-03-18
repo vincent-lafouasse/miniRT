@@ -27,6 +27,7 @@ set_target_properties(libft PROPERTIES
 )
 
 add_subdirectory(MathTest)
+add_subdirectory(ParserTest)
 add_subdirectory(CameraTest)
 
 include(CTest)
@@ -34,5 +35,7 @@ enable_testing()
 
 add_test(NAME MathTest
 		COMMAND MathTest)
+add_test(NAME ParserTest
+		COMMAND ParserTest)
 add_test(NAME CameraTest
 		COMMAND CameraTest)
