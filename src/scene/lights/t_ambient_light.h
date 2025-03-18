@@ -2,6 +2,7 @@
 #define T_AMBIENT_LIGHT_H
 
 #include "math/t_vec3/t_vec3.h"
+#include "math/t_rgb/t_rgb.h"
 
 struct s_ambient_light {
 	double	intensity;

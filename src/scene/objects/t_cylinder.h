@@ -2,6 +2,7 @@
 #define T_CYLINDER_H
 
 #include "math/t_vec3/t_vec3.h"
+#include "math/t_rgb/t_rgb.h"
 
 struct s_cylinder {
 	t_point3	point;
