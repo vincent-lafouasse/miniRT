@@ -16,13 +16,19 @@ t_error double_parse(const char *str, double *result_out)
 {
 	char *dot;
 	double result;
+	bool negate;
 
 	if (!is_valid_double(str))
 		return (E_INVALID_NUMBER);
+	negate = (*str == '-');
+	if (*str == '-' || *str == '+')
+		str++;
 	result = whole_part(str);
 	dot = ft_strchr(str, '.');
 	if (dot)
-		result += fractional_part(dot);
+		result += fractional_part(dot + 1);
+	if (negate)
+		result = -result;
 	*result_out = result;
 	return (NO_ERROR);
 }
@@ -55,33 +61,30 @@ static double	whole_part(const char *str)
 {
 	size_t	i;
 	double	whole;
-	bool	negate;
 
 	i = 0;
 	whole = 0.0;
-	negate = (str[i] == '-');
-	if (str[i] == '-' || str[i] == '+')
-		i++;
 	while (str[i] && str[i] != '.') {
 		whole = (whole * 10.0) + (double)parse_digit(str[i]);
 		i++;
 	}
-	if (negate)
-		whole = -whole;
 	return whole;
 }
 
 static double	fractional_part(const char *str)
 {
 	size_t	i;
+	double	offset;
 	double	fractional;
 	double	current_fraction;
 
-	i = 1;
+	i = 0;
 	fractional = 0.0;
+	offset = 10.0;
 	while (str[i] != '\0') {
-		current_fraction = (double)parse_digit(str[i]) / (i * 10.0);
+		current_fraction = (double)parse_digit(str[i]) / offset;
 		fractional = fractional + current_fraction;
+		offset *= 10.0;
 		i++;
 	}
 	return fractional;
