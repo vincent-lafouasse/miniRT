@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <cmath>
+#include <iostream>
 #include "Vector.hpp"
 
 extern "C" {
@@ -27,6 +28,8 @@ static void expect_camera_eq(t_camera expected, t_camera actual) {
     EXPECT_EQ(expected.screen_height, actual.screen_height);
     EXPECT_EQ(expected.screen_width, actual.screen_width);
 }
+
+static void log_camera(t_camera c, const char* name);
 
 TEST(Camera, AlongOz_OneByOne) {
     size_t h = 1;
@@ -57,5 +60,25 @@ TEST(Camera, AlongOz_OneByOne) {
     t_camera actual = camera_new(origin.get(), orientation.get(), fov_deg, w, h);
 
     expect_camera_eq(expected, actual);
+
+    log_camera(actual, "Actual");
+    log_camera(expected, "Expected");
 }
 
+static void log_vector(t_vec3 v, const char* name) {
+    std::cout << "\t" << name << ":\t"; 
+    std::cout << "{ .x = " << v.x << ", .y = " << v.y << ", .z = " << v.z << "}\n"; 
+}
+
+static void log_camera(t_camera c, const char* name) {
+    std::cout << "Camera " << name << " {\n";
+
+    log_vector(c.position, "Position");
+    log_vector(c.pixel00, "Pixel00");
+    log_vector(c.delta_u, "Delta u");
+    log_vector(c.delta_v, "Delta v");
+
+    std::cout << "\tScreen:\t" << "w = " << c.screen_width << ", h = " << c.screen_height << "\n";
+
+    std::cout << "}" << std::endl;
+}
