@@ -46,13 +46,13 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 {
 	const t_element_list *primitives;
 
-	if (el_len(&p->ambients) != 1)
+	if (el_len(p->ambients) != 1)
 		return (E_TOO_MANY_AMBIENT_LIGHTS);
 	const t_ambient_light_element ambient = p->ambients->element.ambient;
 	if (ambient.lighting_ratio < 0.0 || ambient.lighting_ratio > 1.0)
 		return (E_OUT_OF_RANGE);
 
-	if (el_len(&p->cameras) != 1)
+	if (el_len(p->cameras) != 1)
 		return (E_TOO_MANY_CAMERAS);
 	const t_camera_element camera = p->cameras->element.camera;
 	if (!vec3_is_unit(camera.orientation))
@@ -60,7 +60,7 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	if (camera.fov > 180)
 		return (E_OUT_OF_RANGE);
 
-	if (el_len(&p->lights) != 1)
+	if (el_len(p->lights) != 1)
 		return (E_MULTIPLE_LIGHTS_UNSUPPORTED);
 	const t_light_element light = p->lights->element.light;
 	if (light.brightness_ratio < 0.0 || light.brightness_ratio > 1.0)
