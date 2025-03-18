@@ -62,8 +62,12 @@ TEST(Camera, AlongOz_OneByOne) {
         .screen_width = w,
         .screen_height = h,
     };
-    t_camera actual =
-        camera_new(origin.get(), orientation.get(), fov_deg, w, h);
+    t_camera_specs specs = (t_camera_specs){
+        .position = origin.get(),
+        .direction = orientation.get(),
+        .fov_deg = fov_deg,
+    };
+    t_camera actual = camera_new(specs, w, h);
 
     expect_camera_eq(expected, actual);
 
