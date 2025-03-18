@@ -6,14 +6,13 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:53:20 by poss              #+#    #+#             */
-/*   Updated: 2025/02/08 20:57:11 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/18 19:06:09 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_ERROR_H
 #define T_ERROR_H
 
-typedef enum e_error t_error;
 enum e_error {
     NO_ERROR,
 
@@ -36,6 +35,7 @@ enum e_error {
     // programming errors
     E_UNREACHABLE,
 };
+typedef enum e_error t_error;
 
 const char* error_repr(t_error err);
 
