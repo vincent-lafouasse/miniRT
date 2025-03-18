@@ -22,4 +22,8 @@ struct s_hittable {
 	};
 };
 
+t_hittable	hittable_sphere_new(t_sphere sphere);
+t_hittable	hittable_plane_new(t_plane plane);
+t_hittable	hittable_cylinder_new(t_cylinder cylinder);
+
 #endif // T_HITTABLE_H
