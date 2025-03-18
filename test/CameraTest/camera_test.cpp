@@ -35,17 +35,22 @@ TEST(Camera, AlongOz_OneByOne) {
     size_t h = 1;
     size_t w = 1;
 
+    double aspect_ratio = static_cast<double>(w) / static_cast<double>(h);
+    double viewport_h = 2.0;
+    double viewport_w = 2.0 * aspect_ratio;
+
+
     Vector origin = Vector::Origin();
     Vector orientation = -Vector::E_Z();
 
     // tan fov/2 = width / 2*focal_length
     double target_focal_length = 1.0;
     double fov_rad =
-        2.0 * std::atan(0.5 * static_cast<double>(w) / target_focal_length);
+        2.0 * std::atan(0.5 * viewport_w/ target_focal_length);
     double fov_deg = fov_rad * 180.0 / M_PI;
 
-    Vector expected_viewport_u = Vector::E_X() * 2.0;
-    Vector expected_viewport_v = -Vector::E_Y() * 2.0;
+    Vector expected_viewport_u = Vector::E_X() * viewport_w;
+    Vector expected_viewport_v = -Vector::E_Y() * viewport_h;
 
     Vector expected_viewport_center = origin + orientation;
     Vector expected_pixel00 = expected_viewport_center;
