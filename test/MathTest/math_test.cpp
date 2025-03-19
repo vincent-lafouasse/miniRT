@@ -5,6 +5,11 @@ extern "C" {
 #include "math/t_vec3/t_vec3.h"
 };
 
+#define EXPECT_VEC3_EQ(a, b) \
+    EXPECT_DOUBLE_EQ(a.x, b.x); \
+    EXPECT_DOUBLE_EQ(a.y, b.y); \
+    EXPECT_DOUBLE_EQ(a.z, b.z);
+
 TEST(Vec, VecNew) {
     t_vec3 v = vec3_new(1.0, 2.0, 3.0);
 
@@ -21,9 +26,7 @@ TEST(Vec, VecAdd) {
     t_vec3 actual = vec3_add(a, b);
 
     ASSERT_FALSE(vec3_is_bogus(actual));
-    ASSERT_DOUBLE_EQ(expected.x, actual.x);
-    ASSERT_DOUBLE_EQ(expected.y, actual.y);
-    ASSERT_DOUBLE_EQ(expected.z, actual.z);
+    EXPECT_VEC3_EQ(expected, actual);
 }
 
 TEST(Vec, VecAddHuge) {
@@ -44,9 +47,7 @@ TEST(Vec, VecNegate) {
     t_vec3 actual = vec3_negate(v);
 
     ASSERT_FALSE(vec3_is_bogus(actual));
-    ASSERT_DOUBLE_EQ(expected.x, actual.x);
-    ASSERT_DOUBLE_EQ(expected.y, actual.y);
-    ASSERT_DOUBLE_EQ(expected.z, actual.z);
+    EXPECT_VEC3_EQ(expected, actual);
 }
 
 TEST(Vec, VecSubtract) {
@@ -57,9 +58,7 @@ TEST(Vec, VecSubtract) {
     t_vec3 actual = vec3_sub(a, b);
 
     ASSERT_FALSE(vec3_is_bogus(actual));
-    ASSERT_DOUBLE_EQ(expected.x, actual.x);
-    ASSERT_DOUBLE_EQ(expected.y, actual.y);
-    ASSERT_DOUBLE_EQ(expected.z, actual.z);
+    EXPECT_VEC3_EQ(expected, actual);
 }
 
 TEST(Vec, VecSubtractHuge) {
