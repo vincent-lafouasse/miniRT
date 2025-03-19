@@ -2,6 +2,7 @@
 
 #include "mlx.h"
 #include <stddef.h>
+#include <stdint.h>
 
 typedef struct s_renderer t_renderer;
 struct s_renderer {
@@ -17,3 +18,7 @@ struct s_renderer {
 };
 
 t_renderer renderer_init(size_t width, double aspect_ratio);
+void renderer_put_pixel(t_renderer* renderer,
+                               size_t x,
+                               size_t y,
+                               uint32_t color);

@@ -1,8 +1,8 @@
 #include <X11/X.h>
 
-#include "render/t_renderer.h"
-#include "render/hooks.h"
 #include "parser/parse.h"
+#include "render/hooks.h"
+#include "render/t_renderer.h"
 #include "scene/objects/t_hittable.h"
 
 #define BALLS                              \
@@ -15,10 +15,6 @@ typedef struct {
     int x;
     int y;
 } Point2;
-
-static void renderer_put_pixel(t_renderer* renderer,
-                               Point2 position,
-                               uint32_t color);
 
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
@@ -40,8 +36,7 @@ void render(const t_camera* camera,
         for (size_t y = 0; y < renderer->height; y++) {
             Point2 pixel = (Point2){.x = (int)x, .y = (int)y};
             t_rgb color = (*coloring)(pixel, camera, scene);
-            renderer_put_pixel(renderer, (Point2){.x = (int)x, .y = (int)y},
-                               rgb_to_bytes(color));
+            renderer_put_pixel(renderer, x, y,rgb_to_bytes(color));
         }
     }
     mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0,
@@ -65,12 +60,4 @@ int main(void) {
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
-}
-
-static void renderer_put_pixel(t_renderer* renderer,
-                               Point2 position,
-                               uint32_t color) {
-    char* dst = renderer->addr + (position.y * renderer->line_length +
-                                  position.x * (renderer->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
 }
