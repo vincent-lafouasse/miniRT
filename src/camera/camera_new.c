@@ -16,6 +16,29 @@ typedef struct s_viewport
 	t_vec3	delta_v;
 }			t_viewport;
 
+static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen);
+static t_vec3		compute_pixel00(t_point3 camera_position, t_vec3 direction,
+									double fov_deg, t_viewport vp);
+
+t_camera	camera_new(t_camera_specs specs,
+		size_t screen_width, size_t screen_height)
+{
+	t_viewport	vp;
+	t_vec3		pixel00;
+
+	vp = construct_viewport(specs.direction, (t_dimension){.w = screen_width,
+			.h = screen_height});
+	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg, vp);
+	return (t_camera){
+		.position = specs.position,
+		.pixel00 = pixel00,
+		.delta_u = vp.delta_u,
+		.delta_v = vp.delta_v,
+		.screen_width = screen_width,
+		.screen_height = screen_height,
+	};
+}
+
 static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 {
 	t_vec3	viewport_up;
@@ -65,23 +88,4 @@ static t_vec3	compute_pixel00(t_point3 camera_position, t_vec3 direction,
 					vp.v)));
 	return (vec3_add(viewport_top_left, vec3_mul(0.5, vec3_add(vp.delta_u,
 					vp.delta_v))));
-}
-
-t_camera	camera_new(t_camera_specs specs,
-		size_t screen_width, size_t screen_height)
-{
-	t_viewport	vp;
-	t_vec3		pixel00;
-
-	vp = construct_viewport(specs.direction, (t_dimension){.w = screen_width,
-			.h = screen_height});
-	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg, vp);
-	return (t_camera){
-		.position = specs.position,
-		.pixel00 = pixel00,
-		.delta_u = vp.delta_u,
-		.delta_v = vp.delta_v,
-		.screen_width = screen_width,
-		.screen_height = screen_height,
-	};
 }
