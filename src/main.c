@@ -1,5 +1,6 @@
 #include <X11/X.h>
 
+#include "t_ray.h"
 #include "parser/parse.h"
 #include "render/hooks.h"
 #include "render/t_renderer.h"
@@ -23,9 +24,10 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
         vec3_mul((double)px.y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
+    t_ray ray = ray_new(pixel, ray_direction);
 
     t_sphere sphere = scene->objects->data[0].sphere;
-    bool hit = sphere_hit(sphere, camera->position, ray_direction);
+    bool hit = sphere_hit(sphere, ray);
 
     return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
 }

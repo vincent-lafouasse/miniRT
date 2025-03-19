@@ -5,6 +5,8 @@
 #include "./t_plane.h"
 #include "./t_cylinder.h"
 
+#include "t_ray.h"
+
 enum e_hittable_type {
 	HITTABLE_SPHERE,
 	HITTABLE_PLANE,
@@ -33,6 +35,6 @@ struct s_hit_record {
 	const t_hittable *object;
 };
 
-bool sphere_hit(t_sphere sphere, t_point3 ray_origin, t_vec3 ray_direction);
+bool sphere_hit(t_sphere sphere, t_ray ray);
 
 #endif // T_HITTABLE_H

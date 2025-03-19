@@ -1,12 +1,13 @@
 #include "t_sphere.h"
 #include "t_hittable.h"
+#include "t_ray.h"
 #include "math/t_interval/t_interval.h"
 
-bool sphere_hit(t_sphere sphere, t_point3 ray_origin, t_vec3 ray_direction) {
-    t_vec3 o_c = vec3_sub(sphere.origin, ray_origin);
+bool sphere_hit(t_sphere sphere, t_ray ray) {
+    t_vec3 o_c = vec3_sub(sphere.origin, ray.origin);
 
-    double a = vec3_dot(ray_direction, ray_direction);
-    double b = -2.0 * vec3_dot(ray_direction, o_c);
+    double a = vec3_dot(ray.direction, ray.direction);
+    double b = -2.0 * vec3_dot(ray.direction, o_c);
     double c = vec3_dot(o_c, o_c) - sphere.radius * sphere.radius;
 
     double delta = b * b - 4.0 * a * c;
