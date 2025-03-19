@@ -1,5 +1,7 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
+#include <render/t_renderer.h>
+
 #include "mlx.h"
 
 #include "parser/parse.h"
@@ -27,29 +29,6 @@ typedef struct {
 
 static Image image_new(Point2 sz, void* mlx);
 static void image_put_pixel(Image* img, Point2 position, int color);
-static unsigned int Color(int r, int g, int b) {
-    return (r << 16) | (g << 8) | b;
-}
-
-static unsigned int fColor(double r, double g, double b) {
-    int r_byte = r * 255.999;
-    int g_byte = g * 255.999;
-    int b_byte = b * 255.999;
-    return Color(r_byte, g_byte, b_byte);
-}
-
-static void draw_gradient(Image* image) {
-    for (int x = 0; x < image->sz.x; x++) {
-        for (int y = 0; y < image->sz.y; y++) {
-            double r = (double)x / (double)image->sz.x;
-            double g = 0.0;
-            double b = (double)y / (double)image->sz.y;
-
-            unsigned int color = fColor(r, g, b);
-            image_put_pixel(image, (Point2){.x = x, .y = y}, color);
-        }
-    }
-}
 
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
@@ -84,7 +63,11 @@ void render(
     }
 }
 
+#define WIDTH 700
+#define ASPECT_RATIO (16.0 / 9.0)
+
 int main(void) {
+    t_renderer renderer = renderer_init(WIDTH, ASPECT_RATIO);
     const Point2 sz = (Point2){.x = 600, .y = 400};
     void* mlx = mlx_init();
     void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
