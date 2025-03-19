@@ -2,8 +2,14 @@
 #include <X11/keysym.h>
 #include "mlx.h"
 
+#include "parser/parse.h"
 
-#include "math/t_vec3/t_vec3.h"
+#define BALLS \
+    "C  0,0,0       0,0,-1  90      \n" \
+    "A  0.50        255,255,255     \n" \
+    "L  5,4,0       0.42    255,255,255\n" \
+    "sp 0,0,-1      0.5       2,62,138\n"
+
 
 typedef struct {
     int x;
@@ -52,6 +58,10 @@ int main(void) {
     const Point2 sz = (Point2){.x = 600, .y = 400};
     void* mlx = mlx_init();
     void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
+
+    t_camera_specs specs;
+    t_scene scene;
+    parse(BALLS, &specs, &scene);
 
     Image screen = image_new(sz, mlx);
     draw_gradient(&screen);

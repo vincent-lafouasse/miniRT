@@ -26,4 +26,11 @@ t_hittable	hittable_sphere_new(t_sphere sphere);
 t_hittable	hittable_plane_new(t_plane plane);
 t_hittable	hittable_cylinder_new(t_cylinder cylinder);
 
+typedef struct s_hit_record t_hit_record;
+struct s_hit_record {
+	t_point3 point;
+	t_vec3 normal;
+	const t_hittable *object;
+};
+
 #endif // T_HITTABLE_H
