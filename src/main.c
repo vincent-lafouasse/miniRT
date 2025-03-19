@@ -19,17 +19,21 @@ typedef struct {
 
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
+
+t_rgb ray_color(t_ray r, const t_scene* scene) {
+    t_sphere sphere = scene->objects->data[0].sphere;
+    bool hit = sphere_hit(sphere, r);
+
+    return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
+}
+
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
         vec3_mul((double)px.y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
     t_ray ray = ray_new(pixel, ray_direction);
-
-    t_sphere sphere = scene->objects->data[0].sphere;
-    bool hit = sphere_hit(sphere, ray);
-
-    return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
+    return ray_color(ray, scene);
 }
 
 void render(const t_camera* camera,
