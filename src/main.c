@@ -5,12 +5,11 @@
 #include "parser/parse.h"
 #include "scene/objects/t_hittable.h"
 
-#define BALLS \
-    "C  0,0,0       0,0,-1  90      \n" \
-    "A  0.50        255,255,255     \n" \
+#define BALLS                              \
+    "C  0,0,0       0,0,-1  90      \n"    \
+    "A  0.50        255,255,255     \n"    \
     "L  5,4,0       0.42    255,255,255\n" \
     "sp 0,0,-1      0.5       2,62,138\n"
-
 
 typedef struct {
     int x;
@@ -55,11 +54,13 @@ static void draw_gradient(Image* image) {
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
-t_rgb pixel_color(Point2 px, Point2 sz, const t_camera* camera, const t_scene* scene) {
+t_rgb pixel_color(Point2 px,
+                  Point2 sz,
+                  const t_camera* camera,
+                  const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
-        vec3_mul((double)px.y, camera->delta_v)
-        );
+        vec3_mul((double)px.y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
 
     t_sphere sphere = scene->objects->data[0].sphere;
@@ -68,14 +69,17 @@ t_rgb pixel_color(Point2 px, Point2 sz, const t_camera* camera, const t_scene* s
     return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
 }
 
-void render(const t_camera* camera, const t_scene* scene, Image* screen,
-t_rgb (*coloring)(Point2, Point2, const t_camera*, const t_scene*)
-    ) {
+void render(
+    const t_camera* camera,
+    const t_scene* scene,
+    Image* screen,
+    t_rgb (*coloring)(Point2, Point2, const t_camera*, const t_scene*)) {
     for (int x = 0; x < screen->sz.x; x++) {
         for (int y = 0; y < screen->sz.y; y++) {
             Point2 pixel = (Point2){.x = x, .y = y};
             t_rgb color = (*coloring)(pixel, screen->sz, camera, scene);
-            image_put_pixel(screen, (Point2){.x = x, .y = y}, rgb_to_bytes(color));
+            image_put_pixel(screen, (Point2){.x = x, .y = y},
+                            rgb_to_bytes(color));
         }
     }
 }
