@@ -22,7 +22,10 @@ extern "C" {
     EXPECT_EQ(a.screen_width, b.screen_width); \
     EXPECT_EQ(a.screen_height, b.screen_height);
 
+[[maybe_unused]]
 static void log_camera(t_camera c, const char* name);
+[[maybe_unused]]
+static void log_vector(t_vec3 v, const char* name);
 
 TEST(Camera, AlongOz_OneByOne) {
     size_t h = 1;
@@ -62,17 +65,16 @@ TEST(Camera, AlongOz_OneByOne) {
     t_camera actual = camera_new(specs, w, h);
 
     EXPECT_CAM_EQ(expected, actual);
-
-    log_camera(actual, "Actual");
-    log_camera(expected, "Expected");
 }
 
+[[maybe_unused]]
 static void log_vector(t_vec3 v, const char* name) {
     std::cout << std::format("\t{}:\t", name);
     std::cout << std::format("{{ .x = {}, .y = {}, .z = {} }}", v.x, v.y, v.z);
     std::cout << std::endl;
 }
 
+[[maybe_unused]]
 static void log_camera(t_camera c, const char* name) {
     std::cout << "Camera " << name << " {\n";
 
