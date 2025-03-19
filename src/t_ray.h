@@ -9,5 +9,6 @@ typedef struct s_ray {
 } t_ray;
 
 t_ray ray_new(t_point3 origin, t_vec3 direction);
+t_point3 ray_at(t_ray ray, double t);
 
 #endif
