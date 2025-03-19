@@ -9,26 +9,18 @@ extern "C" {
 #include "math/t_vec3/t_vec3.h"
 };
 
-static void expect_camera_eq(t_camera expected, t_camera actual) {
-    EXPECT_DOUBLE_EQ(expected.position.x, actual.position.x);
-    EXPECT_DOUBLE_EQ(expected.position.y, actual.position.y);
-    EXPECT_DOUBLE_EQ(expected.position.z, actual.position.z);
+#define EXPECT_VEC3_EQ(a, b) \
+    EXPECT_DOUBLE_EQ(a.x, b.x); \
+    EXPECT_DOUBLE_EQ(a.y, b.y); \
+    EXPECT_DOUBLE_EQ(a.z, b.z);
 
-    EXPECT_DOUBLE_EQ(expected.pixel00.x, actual.pixel00.x);
-    EXPECT_DOUBLE_EQ(expected.pixel00.y, actual.pixel00.y);
-    EXPECT_DOUBLE_EQ(expected.pixel00.z, actual.pixel00.z);
-
-    EXPECT_DOUBLE_EQ(expected.delta_u.x, actual.delta_u.x);
-    EXPECT_DOUBLE_EQ(expected.delta_u.y, actual.delta_u.y);
-    EXPECT_DOUBLE_EQ(expected.delta_u.z, actual.delta_u.z);
-
-    EXPECT_DOUBLE_EQ(expected.delta_v.x, actual.delta_v.x);
-    EXPECT_DOUBLE_EQ(expected.delta_v.y, actual.delta_v.y);
-    EXPECT_DOUBLE_EQ(expected.delta_v.z, actual.delta_v.z);
-
-    EXPECT_EQ(expected.screen_height, actual.screen_height);
-    EXPECT_EQ(expected.screen_width, actual.screen_width);
-}
+#define EXPECT_CAM_EQ(a, b) \
+    EXPECT_VEC3_EQ(a.position, b.position); \
+    EXPECT_VEC3_EQ(a.pixel00, b.pixel00); \
+    EXPECT_VEC3_EQ(a.delta_u, b.delta_u); \
+    EXPECT_VEC3_EQ(a.delta_v, b.delta_v); \
+    EXPECT_EQ(a.screen_width, b.screen_width); \
+    EXPECT_EQ(a.screen_height, b.screen_height);
 
 static void log_camera(t_camera c, const char* name);
 
@@ -69,7 +61,7 @@ TEST(Camera, AlongOz_OneByOne) {
     };
     t_camera actual = camera_new(specs, w, h);
 
-    expect_camera_eq(expected, actual);
+    EXPECT_CAM_EQ(expected, actual);
 
     log_camera(actual, "Actual");
     log_camera(expected, "Expected");
