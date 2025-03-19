@@ -1,9 +1,7 @@
 #include <X11/X.h>
-#include <X11/keysym.h>
-#include <render/t_renderer.h>
 
-#include "mlx.h"
-
+#include "render/t_renderer.h"
+#include "render/hooks.h"
 #include "parser/parse.h"
 #include "scene/objects/t_hittable.h"
 
@@ -21,8 +19,6 @@ typedef struct {
 static void renderer_put_pixel(t_renderer* renderer,
                                Point2 position,
                                uint32_t color);
-static int key_hook(int keycode, void* mlx);
-static int exit_hook(void* mlx);
 
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
@@ -69,17 +65,6 @@ int main(void) {
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
-}
-
-static int key_hook(int keycode, void* mlx) {
-    if (keycode == XK_Escape)
-        mlx_loop_end(mlx);
-    return (0);
-}
-
-static int exit_hook(void* mlx) {
-    mlx_loop_end(mlx);
-    return (0);
 }
 
 static void renderer_put_pixel(t_renderer* renderer,
