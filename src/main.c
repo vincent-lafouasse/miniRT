@@ -3,6 +3,7 @@
 #include "mlx.h"
 
 #include "parser/parse.h"
+#include "scene/objects/t_hittable.h"
 
 #define BALLS \
     "C  0,0,0       0,0,-1  90      \n" \
@@ -59,14 +60,30 @@ int main(void) {
     void* mlx = mlx_init();
     void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
 
+    Image screen = image_new(sz, mlx);
+
     t_camera_specs specs;
     t_scene scene;
     parse(BALLS, &specs, &scene);
+    t_camera camera = camera_new(specs, sz.x, sz.y);
 
-    Image screen = image_new(sz, mlx);
-    draw_gradient(&screen);
+    for (int x = 0; x < screen.sz.x; x++) {
+        for (int y = 0; y < screen.sz.y; y++) {
+            t_point3 pixel = vec3_add(
+                vec3_add(camera.pixel00, vec3_mul((double)x, camera.delta_u)),
+                vec3_mul((double)y, camera.delta_v)
+                );
+            t_vec3 ray_direction = vec3_sub(pixel, camera.position);
+
+            t_sphere sphere = scene.objects->data[0].sphere;
+            bool hit = sphere_hit(sphere, camera.position, ray_direction);
+
+            t_rgb color = hit ? vec3_new(1,0,0) : vec3_new(0,0,0);
+            image_put_pixel(&screen, (Point2){.x = x, .y = y}, rgb_to_bytes(color));
+        }
+    }
+
     mlx_put_image_to_window(mlx, window, screen.img, 0, 0);
-
     mlx_hook(window, DestroyNotify, StructureNotifyMask, exit_hook, mlx);
     mlx_key_hook(window, &key_hook, mlx);
     mlx_loop(mlx);

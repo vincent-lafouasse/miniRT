@@ -33,4 +33,6 @@ struct s_hit_record {
 	const t_hittable *object;
 };
 
+bool sphere_hit(t_sphere sphere, t_point3 ray_origin, t_vec3 ray_direction);
+
 #endif // T_HITTABLE_H

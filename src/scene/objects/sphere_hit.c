@@ -12,6 +12,7 @@ bool sphere_hit(t_sphere sphere, t_point3 ray_origin, t_vec3 ray_direction) {
     double delta = b * b - 4.0 * a * c;
 
     return delta >= 0.0;
+}
 /*
     let o_c = self.origin - ray.origin;
 
@@ -43,4 +44,3 @@ bool sphere_hit(t_sphere sphere, t_point3 ray_origin, t_vec3 ray_direction) {
             HitRecord { t, normal, from_within, at: intersection }
     })
     */
-}
