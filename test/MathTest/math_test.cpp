@@ -3,6 +3,7 @@
 
 extern "C" {
 #include "math/t_vec3/t_vec3.h"
+#include "Vector.hpp"
 };
 
 #define EXPECT_VEC3_EQ(a, b) \
