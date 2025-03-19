@@ -55,6 +55,31 @@ static void draw_gradient(Image* image) {
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
+t_rgb pixel_color(Point2 px, Point2 sz, const t_camera* camera, const t_scene* scene) {
+    t_point3 pixel = vec3_add(
+        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
+        vec3_mul((double)px.y, camera->delta_v)
+        );
+    t_vec3 ray_direction = vec3_sub(pixel, camera->position);
+
+    t_sphere sphere = scene->objects->data[0].sphere;
+    bool hit = sphere_hit(sphere, camera->position, ray_direction);
+
+    return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
+}
+
+void render(const t_camera* camera, const t_scene* scene, Image* screen,
+t_rgb (*coloring)(Point2, Point2, const t_camera*, const t_scene*)
+    ) {
+    for (int x = 0; x < screen->sz.x; x++) {
+        for (int y = 0; y < screen->sz.y; y++) {
+            Point2 pixel = (Point2){.x = x, .y = y};
+            t_rgb color = (*coloring)(pixel, screen->sz, camera, scene);
+            image_put_pixel(screen, (Point2){.x = x, .y = y}, rgb_to_bytes(color));
+        }
+    }
+}
+
 int main(void) {
     const Point2 sz = (Point2){.x = 600, .y = 400};
     void* mlx = mlx_init();
@@ -67,21 +92,7 @@ int main(void) {
     parse(BALLS, &specs, &scene);
     t_camera camera = camera_new(specs, sz.x, sz.y);
 
-    for (int x = 0; x < screen.sz.x; x++) {
-        for (int y = 0; y < screen.sz.y; y++) {
-            t_point3 pixel = vec3_add(
-                vec3_add(camera.pixel00, vec3_mul((double)x, camera.delta_u)),
-                vec3_mul((double)y, camera.delta_v)
-                );
-            t_vec3 ray_direction = vec3_sub(pixel, camera.position);
-
-            t_sphere sphere = scene.objects->data[0].sphere;
-            bool hit = sphere_hit(sphere, camera.position, ray_direction);
-
-            t_rgb color = hit ? vec3_new(1,0,0) : vec3_new(0,0,0);
-            image_put_pixel(&screen, (Point2){.x = x, .y = y}, rgb_to_bytes(color));
-        }
-    }
+    render(&camera, &scene, &screen, pixel_color);
 
     mlx_put_image_to_window(mlx, window, screen.img, 0, 0);
     mlx_hook(window, DestroyNotify, StructureNotifyMask, exit_hook, mlx);
