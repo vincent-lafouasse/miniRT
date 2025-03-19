@@ -18,23 +18,11 @@ typedef struct {
     int y;
 } Point2;
 
-typedef struct {
-    void* img;
-    char* addr;
-    Point2 sz;
-    int bits_per_pixel;
-    int line_length;
-    int endian;
-} Image;
-
-static Image image_new(Point2 sz, void* mlx);
-static void image_put_pixel(Image* img, Point2 position, int color);
-
+static void renderer_put_pixel(t_renderer* renderer, Point2 position, int color);
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
 t_rgb pixel_color(Point2 px,
-                  Point2 sz,
                   const t_camera* camera,
                   const t_scene* scene) {
     t_point3 pixel = vec3_add(
@@ -51,16 +39,21 @@ t_rgb pixel_color(Point2 px,
 void render(
     const t_camera* camera,
     const t_scene* scene,
-    Image* screen,
-    t_rgb (*coloring)(Point2, Point2, const t_camera*, const t_scene*)) {
-    for (int x = 0; x < screen->sz.x; x++) {
-        for (int y = 0; y < screen->sz.y; y++) {
+    t_renderer* renderer,
+    t_rgb (*coloring)(Point2, const t_camera*, const t_scene*)) {
+    for (size_t x = 0; x < renderer->width; x++) {
+        for (size_t y = 0; y < renderer->height; y++) {
             Point2 pixel = (Point2){.x = x, .y = y};
-            t_rgb color = (*coloring)(pixel, screen->sz, camera, scene);
-            image_put_pixel(screen, (Point2){.x = x, .y = y},
+            t_rgb color = (*coloring)(pixel, camera, scene);
+            renderer_put_pixel(renderer, (Point2){.x = x, .y = y},
                             rgb_to_bytes(color));
         }
     }
+    mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0, 0);
+
+    mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook, renderer->mlx);
+    mlx_key_hook(renderer->window, &key_hook, renderer->mlx);
+    mlx_loop(renderer->mlx);
 }
 
 #define WIDTH 700
@@ -68,23 +61,13 @@ void render(
 
 int main(void) {
     t_renderer renderer = renderer_init(WIDTH, ASPECT_RATIO);
-    const Point2 sz = (Point2){.x = 600, .y = 400};
-    void* mlx = mlx_init();
-    void* window = mlx_new_window(mlx, sz.x, sz.y, "miniRT");
-
-    Image screen = image_new(sz, mlx);
 
     t_camera_specs specs;
     t_scene scene;
     parse(BALLS, &specs, &scene);
-    t_camera camera = camera_new(specs, sz.x, sz.y);
+    t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
-    render(&camera, &scene, &screen, pixel_color);
-
-    mlx_put_image_to_window(mlx, window, screen.img, 0, 0);
-    mlx_hook(window, DestroyNotify, StructureNotifyMask, exit_hook, mlx);
-    mlx_key_hook(window, &key_hook, mlx);
-    mlx_loop(mlx);
+    render(&camera, &scene, &renderer, pixel_color);
 }
 
 static int key_hook(int keycode, void* mlx) {
@@ -98,18 +81,8 @@ static int exit_hook(void* mlx) {
     return (0);
 }
 
-static Image image_new(Point2 sz, void* mlx) {
-    Image image;
-
-    image.img = mlx_new_image(mlx, sz.x, sz.y);
-    image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel,
-                                   &image.line_length, &image.endian);
-    image.sz = sz;
-    return image;
-}
-
-static void image_put_pixel(Image* img, Point2 position, int color) {
-    char* dst = img->addr + (position.y * img->line_length +
-                             position.x * (img->bits_per_pixel / 8));
+static void renderer_put_pixel(t_renderer* renderer, Point2 position, int color) {
+    char* dst = renderer->addr + (position.y * renderer->line_length +
+                             position.x * (renderer->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
