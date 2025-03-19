@@ -16,6 +16,7 @@ bool sphere_hit(t_sphere sphere, t_ray ray, t_hit_record *rec) {
     if (delta < 0.0) {
         return false;
     }
+    return true;
 
     double x0 = (-b - sqrt(delta)) / (2.0 * a);
     double x1 = (-b + sqrt(delta)) / (2.0 * a);
