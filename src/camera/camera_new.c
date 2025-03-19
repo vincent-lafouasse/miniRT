@@ -60,13 +60,13 @@ static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 	// this yields an orthonormal base
 	viewport_right = vec3_cross(direction, viewport_up);
 	viewport_down = vec3_cross(direction, viewport_right);
-	u = vec3_mul(2.0 * screen.w / screen.w, viewport_right);
+	u = vec3_mul(2.0 * screen.w / screen.h, viewport_right);
 	v = vec3_mul(2.0, viewport_down);
 	return (t_viewport){
 		.u = u,
 		.v = v,
-		.delta_u = vec3_mul(2.0 * screen.w / screen.h, viewport_right),
-		.delta_v = vec3_mul(2.0, viewport_down),
+		.delta_u = vec3_div(u, screen.w),
+		.delta_v = vec3_div(v, screen.h),
 	};
 }
 
