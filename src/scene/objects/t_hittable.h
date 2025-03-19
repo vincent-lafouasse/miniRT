@@ -5,7 +5,7 @@
 #include "./t_plane.h"
 #include "./t_cylinder.h"
 
-#include "t_ray.h"
+#include "ray/t_ray.h"
 
 enum e_hittable_type {
 	HITTABLE_SPHERE,

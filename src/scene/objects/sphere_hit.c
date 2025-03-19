@@ -1,6 +1,5 @@
 #include "t_sphere.h"
 #include "t_hittable.h"
-#include "t_ray.h"
 #include "math/t_interval/t_interval.h"
 
 #include <stddef.h>
@@ -41,7 +40,6 @@ bool sphere_hit(t_sphere sphere, t_ray ray, t_hit_record *rec) {
         return true;
     }
 
-    // unreachable
     return false;
 }
 /*

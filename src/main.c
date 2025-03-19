@@ -1,6 +1,6 @@
 #include <X11/X.h>
 
-#include "t_ray.h"
+#include "ray/t_ray.h"
 #include "parser/parse.h"
 #include "render/hooks.h"
 #include "render/t_renderer.h"
@@ -22,9 +22,14 @@ typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_sphere sphere = scene->objects->data[0].sphere;
-    bool hit = sphere_hit(sphere, r);
+    t_hit_record rec;
+    bool hit = sphere_hit(sphere, r, &rec);
 
-    return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
+    if (!hit) {
+        return vec3_new(0,0,0);
+    }
+
+    return vec3_new(1,0,0);
 }
 
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
