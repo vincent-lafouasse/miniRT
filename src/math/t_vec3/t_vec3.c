@@ -38,7 +38,7 @@ double	vec3_dot(t_vec3 self, t_vec3 other)
 t_vec3	vec3_cross(t_vec3 self, t_vec3 other)
 {
 	return (vec3_new(self.y * other.z - self.z * other.y, self.z * other.x
-			- self.x * other.z, self.x * other.y - self.x * other.y));
+			- self.x * other.z, self.x * other.y - self.y * other.x));
 }
 
 double	vec3_length(t_vec3 self)
