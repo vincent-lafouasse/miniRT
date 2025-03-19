@@ -6,6 +6,10 @@ extern "C" {
 #include "Vector.hpp"
 };
 
+const t_vec3 e_x = Vector::E_X().get();
+const t_vec3 e_y = Vector::E_Y().get();
+const t_vec3 e_z = Vector::E_Z().get();
+
 #define EXPECT_VEC3_EQ(a, b) \
     EXPECT_DOUBLE_EQ(a.x, b.x); \
     EXPECT_DOUBLE_EQ(a.y, b.y); \
@@ -71,4 +75,16 @@ TEST(Vec, VecSubtractHuge) {
     ASSERT_FALSE(vec3_is_bogus(a));
     ASSERT_FALSE(vec3_is_bogus(b));
     ASSERT_TRUE(vec3_is_bogus(v));
+}
+
+TEST(CrossProduct, BasisVectors) {
+    EXPECT_VEC3_EQ(vec3_cross(e_x, e_y), e_z);
+    EXPECT_VEC3_EQ(vec3_cross(e_y, e_z), e_x);
+    EXPECT_VEC3_EQ(vec3_cross(e_z, e_x), e_y);
+}
+
+TEST(CrossProduct, IsAntiCommutative) {
+    EXPECT_VEC3_EQ(vec3_cross(e_x, e_z), -e_y);
+    EXPECT_VEC3_EQ(vec3_cross(e_y, e_x), -e_z);
+    EXPECT_VEC3_EQ(vec3_cross(e_z, e_y), -e_x);
 }
