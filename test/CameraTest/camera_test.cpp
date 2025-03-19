@@ -113,8 +113,6 @@ TEST(Camera, AlongOz_TwoByTwo) {
     t_camera actual = camera_new(specs, w, h);
 
     EXPECT_CAM_EQ(expected, actual);
-    log_camera(expected, "expected");
-    log_camera(actual, "actual");
 }
 
 [[maybe_unused]]
