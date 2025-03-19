@@ -18,13 +18,13 @@ typedef struct {
     int y;
 } Point2;
 
-static void renderer_put_pixel(t_renderer* renderer, Point2 position, int color);
+static void renderer_put_pixel(t_renderer* renderer,
+                               Point2 position,
+                               int color);
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
-t_rgb pixel_color(Point2 px,
-                  const t_camera* camera,
-                  const t_scene* scene) {
+t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
         vec3_mul((double)px.y, camera->delta_v));
@@ -36,22 +36,23 @@ t_rgb pixel_color(Point2 px,
     return hit ? vec3_new(1, 0, 0) : vec3_new(0, 0, 0);
 }
 
-void render(
-    const t_camera* camera,
-    const t_scene* scene,
-    t_renderer* renderer,
-    t_rgb (*coloring)(Point2, const t_camera*, const t_scene*)) {
+void render(const t_camera* camera,
+            const t_scene* scene,
+            t_renderer* renderer,
+            t_rgb (*coloring)(Point2, const t_camera*, const t_scene*)) {
     for (size_t x = 0; x < renderer->width; x++) {
         for (size_t y = 0; y < renderer->height; y++) {
             Point2 pixel = (Point2){.x = x, .y = y};
             t_rgb color = (*coloring)(pixel, camera, scene);
             renderer_put_pixel(renderer, (Point2){.x = x, .y = y},
-                            rgb_to_bytes(color));
+                               rgb_to_bytes(color));
         }
     }
-    mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0, 0);
+    mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0,
+                            0);
 
-    mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook, renderer->mlx);
+    mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook,
+             renderer->mlx);
     mlx_key_hook(renderer->window, &key_hook, renderer->mlx);
     mlx_loop(renderer->mlx);
 }
@@ -81,8 +82,10 @@ static int exit_hook(void* mlx) {
     return (0);
 }
 
-static void renderer_put_pixel(t_renderer* renderer, Point2 position, int color) {
+static void renderer_put_pixel(t_renderer* renderer,
+                               Point2 position,
+                               int color) {
     char* dst = renderer->addr + (position.y * renderer->line_length +
-                             position.x * (renderer->bits_per_pixel / 8));
+                                  position.x * (renderer->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
