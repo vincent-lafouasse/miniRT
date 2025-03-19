@@ -44,7 +44,7 @@ struct Vector {
 	}
 
 	static Vector E_Y(void) {
-		return vec3_new(0.0, 0.0, 1.0);
+		return vec3_new(0.0, 1.0, 0.0);
 	}
 
 	static Vector E_Z(void) {
