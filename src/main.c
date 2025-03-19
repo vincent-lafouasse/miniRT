@@ -16,6 +16,8 @@ typedef struct {
     int y;
 } Point2;
 
+typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
+
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
@@ -31,12 +33,12 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
 void render(const t_camera* camera,
             const t_scene* scene,
             t_renderer* renderer,
-            t_rgb (*coloring)(Point2, const t_camera*, const t_scene*)) {
+            t_coloring_ft coloring_ft) {
     for (size_t x = 0; x < renderer->width; x++) {
         for (size_t y = 0; y < renderer->height; y++) {
             Point2 pixel = (Point2){.x = (int)x, .y = (int)y};
-            t_rgb color = (*coloring)(pixel, camera, scene);
-            renderer_put_pixel(renderer, x, y,rgb_to_bytes(color));
+            t_rgb color = (*coloring_ft)(pixel, camera, scene);
+            renderer_put_pixel(renderer, x, y, rgb_to_bytes(color));
         }
     }
     mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0,
