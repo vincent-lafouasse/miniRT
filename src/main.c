@@ -32,6 +32,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     return vec3_new(1,0,0);
 }
 
+// main entry point
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
@@ -41,6 +42,7 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     return ray_color(ray, scene);
 }
 
+// will be hidden
 void render(const t_camera* camera,
             const t_scene* scene,
             t_renderer* renderer,
