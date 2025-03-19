@@ -1,10 +1,10 @@
 #include "./t_element.h"
+#include "./t_element_list/t_element_list.h"
 
 #include "error/t_error.h"
 
 #include "math/t_rgb/t_rgb.h"
 #include "math/t_vec3/t_vec3.h"
-#include "parser/t_element_list.h"
 #include "camera/t_camera.h"
 
 #include "scene/lights/t_ambient_light.h"
@@ -136,7 +136,7 @@ static t_hittable_array *gather_objects(t_partitioned_elements *p) {
 		current = el_pop_front_link(&p->primitives);
 		hittable = hittable_from_primitive(current->element);
 		hittable_array_push(objects, hittable);
-		free(current);
+		el_delone(&current);
 	}
 	return (objects);
 }

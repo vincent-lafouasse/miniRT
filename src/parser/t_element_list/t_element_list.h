@@ -5,84 +5,23 @@
 
 #include "error/t_error.h"
 
+#include <stddef.h>
+
 typedef struct s_element_list	t_element_list;
 struct s_element_list {
 	t_element		element;
 	t_element_list	*next;
 };
 
-#include <stdlib.h>
-static inline t_element_list *el_new(t_element element) {
-	t_element_list *alloc;
+t_element_list *el_new(t_element element);
 
-	alloc = malloc(sizeof(*alloc));
-	if (!alloc)
-		return (NULL);
-	*alloc = (t_element_list){.element = element, .next = NULL};
-	return (alloc);
-}
+void	el_push_front_link(t_element_list **self, t_element_list *link);
+t_error el_push_front(t_element_list **self, t_element element);
+t_element_list *el_pop_front_link(t_element_list **self);
 
-static inline void	el_push_front_link(t_element_list **self, t_element_list *link) {
-	t_element_list *buffer;
+size_t el_len(const t_element_list *self);
 
-	if (!link)
-		return ;
-	buffer = *self;
-	link->next = buffer;
-	*self = link;
-}
-
-static inline t_error el_push_front(t_element_list **self, t_element element) {
-	t_element_list *link;
-
-	link = el_new(element);
-	if (!link)
-		return (E_OOM);
-	el_push_front_link(self, link);
-	return (NO_ERROR);
-}
-
-static inline t_element_list *el_pop_front_link(t_element_list **self) {
-	t_element_list *new_head;
-	t_element_list *link;
-
-	if (!*self)
-		return (NULL);
-	new_head = (*self)->next;
-	link = *self;
-	link->next = NULL;
-	*self = new_head;
-	return (link);
-}
-
-size_t el_len(const t_element_list *self) {
-	size_t i;
-
-	i = 0;
-	while (self)
-	{
-		self = self->next;
-		i++;
-	}
-	return (i);
-}
-
-void	el_delone(t_element_list **self)
-{
-	t_element_list	*buffer;
-
-	if (!*self)
-		return ;
-	buffer = (*self)->next;
-	free(*self);
-	*self = buffer;
-	return ;
-}
-
-void	el_clear(t_element_list **self)
-{
-	while (*self)
-		el_delone(self);
-}
+void	el_delone(t_element_list **self);
+void	el_clear(t_element_list **self);
 
 #endif // T_ELEMENT_LIST_H
