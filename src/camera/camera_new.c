@@ -1,5 +1,4 @@
 #include "t_camera.h"
-#include <float.h>
 #include <math.h>
 
 typedef struct s_dimension
@@ -49,8 +48,7 @@ static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 
 	// set "up" vaguely towards positive y
 	// if colinear to e_y, set to e_x
-	// direction really should be normalized for the colinearity check to work
-	if (fabs(vec3_dot(direction, vec3_new(0.0, 1.0, 0.0))) - 1.0 < DBL_EPSILON)
+	if (vec3_eq(vec3_new(0,0,0), vec3_cross(direction, vec3_new(0,1,0))))
 	{
 		viewport_up = vec3_new(1.0, 0.0, 0.0);
 	}
