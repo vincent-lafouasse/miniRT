@@ -20,7 +20,7 @@ typedef struct {
 
 static void renderer_put_pixel(t_renderer* renderer,
                                Point2 position,
-                               int color);
+                               uint32_t color);
 static int key_hook(int keycode, void* mlx);
 static int exit_hook(void* mlx);
 
@@ -42,9 +42,9 @@ void render(const t_camera* camera,
             t_rgb (*coloring)(Point2, const t_camera*, const t_scene*)) {
     for (size_t x = 0; x < renderer->width; x++) {
         for (size_t y = 0; y < renderer->height; y++) {
-            Point2 pixel = (Point2){.x = x, .y = y};
+            Point2 pixel = (Point2){.x = (int)x, .y = (int)y};
             t_rgb color = (*coloring)(pixel, camera, scene);
-            renderer_put_pixel(renderer, (Point2){.x = x, .y = y},
+            renderer_put_pixel(renderer, (Point2){.x = (int)x, .y = (int)y},
                                rgb_to_bytes(color));
         }
     }
@@ -53,7 +53,7 @@ void render(const t_camera* camera,
 
     mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook,
              renderer->mlx);
-    mlx_key_hook(renderer->window, &key_hook, renderer->mlx);
+    mlx_key_hook(renderer->window, key_hook, renderer->mlx);
     mlx_loop(renderer->mlx);
 }
 
@@ -84,7 +84,7 @@ static int exit_hook(void* mlx) {
 
 static void renderer_put_pixel(t_renderer* renderer,
                                Point2 position,
-                               int color) {
+                               uint32_t color) {
     char* dst = renderer->addr + (position.y * renderer->line_length +
                                   position.x * (renderer->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
