@@ -1,7 +1,7 @@
 #ifndef T_ELEMENT_LIST_H
 # define T_ELEMENT_LIST_H
 
-#include "./t_element.h"
+#include "../t_element.h"
 
 #include "error/t_error.h"
 
