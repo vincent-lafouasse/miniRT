@@ -89,6 +89,10 @@ update: clean
 	jq -s add build/compile_commands.json build/test/compile_commands.json >build/tmp
 	mv build/tmp build/compile_commands.json
 
+.PHONY: run
+run: build
+	exec ./$(NAME)
+
 # aliases
 .PHONY: b c u r t vt
 b: build
