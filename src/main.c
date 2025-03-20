@@ -6,6 +6,7 @@
 #include "render/t_renderer.h"
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
+#include "scene/objects/t_hittable_array.h"
 
 #define BALLS                              \
     "C  0,0,0       0,0,-1  90      \n"    \
@@ -23,7 +24,7 @@ typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
-    bool hit = object_hit(&scene->objects->data[0], interval_R_plus(), r, &rec);
+    bool hit = hittable_array_hit(scene->objects, interval_R_plus(), r, &rec);
 
     if (!hit) {
         return vec3_new(0,0,0);
