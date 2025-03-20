@@ -26,4 +26,4 @@ void renderer_put_pixel(t_renderer* renderer,
                                size_t y,
                                uint32_t color);
 
-static inline void renderer_destroy(t_renderer *self) { (void)self; }
+void renderer_destroy(t_renderer *self);
