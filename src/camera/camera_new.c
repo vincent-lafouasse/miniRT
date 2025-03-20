@@ -60,7 +60,7 @@ static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)
 	// this yields an orthonormal base
 	viewport_right = vec3_cross(direction, viewport_up);
 	viewport_down = vec3_cross(direction, viewport_right);
-	u = vec3_mul(2.0 * screen.w / screen.h, viewport_right);
+	u = vec3_mul(2.0 * (screen.w / screen.h), viewport_right);
 	v = vec3_mul(2.0, viewport_down);
 	return (t_viewport){
 		.u = u,
@@ -78,7 +78,7 @@ static t_vec3	compute_pixel00(t_point3 camera_position, t_vec3 direction,
 	t_point3	viewport_center;
 	t_point3	viewport_top_left;
 
-	fov_radians = M_PI * fov_deg / 180.0;
+	fov_radians = fov_deg * M_PI / 180.0;
 	focal_length = 0.5 * vec3_length(vp.u) / tan(fov_radians / 2.0);
 	viewport_center = vec3_add(camera_position, vec3_mul(focal_length,
 				direction));
