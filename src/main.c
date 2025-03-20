@@ -38,7 +38,7 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
         vec3_mul((double)px.y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
-    t_ray ray = ray_new(pixel, ray_direction);
+    t_ray ray = ray_new(camera->position, ray_direction);
     return ray_color(ray, scene);
 }
 
