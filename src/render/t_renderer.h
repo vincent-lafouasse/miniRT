@@ -1,5 +1,7 @@
 #pragma once
 
+#include "error/t_error.h"
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,9 +18,12 @@ struct s_renderer {
     int endian;
 };
 
-t_renderer renderer_init(size_t width, double aspect_ratio);
-t_renderer renderer_from_dimensions(size_t width, size_t height);
+t_error renderer_init(size_t width, double aspect_ratio, t_renderer *out);
+t_error renderer_from_dimensions(size_t width, size_t height, t_renderer *out);
+
 void renderer_put_pixel(t_renderer* renderer,
                                size_t x,
                                size_t y,
                                uint32_t color);
+
+static inline void renderer_destroy(t_renderer *self) { (void)self; }

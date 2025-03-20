@@ -71,8 +71,13 @@ void render(const t_camera* camera,
 #define WIDTH 700
 #define ASPECT_RATIO (16.0 / 9.0)
 
+#include <stdlib.h>
+
 int main(void) {
-    t_renderer renderer = renderer_init(WIDTH, ASPECT_RATIO);
+    t_renderer renderer;
+    t_error err = renderer_init(WIDTH, ASPECT_RATIO, &renderer);
+    if (err != NO_ERROR)
+        return (EXIT_FAILURE);
 
     t_camera_specs specs;
     t_scene scene;
