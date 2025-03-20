@@ -6,6 +6,7 @@
 #include "./t_cylinder.h"
 
 #include "ray/t_ray.h"
+#include "math/t_interval/t_interval.h"
 
 enum e_hittable_type {
 	HITTABLE_SPHERE,
@@ -35,6 +36,6 @@ struct s_hit_record {
 	const t_hittable *object;
 };
 
-bool object_hit(const t_hittable *object, t_ray ray, t_hit_record *rec_out);
+bool object_hit(const t_hittable *object, t_interval range, t_ray ray, t_hit_record *rec_out);
 
 #endif // T_HITTABLE_H

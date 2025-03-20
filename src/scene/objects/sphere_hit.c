@@ -4,7 +4,7 @@
 
 #include <stddef.h>
 
-bool sphere_hit(t_sphere sphere, t_ray ray, t_hit_record *rec) {
+bool sphere_hit(t_sphere sphere, t_interval range, t_ray ray, t_hit_record *rec) {
     t_vec3 o_c = vec3_sub(sphere.origin, ray.origin);
 
     double a = vec3_dot(ray.direction, ray.direction);
@@ -21,22 +21,20 @@ bool sphere_hit(t_sphere sphere, t_ray ray, t_hit_record *rec) {
     double x0 = (-b - sqrt(delta)) / (2.0 * a);
     double x1 = (-b + sqrt(delta)) / (2.0 * a);
 
-    if (x0 > 0.0) {
+    if (interval_contains(range, x0)) {
         t_point3 hit = ray_at(ray, x0);
         *rec = (t_hit_record) {
             .point = hit,
             .normal = vec3_normalize(vec3_sub(hit, sphere.origin)),
-            .object = NULL,
         };
         return true;
     }
 
-    if (x1 > 0.0) {
+    if (interval_contains(range, x1)) {
         t_point3 hit = ray_at(ray, x1);
         *rec = (t_hit_record) {
             .point = hit,
             .normal = vec3_normalize(vec3_sub(hit, sphere.origin)),
-            .object = NULL,
         };
         return true;
     }
