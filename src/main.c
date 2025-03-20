@@ -21,9 +21,8 @@ typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
-    t_sphere sphere = scene->objects->data[0].sphere;
     t_hit_record rec;
-    bool hit = sphere_hit(sphere, r, &rec);
+    bool hit = object_hit(&scene->objects->data[0], r, &rec);
 
     if (!hit) {
         return vec3_new(0,0,0);
