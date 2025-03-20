@@ -31,7 +31,9 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
         return vec3_new(0,0,0);
     }
 
-    return vec3_new(1,0,0);
+    t_rgb color = vec3_div(vec3_add(rec.normal, vec3_new(1, 1, 1)), 2);
+
+    return color;
 }
 
 // main entry point
