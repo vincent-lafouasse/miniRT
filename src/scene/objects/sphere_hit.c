@@ -25,6 +25,7 @@ bool sphere_hit(t_sphere sphere, t_interval range, t_ray ray, t_hit_record *rec)
         t_point3 hit = ray_at(ray, x0);
         *rec = (t_hit_record) {
             .point = hit,
+            .t = x0,
             .normal = vec3_normalize(vec3_sub(hit, sphere.origin)),
         };
         return true;
@@ -34,6 +35,7 @@ bool sphere_hit(t_sphere sphere, t_interval range, t_ray ray, t_hit_record *rec)
         t_point3 hit = ray_at(ray, x1);
         *rec = (t_hit_record) {
             .point = hit,
+            .t = x1,
             .normal = vec3_normalize(vec3_sub(hit, sphere.origin)),
         };
         return true;
