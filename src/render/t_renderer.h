@@ -1,6 +1,5 @@
 #pragma once
 
-#include "mlx.h"
 #include <stddef.h>
 #include <stdint.h>
 

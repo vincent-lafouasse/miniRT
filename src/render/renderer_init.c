@@ -1,5 +1,7 @@
 #include "t_renderer.h"
 
+#include "mlx.h"
+
 t_renderer renderer_init(size_t width, double aspect_ratio) {
     const size_t height = (double)width / aspect_ratio;
 

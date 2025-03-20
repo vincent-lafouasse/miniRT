@@ -1,5 +1,3 @@
-#include <X11/X.h>
-
 #include "ray/t_ray.h"
 #include "parser/parse.h"
 #include "render/hooks.h"
@@ -45,6 +43,9 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_ray ray = ray_new(camera->position, ray_direction);
     return ray_color(ray, scene);
 }
+
+#include "mlx.h"
+#include <X11/X.h>
 
 // will be hidden
 void render(const t_camera* camera,
