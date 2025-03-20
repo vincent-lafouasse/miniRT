@@ -1,9 +1,15 @@
 #include "t_renderer.h"
 
 t_renderer renderer_init(size_t width, double aspect_ratio) {
+    const size_t height = (double)width / aspect_ratio;
+
+    return renderer_from_dimensions(width, height);
+}
+
+t_renderer renderer_from_dimensions(size_t width, size_t height) {
     t_renderer out;
 
-    out.height = (double)width / aspect_ratio;
+    out.height = height;
     out.width = width;
     out.mlx = mlx_init();
     out.window = mlx_new_window(out.mlx, width, out.height, "miniRT");
