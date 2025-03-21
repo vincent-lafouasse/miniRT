@@ -27,6 +27,23 @@ double double_max(double a, double b) {
         return b;
 }
 
+struct s_material {
+    double ambient;
+    double diffuse;
+    double specular;
+    double alpha;
+};
+typedef struct s_material t_material;
+
+t_material material_default(void) {
+    return (t_material){
+        .ambient = 0.2,
+        .diffuse = 1.0,
+        .specular = 1.0,
+        .alpha = 10,
+    };
+}
+
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
     bool hit = hittable_array_hit(scene->objects, interval_R_plus(), r, &rec);
@@ -36,6 +53,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     }
 
     t_rgb object_color = rec.object->sphere.color;
+    t_material material = material_default();
 
     t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
     [[maybe_unused]] double distance_to_light = vec3_length(hit_to_light);
@@ -47,17 +65,14 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     diffuse_weight = double_max(0.0, diffuse_weight);
     t_rgb diffuse = vec3_mul(diffuse_weight, object_color); // should mix color with point_light color
 
-    
-    double ambient_material_coeff = 0.2;
-    double diffuse_material_coeff = 1.0;
 
     t_rgb out = vec3_new(0, 0, 0);
     out = vec3_add(
         out,
-        vec3_mul(ambient_material_coeff, ambient));
+        vec3_mul(material.ambient, ambient));
     out = vec3_add(
         out,
-        vec3_mul(diffuse_material_coeff, diffuse));
+        vec3_mul(material.diffuse, diffuse));
 
     return out;
 }
