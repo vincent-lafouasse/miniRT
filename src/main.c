@@ -61,7 +61,7 @@ void render(const t_camera* camera,
 
     renderer_set_exit_loop_on_esc(renderer);
     renderer_set_exit_loop_on_cross(renderer);
-    mlx_loop(renderer->mlx);
+    renderer_enter_loop(renderer);
 }
 
 #define WIDTH 700

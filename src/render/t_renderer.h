@@ -30,4 +30,6 @@ void renderer_flush_pixels(t_renderer* self);
 void renderer_set_exit_loop_on_esc(t_renderer* self);
 void renderer_set_exit_loop_on_cross(t_renderer* self);
 
+void renderer_enter_loop(t_renderer *self);
+
 void renderer_destroy(t_renderer *self);
