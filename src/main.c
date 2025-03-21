@@ -59,8 +59,6 @@ void render(const t_camera* camera,
     }
     renderer_flush_pixels(renderer);
 
-    renderer_set_exit_loop_on_esc(renderer);
-    renderer_set_exit_loop_on_cross(renderer);
     renderer_enter_loop(renderer);
 }
 
@@ -69,9 +67,11 @@ void render(const t_camera* camera,
 
 #include <stdlib.h>
 
+static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out);
+
 int main(void) {
     t_renderer renderer;
-    t_error err = renderer_init(WIDTH, ASPECT_RATIO, &renderer);
+    t_error err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
         return (EXIT_FAILURE);
 
@@ -81,4 +81,15 @@ int main(void) {
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
+}
+
+static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out)
+{
+    t_error err = renderer_init(width, aspect_ratio, out);
+    if (err == NO_ERROR) {
+        renderer_set_exit_loop_on_esc(out);
+        renderer_set_exit_loop_on_cross(out);
+    }
+
+    return (err);
 }
