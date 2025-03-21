@@ -9,13 +9,6 @@
 
 #include <assert.h>
 
-#define BALLS                              \
-    "C  0,0,0       0,0,-1  120      \n"    \
-    "A  0.15        255,255,255     \n"    \
-    "L  5,4,0       0.42    255,255,255\n" \
-    "sp 0,0,-1      1.0       2,62,138\n"  \
-    "sp 0,-100.5,-1      200       20,200,100\n"
-
 typedef struct {
     int x;
     int y;
@@ -39,6 +32,9 @@ t_material material_default(void) {
 }
 
 #define DBL_EPSILON 0.0000001
+
+static const char* atom(void);
+static const char* balls(void);
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
@@ -139,7 +135,7 @@ int main(void) {
 
     t_camera_specs specs;
     t_scene scene;
-    parse(BALLS, &specs, &scene);
+    parse(balls(), &specs, &scene);
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
@@ -156,4 +152,70 @@ static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, 
     }
 
     return (err);
+}
+
+
+static const char* balls(void) {
+    return \
+    "C  0,0,0       0,0,-1  120      \n"    \
+    "A  0.15        255,255,255     \n"    \
+    "L  5,4,0       0.42    255,255,255\n" \
+    "sp 0,0,-1      1.0       2,62,138\n"  \
+    "sp 0,-100.5,-1      200       20,200,100\n";
+}
+
+
+static const char* atom(void) {
+     return \
+        "A	0.3				255,120,255\n" \
+        "C	50,50,0		    0,0,1		    40\n" \
+        "L	65,70,20		0.7				255,255,255\n" \
+        "\n" \
+        "pl	0,0,0			0,1,0			64,64,64\n" \
+        "pl	0,100,0			0,1,0			64,64,64\n" \
+        "pl	0,0,150			0,0,1			96,96,96\n" \
+        "pl	0,0,0			0,0,1			96,96,96\n" \
+        "pl	110,0,0			-1,0,0			96,96,96\n" \
+        "pl	-10,0,0			-1,0,0			96,96,96\n" \
+        "\n" \
+        "sp	40,60,60		2				255,255,0\n" \
+        "sp  60,40,160       2               255,255,0\n" \
+        "sp	40,60,150		2				255,255,0\n" \
+        "sp  60,40,50        2               255,255,0\n" \
+        "sp	42,42,30		2				255,255,0\n" \
+        "sp  62,62,130       2               255,255,0\n" \
+        "sp	42,42,140		2				255,255,0\n" \
+        "sp  62,62,40        2               255,255,0\n" \
+        "\n" \
+        "sp	42,50,100		6				0,127,255\n" \
+        "\n" \
+        "sp	45,45,100		6				255,0,127\n" \
+        "sp	45,55,100		6				255,0,127\n" \
+        "\n" \
+        "sp	50,42,100		6				0,127,255\n" \
+        "sp	50,58,100		6				0,127,255\n" \
+        "\n" \
+        "sp	50,48,100		6				0,127,255\n" \
+        "sp	50,52,100		6				0,127,255\n" \
+        "sp	48,50,100		6				0,127,255\n" \
+        "sp	52,50,100		6				0,127,255\n" \
+        "\n" \
+        "sp	55,55,100		6				255,0,127\n" \
+        "sp	55,45,100		6				255,0,127\n" \
+        "\n" \
+        "sp	58,50,100		6				0,127,255\n" \
+        "\n" \
+        "sp	47,53,95		6				255,0,127\n" \
+        "sp	47,47,95		6				255,0,127\n" \
+        "sp	53,53,95		6				255,0,127\n" \
+        "sp	53,47,95		6				255,0,127\n" \
+        "\n" \
+        "sp	50,50,92		6				0,127,255\n" \
+        "\n" \
+        "sp	47,53,105		6				255,0,127\n" \
+        "sp	47,47,105		6				255,0,127\n" \
+        "sp	53,53,105		6				255,0,127\n" \
+        "sp	53,47,105		6				255,0,127\n" \
+        "\n" \
+        "sp	50,50,108		6				0,127,255\n";
 }
