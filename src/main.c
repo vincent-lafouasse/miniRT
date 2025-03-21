@@ -38,7 +38,7 @@ static const char* balls(void);
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
-    bool hit = hittable_array_hit(scene->objects, interval_R_plus(), r, &rec);
+    bool hit = hittable_array_hit(scene->objects, interval_new(0.0001, INFINITY), r, &rec);
 
     if (!hit) {
         return vec3_new(0,0,0);
