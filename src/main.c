@@ -51,10 +51,15 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     double ambient_material_coeff = 0.2;
     double diffuse_material_coeff = 1.0;
 
-    return vec3_add(
-        vec3_mul(ambient_material_coeff, ambient),
-        vec3_mul(diffuse_material_coeff, diffuse)
-    );
+    t_rgb out = vec3_new(0, 0, 0);
+    out = vec3_add(
+        out,
+        vec3_mul(ambient_material_coeff, ambient));
+    out = vec3_add(
+        out,
+        vec3_mul(diffuse_material_coeff, diffuse));
+
+    return out;
 }
 
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
