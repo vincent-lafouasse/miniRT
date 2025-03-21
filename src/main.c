@@ -65,7 +65,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     diffuse_weight = fmax(0.0, diffuse_weight);
     t_rgb diffuse = vec3_mul(diffuse_weight, object_color); // should mix color with point_light color
 
-    double specular_intensity = 1.0; // should come from .rt
+    double specular_intensity = 1.0; // should come from .rt, should probably be a point light property
     t_vec3 perfect_specular_direction = vec3_mul(2.0 * vec3_dot(hit_to_light_unit, rec.normal), rec.normal);
     perfect_specular_direction = vec3_sub(perfect_specular_direction, hit_to_light_unit);
     perfect_specular_direction = vec3_normalize(perfect_specular_direction);
