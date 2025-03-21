@@ -43,8 +43,6 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     return ray_color(ray, scene);
 }
 
-#include "mlx.h"
-
 // will be hidden
 void render(const t_camera* camera,
             const t_scene* scene,
