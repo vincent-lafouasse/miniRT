@@ -69,6 +69,8 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
         material.alpha
     );
     specular_weight = fmax(0.0, specular_weight);
+    if (diffuse_weight == 0.0) // safe check as it is explicitely set to 0.0
+        specular_weight = 0.0;
     t_rgb specular = vec3_mul(specular_weight, vec3_new(1,1,1));
 
     t_rgb out = vec3_new(0, 0, 0);
