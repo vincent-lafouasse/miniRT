@@ -59,8 +59,7 @@ void render(const t_camera* camera,
             renderer_put_pixel(renderer, x, y, rgb_to_bytes(color));
         }
     }
-    mlx_put_image_to_window(renderer->mlx, renderer->window, renderer->img, 0,
-                            0);
+    renderer_flush_pixels(renderer);
 
     mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook,
              renderer->mlx);
