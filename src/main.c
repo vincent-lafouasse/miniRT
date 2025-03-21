@@ -5,6 +5,7 @@
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
 #include "scene/objects/t_hittable_array.h"
+#include "scene/t_scene.h"
 
 #include <assert.h>
 
@@ -141,6 +142,8 @@ int main(void) {
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
+    scene_destroy(&scene);
+    renderer_destroy(&renderer);
 }
 
 static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out)
