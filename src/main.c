@@ -37,6 +37,8 @@ t_material material_default(void) {
     };
 }
 
+#define DBL_EPSILON 0.0000001
+
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
     bool hit = hittable_array_hit(scene->objects, interval_R_plus(), r, &rec);
@@ -51,6 +53,10 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
     [[maybe_unused]] double distance_to_light = vec3_length(hit_to_light);
     t_vec3 hit_to_light_unit = vec3_normalize(hit_to_light);
+
+    t_hit_record _;
+    if (hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_))
+        return vec3_new(0,0,0);
 
     t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
 
