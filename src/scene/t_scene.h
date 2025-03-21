@@ -14,4 +14,6 @@ typedef struct s_scene	t_scene;
 
 t_scene scene_new(t_ambient_light ambient_light, t_point_light point_light, t_hittable_array *objects);
 
+void scene_destroy(t_scene *scene);
+
 #endif // T_SCENE_H
