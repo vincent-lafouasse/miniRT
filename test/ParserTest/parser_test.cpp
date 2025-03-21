@@ -93,8 +93,8 @@ TEST(Parser, BasicSceneWithOneSphereWorks) {
 
     t_sphere expected_sphere = (t_sphere){
         .origin = vec3_new(55, 55, 100),
-        .radius = 6.0 / 2.0,
         .color = rgb_from_elements(255, 0, 127),
+        .radius = 6.0 / 2.0,
     };
 
     t_camera_specs camera;
