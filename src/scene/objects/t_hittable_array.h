@@ -20,4 +20,6 @@ t_is_full hittable_array_push(t_hittable_array *self, t_hittable hittable);
 
 bool hittable_array_hit(const t_hittable_array *self, t_interval range, t_ray ray, t_hit_record *rec_out);
 
+void hittable_array_destroy(t_hittable_array **self);
+
 #endif // T_HITTABLE_ARRAY_H
