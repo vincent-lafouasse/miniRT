@@ -135,7 +135,7 @@ int main(void) {
 
     t_camera_specs specs;
     t_scene scene;
-    parse(balls(), &specs, &scene);
+    parse(atom(), &specs, &scene);
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color);
@@ -171,13 +171,13 @@ static const char* atom(void) {
         "C	50,50,0		    0,0,1		    40\n" \
         "L	65,70,20		0.7				255,255,255\n" \
         "\n" \
-        "pl	0,0,0			0,1,0			64,64,64\n" \
+        /*"pl	0,0,0			0,1,0			64,64,64\n" \
         "pl	0,100,0			0,1,0			64,64,64\n" \
         "pl	0,0,150			0,0,1			96,96,96\n" \
         "pl	0,0,0			0,0,1			96,96,96\n" \
         "pl	110,0,0			-1,0,0			96,96,96\n" \
         "pl	-10,0,0			-1,0,0			96,96,96\n" \
-        "\n" \
+        "\n" */ \
         "sp	40,60,60		2				255,255,0\n" \
         "sp  60,40,160       2               255,255,0\n" \
         "sp	40,60,150		2				255,255,0\n" \
