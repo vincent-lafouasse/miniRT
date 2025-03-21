@@ -54,11 +54,11 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     [[maybe_unused]] double distance_to_light = vec3_length(hit_to_light);
     t_vec3 hit_to_light_unit = vec3_normalize(hit_to_light);
 
+    t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
+
     t_hit_record _;
     if (hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_))
-        return vec3_new(0,0,0);
-
-    t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
+        return vec3_mul(material.ambient, ambient);
 
     double diffuse_weight = scene->point_light.intensity * vec3_dot(rec.normal, hit_to_light_unit);
     diffuse_weight = fmax(0.0, diffuse_weight);
@@ -122,7 +122,7 @@ void render(const t_camera* camera,
     renderer_enter_loop(renderer);
 }
 
-#define WIDTH 700
+#define WIDTH 2000
 #define ASPECT_RATIO (16.0 / 9.0)
 
 #include <stdlib.h>
