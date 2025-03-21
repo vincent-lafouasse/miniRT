@@ -1,6 +1,6 @@
 #include "./t_renderer.h"
 
-#include "mlx.h"
+#include <mlx.h>
 #include <X11/X.h>
 
 int key_hook(int keycode, void* mlx);

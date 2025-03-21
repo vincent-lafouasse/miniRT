@@ -2,7 +2,7 @@
 
 #include "error/t_error.h"
 
-#include "mlx.h"
+#include <mlx.h>
 #include <stddef.h>
 
 t_error renderer_init(size_t width, double aspect_ratio, t_renderer *out) {

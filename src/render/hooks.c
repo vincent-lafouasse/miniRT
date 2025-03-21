@@ -1,4 +1,4 @@
-#include "mlx.h"
+#include <mlx.h>
 
 #include <X11/keysym.h>
 
