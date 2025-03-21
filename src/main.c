@@ -24,9 +24,9 @@ typedef struct s_material t_material;
 
 t_material material_default(void) {
     return (t_material){
-        .ambient = 0.2,
+        .ambient = 0.4,
         .diffuse = 1.0,
-        .specular = 1.0,
+        .specular = 0.5,
         .alpha = 10,
     };
 }
