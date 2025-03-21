@@ -27,4 +27,7 @@ void renderer_put_pixel(t_renderer* self,
                                uint32_t color);
 void renderer_flush_pixels(t_renderer* self);
 
+void renderer_set_exit_loop_on_esc(t_renderer* self);
+void renderer_set_exit_loop_on_cross(t_renderer* self);
+
 void renderer_destroy(t_renderer *self);

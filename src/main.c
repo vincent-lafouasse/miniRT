@@ -1,6 +1,5 @@
 #include "ray/t_ray.h"
 #include "parser/parse.h"
-#include "render/hooks.h"
 #include "render/t_renderer.h"
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
@@ -45,7 +44,6 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
 }
 
 #include "mlx.h"
-#include <X11/X.h>
 
 // will be hidden
 void render(const t_camera* camera,
@@ -61,9 +59,8 @@ void render(const t_camera* camera,
     }
     renderer_flush_pixels(renderer);
 
-    mlx_hook(renderer->window, DestroyNotify, StructureNotifyMask, exit_hook,
-             renderer->mlx);
-    mlx_key_hook(renderer->window, key_hook, renderer->mlx);
+    renderer_set_exit_loop_on_esc(renderer);
+    renderer_set_exit_loop_on_cross(renderer);
     mlx_loop(renderer->mlx);
 }
 
