@@ -1,9 +1,12 @@
+#include "math/t_vec3/t_vec3.h"
 #include "ray/t_ray.h"
 #include "parser/parse.h"
 #include "render/t_renderer.h"
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
 #include "scene/objects/t_hittable_array.h"
+
+#include <assert.h>
 
 #define BALLS                              \
     "C  0,0,0       0,0,-1  90      \n"    \
@@ -17,8 +20,12 @@ typedef struct {
     int y;
 } Point2;
 
-typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
-
+double double_max(double a, double b) {
+    if (a > b)
+        return a;
+    else
+        return b;
+}
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
@@ -28,10 +35,29 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
         return vec3_new(0,0,0);
     }
 
-    t_rgb color = vec3_div(vec3_add(rec.normal, vec3_new(1, 1, 1)), 2);
+    t_rgb object_color = rec.object->sphere.color;
 
-    return color;
+    t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
+    [[maybe_unused]] double distance_to_light = vec3_length(hit_to_light);
+    t_vec3 hit_to_light_unit = vec3_normalize(hit_to_light);
+
+    t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
+
+    double diffuse_weight = scene->point_light.intensity * vec3_dot(rec.normal, hit_to_light_unit);
+    diffuse_weight = double_max(0.0, diffuse_weight);
+    t_rgb diffuse = vec3_mul(diffuse_weight, object_color); // should mix color with point_light color
+
+    
+    double ambient_material_coeff = 0.2;
+    double diffuse_material_coeff = 1.0;
+
+    return vec3_add(
+        vec3_mul(ambient_material_coeff, ambient),
+        vec3_mul(diffuse_material_coeff, diffuse)
+    );
 }
+
+typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
 // main entry point
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
