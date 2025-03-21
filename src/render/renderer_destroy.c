@@ -3,11 +3,7 @@
 #include <mlx.h>
 #include <stdlib.h>
 
-void properly_destroy_mlx_display(void *display)
-{
-	mlx_destroy_display(display);
-	free(display);
-}
+static void properly_destroy_mlx_display(void *display);
 
 void renderer_destroy(t_renderer *self)
 {
@@ -19,4 +15,10 @@ void renderer_destroy(t_renderer *self)
 		mlx_destroy_window(self->mlx, self->window);
 	if (self->mlx)
 		properly_destroy_mlx_display(self->mlx);
+}
+
+static void properly_destroy_mlx_display(void *display)
+{
+	mlx_destroy_display(display);
+	free(display);
 }
