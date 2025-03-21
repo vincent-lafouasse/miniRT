@@ -181,5 +181,6 @@ static t_error parse_elements(const char *input, t_partitioned_elements *out)
 		}
 		i++;
 	}
+	ft_split_destroy(nonempty_lines);
 	return (NO_ERROR);
 }
