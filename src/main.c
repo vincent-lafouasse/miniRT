@@ -20,13 +20,6 @@ typedef struct {
     int y;
 } Point2;
 
-double double_max(double a, double b) {
-    if (a > b)
-        return a;
-    else
-        return b;
-}
-
 struct s_material {
     double ambient;
     double diffuse;
@@ -62,7 +55,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
 
     double diffuse_weight = scene->point_light.intensity * vec3_dot(rec.normal, hit_to_light_unit);
-    diffuse_weight = double_max(0.0, diffuse_weight);
+    diffuse_weight = fmax(0.0, diffuse_weight);
     t_rgb diffuse = vec3_mul(diffuse_weight, object_color); // should mix color with point_light color
 
     double specular_intensity = 1.0; // should come from .rt
