@@ -51,7 +51,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_material material = material_default();
 
     t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
-    [[maybe_unused]] double distance_to_light = vec3_length(hit_to_light);
+    double distance_to_light = vec3_length(hit_to_light);
     t_vec3 hit_to_light_unit = vec3_normalize(hit_to_light);
 
     t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
