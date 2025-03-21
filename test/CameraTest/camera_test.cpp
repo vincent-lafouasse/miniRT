@@ -1,5 +1,4 @@
 #include <cmath>
-#include <format>
 #include <iostream>
 #include "Vector.hpp"
 #include "gtest/gtest.h"
@@ -209,8 +208,8 @@ TEST(Camera, OffFromOrigin) {
 
 [[maybe_unused]]
 static void log_vector(t_vec3 v, const char* name) {
-    std::cout << std::format("\t{}:\t", name);
-    std::cout << std::format("{{ .x = {}, .y = {}, .z = {} }}", v.x, v.y, v.z);
+    std::cout << "\t" << name << ":\t";
+    std::cout << "{{ .x = " << v.x << ", .y = " << v.y << ", .z = " << v.z << " }}";
     std::cout << std::endl;
 }
 
@@ -224,8 +223,7 @@ static void log_camera(t_camera c, const char* name) {
     log_vector(c.delta_v, "Delta v");
 
     std::cout << "\tScreen:\t\t";
-    std::cout << std::format("{{ .height = {}, .width = {} }}\n",
-                             c.screen_height, c.screen_width);
+    std::cout << "{{ .height = " << c.screen_height << ", .width = " << c.screen_width << " }}\n";
 
     std::cout << "}" << std::endl;
 }

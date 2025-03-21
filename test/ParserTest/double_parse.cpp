@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
 
-#include <format>
-
 extern "C" {
 #include "error/t_error.h"
 t_error double_parse(const char *str, double *result_out);
@@ -14,7 +12,7 @@ TEST(DoubleParse, OneDotZeroWorks) {
 	double expected = 1.0;
 
 	t_error err = double_parse(input, &result);
-	ASSERT_EQ(err, NO_ERROR) << std::format("received error from double_parse method: {}", error_repr(err));
+	ASSERT_EQ(err, NO_ERROR) << "received error from double_parse method" << error_repr(err);
 
 	ASSERT_DOUBLE_EQ(result, expected);
 }
@@ -26,7 +24,7 @@ TEST(DoubleParse, OneAsIntegerWorks) {
 	double expected = 1.0;
 
 	t_error err = double_parse(input, &result);
-	ASSERT_EQ(err, NO_ERROR) << std::format("received error from double_parse method: {}", error_repr(err));
+	ASSERT_EQ(err, NO_ERROR) << "received error from double_parse method" << error_repr(err);
 
 	ASSERT_DOUBLE_EQ(result, expected);
 }
@@ -38,7 +36,7 @@ TEST(DoubleParse, ZeroWithLongFractionalPartWorks) {
 	double expected = 0.9483958396398324;
 
 	t_error err = double_parse(input, &result);
-	ASSERT_EQ(err, NO_ERROR) << std::format("received error from double_parse method: {}", error_repr(err));
+	ASSERT_EQ(err, NO_ERROR) << "received error from double_parse method" << error_repr(err);
 
 	ASSERT_DOUBLE_EQ(result, expected);
 }
@@ -50,7 +48,7 @@ TEST(DoubleParse, NegativeNumberWorks) {
 	double expected = -1.25;
 
 	t_error err = double_parse(input, &result);
-	ASSERT_EQ(err, NO_ERROR) << std::format("received error from double_parse method: {}", error_repr(err));
+	ASSERT_EQ(err, NO_ERROR) << "received error from double_parse method" << error_repr(err);
 
 	ASSERT_DOUBLE_EQ(result, expected);
 }

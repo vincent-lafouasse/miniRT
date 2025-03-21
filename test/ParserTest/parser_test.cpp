@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
 
-#include <format>
-
 extern "C" {
 #include "error/t_error.h"
 #include "parser/parse.h"
@@ -58,7 +56,7 @@ TEST(Parser, BasicSceneWithoutHittablesWorks) {
     t_scene scene;
 
     t_error err = parse(input, &camera, &scene);
-    ASSERT_EQ(err, NO_ERROR) << std::format("received error from parse method: {}", error_repr(err));
+    ASSERT_EQ(err, NO_ERROR) << "received error from parse method: " << error_repr(err);
 
     EXPECT_CAM_EQ(camera, expected_camera);
     EXPECT_AMBIENT_EQ(scene.ambient_light, expected_ambient_light);
@@ -101,7 +99,7 @@ TEST(Parser, BasicSceneWithOneSphereWorks) {
     t_scene scene;
 
     t_error err = parse(input, &camera, &scene);
-    ASSERT_EQ(err, NO_ERROR) << std::format("received error from parse method: {}", error_repr(err));
+    ASSERT_EQ(err, NO_ERROR) << "received error from parse method" << error_repr(err);
 
     EXPECT_CAM_EQ(camera, expected_camera);
     EXPECT_AMBIENT_EQ(scene.ambient_light, expected_ambient_light);
