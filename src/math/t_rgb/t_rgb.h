@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:21:50 by poss              #+#    #+#             */
-/*   Updated: 2025/03/18 21:22:17 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/21 17:07:10 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,13 @@ typedef struct s_vec3	t_rgb;
 t_rgb		rgb_from_bytes(const uint8_t color[3]);
 t_rgb		rgb_from_elements(uint8_t r, uint8_t g, uint8_t b);
 uint32_t	rgb_to_bytes(t_rgb self);
+
+static inline t_rgb rgb_white(void) {
+	return (t_rgb){.x = 1.0, .y = 1.0, .z = 1.0};
+}
+
+static inline t_rgb rgb_black(void) {
+	return (t_rgb){.x = 0.0, .y = 0.0, .z = 0.0};
+}
 
 #endif
