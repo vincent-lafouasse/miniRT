@@ -94,6 +94,30 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
 // main entry point
+t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_scene* scene) {
+    t_point3 pixel_center = vec3_add(
+        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
+        vec3_mul((double)px.y, camera->delta_v));
+
+    t_point3 sub_pixel = vec3_add(pixel_center, vec3_div(vec3_add(camera->delta_u, camera->delta_v), 4.0));
+    t_ray ray = ray_new(camera->position, vec3_sub(sub_pixel, camera->position));
+    t_rgb color = ray_color(ray, scene);
+
+    sub_pixel = vec3_sub(sub_pixel, vec3_div(camera->delta_u, 2.0));
+    ray = ray_new(camera->position, vec3_sub(sub_pixel, camera->position));
+    color = vec3_add(color, ray_color(ray, scene));
+
+    sub_pixel = vec3_sub(sub_pixel, vec3_div(camera->delta_v, 2.0));
+    ray = ray_new(camera->position, vec3_sub(sub_pixel, camera->position));
+    color = vec3_add(color, ray_color(ray, scene));
+
+    sub_pixel = vec3_add(sub_pixel, vec3_div(camera->delta_u, 2.0));
+    ray = ray_new(camera->position, vec3_sub(sub_pixel, camera->position));
+    color = vec3_add(color, ray_color(ray, scene));
+
+    return vec3_div(color, 4.0);
+}
+
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
@@ -135,10 +159,10 @@ int main(void) {
 
     t_camera_specs specs;
     t_scene scene;
-    parse(atom(), &specs, &scene);
+    parse(balls(), &specs, &scene);
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
-    render(&camera, &scene, &renderer, pixel_color);
+    render(&camera, &scene, &renderer, pixel_color_with_antialiasing);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
 }
