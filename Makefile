@@ -3,8 +3,12 @@ NAME = miniRT
 ### definitions
 
 CC        = cc
-CFLAGS    = -Wall -Wextra -g3
+CFLAGS    = -Wall -Wextra
 # CFLAGS   += -Werror
+DEBUG_FLAGS = -g3
+OPTIMIZATION_FLAGS = -O3 -flto
+CFLAGS += $(OPTIMIZATION_FLAGS)
+
 CPPFLAGS  = -Isrc -MMD -MP
 LDLIBS = -lm
 LDFLAGS =
