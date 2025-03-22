@@ -7,8 +7,6 @@
 #include "scene/objects/t_hittable_array.h"
 #include "scene/t_scene.h"
 
-#include <assert.h>
-
 typedef struct {
     int x;
     int y;
@@ -93,7 +91,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
 
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
 
-// main entry point
+// alternative entry point
 t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel_center = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
@@ -118,6 +116,7 @@ t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_s
     return vec3_div(color, 4.0);
 }
 
+// main entry point
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
         vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
