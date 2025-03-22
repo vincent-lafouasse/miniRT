@@ -29,6 +29,24 @@ t_material material_default(void) {
     };
 }
 
+t_material material_matte(void) {
+    return (t_material){
+        .ambient = 0.4,
+        .diffuse = 1.0,
+        .specular = 0.3,
+        .alpha = 5,
+    };
+}
+
+t_material material_shiny(void) {
+    return (t_material){
+        .ambient = 0.4,
+        .diffuse = 1.0,
+        .specular = 0.8,
+        .alpha = 50,
+    };
+}
+
 #define DBL_EPSILON 0.0000001
 
 static const char* atom(void);
@@ -43,7 +61,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     }
 
     t_rgb object_color = rec.object->sphere.color;
-    t_material material = material_default();
+    t_material material = material_shiny();
 
     t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
     double distance_to_light = vec3_length(hit_to_light);
