@@ -7,6 +7,8 @@
 #include "scene/objects/t_hittable_array.h"
 #include "scene/t_scene.h"
 
+#include <stdio.h>
+
 typedef struct {
     int x;
     int y;
@@ -173,11 +175,19 @@ int main(void) {
     t_renderer renderer;
     t_error err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
+    {
+        printf("Error: %s\n", error_repr(err));
         return (EXIT_FAILURE);
+    }
 
     t_camera_specs specs;
     t_scene scene;
-    parse(buncha_balls(), &specs, &scene);
+    err = parse(buncha_balls(), &specs, &scene);
+    if (err != NO_ERROR)
+    {
+        printf("Error: %s\n", error_repr(err));
+        return (EXIT_FAILURE);
+    }
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
     render(&camera, &scene, &renderer, pixel_color_with_antialiasing);
