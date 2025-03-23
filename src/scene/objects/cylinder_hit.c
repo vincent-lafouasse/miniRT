@@ -36,10 +36,77 @@
 	(A, tD + BP) \in [0, cy.h]
 */
 
-bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec);
+bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
+{
+	t_vec3 bp = vec3_sub(ray.origin, cylinder.point);
+	t_vec3 acd = vec3_cross(cylinder.axis, ray.direction);
+	t_vec3 acbp = vec3_cross(cylinder.axis, bp);
+
+	double a = vec3_dot(acd, acd);
+	double b = 2.0 * vec3_dot(acd, acbp);
+	double c = vec3_dot(acbp, acbp) - cylinder.radius * cylinder.radius;
+
+	double determinant = a * a - 4.0 * b * c;
+
+	if (determinant <= 0.0)
+		return false;
+
+	double determinant_sqrt = sqrt(determinant);
+
+	double t0 = 0.5 * (-b - determinant_sqrt) / a;
+	double t1 = 0.5 * (-b + determinant_sqrt) / a;
+
+	t_interval height_range = interval_new(0.0, cylinder.height);
+
+	if (interval_contains(range, t0)) {
+		t_point3 hit = ray_at(ray, t0);
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		if (interval_contains(height_range, h))
+		{
+			t_vec3 projection = vec3_mul(h, cylinder.axis);
+			projection = vec3_add(projection, cylinder.point);
+			t_vec3 normal = vec3_sub(hit, projection);
+			normal = vec3_normalize(normal);
+			if (vec3_dot(normal, ray.direction) > 0.0)
+				normal = vec3_negate(normal);
+
+			*rec = (t_hit_record){
+				.point = hit,
+				.t = t0,
+				.normal = normal,
+				.object = NULL,
+			};
+		}
+	}
+
+	// duplication
+	if (interval_contains(range, t1)) {
+		t_point3 hit = ray_at(ray, t1);
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		if (interval_contains(height_range, h))
+		{
+			t_vec3 projection = vec3_mul(h, cylinder.axis);
+			projection = vec3_add(projection, cylinder.point);
+			t_vec3 normal = vec3_sub(hit, projection);
+			normal = vec3_normalize(normal);
+			if (vec3_dot(normal, ray.direction) > 0.0)
+				normal = vec3_negate(normal);
+
+			*rec = (t_hit_record){
+				.point = hit,
+				.t = t1,
+				.normal = normal,
+				.object = NULL,
+			};
+		}
+	}
+
+	return false;
+}
+
 bool cylinder_endcap_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec);
 
 bool cylinder_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
-	return (false);
+	return cylinder_shaft_hit(cylinder, range, ray, rec);
 }
