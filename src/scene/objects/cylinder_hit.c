@@ -54,11 +54,8 @@ vec2 cylIntersect( in vec3 ro, in vec3 rd, in vec3 cb, in vec3 ca, float cr )
 */
 bool double_eq(double, double);
 
-#include <stdio.h>
-
 bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
-	printf("a");
 	t_vec3 oc = vec3_sub(ray.origin, cylinder.point);
 	double card = vec3_dot(cylinder.axis, ray.direction);
 	double caoc = vec3_dot(cylinder.axis, oc);
@@ -93,6 +90,7 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 			.normal = normal,
 			.object = NULL,
 		};
+		return true;
 	}
 
 	if (interval_contains(range, t1)) {
@@ -111,6 +109,7 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 			.normal = normal,
 			.object = NULL,
 		};
+		return true;
 	}
 
 	return false;
