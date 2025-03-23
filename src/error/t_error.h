@@ -32,6 +32,10 @@ enum e_error {
     // library functions errors
     E_OOM,
 
+    // system call errors
+    E_OPEN,
+    E_READ,
+
     // programming errors
     E_UNREACHABLE,
 };

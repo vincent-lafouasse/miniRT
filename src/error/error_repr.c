@@ -28,6 +28,9 @@
 
 #define OOM_REPR "Malloc"
 
+#define READ_REPR "Read"
+#define OPEN_REPR "Read"
+
 #define UNREACHABLE_REPR "Programming error"
 
 #define UNKNOWN_VARIANT_REPR "Unknown error variant"
@@ -59,6 +62,10 @@ const char* error_repr(t_error err) {
         return (OUT_OF_RANGE_REPR);
     if (err == E_OOM)
         return (OOM_REPR);
+    if (err == E_READ)
+        return (READ_REPR);
+    if (err == E_OPEN)
+        return (OPEN_REPR);
     if (err == E_UNREACHABLE)
         return (UNREACHABLE_REPR);
     return (UNKNOWN_VARIANT_REPR);
