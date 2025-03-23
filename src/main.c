@@ -138,6 +138,23 @@ t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_s
     return vec3_div(color, 4.0);
 }
 
+t_rgb pixel_color_flat(Point2 px, const t_camera* camera, const t_scene* scene) {
+    t_point3 pixel = vec3_add(
+        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
+        vec3_mul((double)px.y, camera->delta_v));
+    t_vec3 ray_direction = vec3_sub(pixel, camera->position);
+    t_ray ray = ray_new(camera->position, ray_direction);
+
+    t_hit_record _;
+    bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), ray, &_);
+
+    if (!hit) {
+        return vec3_new(0,0,0);
+    } else {
+        return vec3_new(1,1,1);
+    }
+}
+
 // main entry point
 t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
@@ -191,7 +208,7 @@ int main(void) {
     }
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
-    render(&camera, &scene, &renderer, pixel_color_with_antialiasing);
+    render(&camera, &scene, &renderer, pixel_color_flat);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
 }
