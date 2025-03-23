@@ -14,7 +14,11 @@
 	||cy.axis x (ray.o + t ray.d - cy.base)||^2 == r^2 (a1)
 	and [h = cy.axis . (ray.o + t ray.d - cy.base) signed height], h must be in [0, cy.height] (a2)
 
-	A = cy.axis, BP = base_to_camera = (ray.o - cy.base), D = ray.direction
+	with:
+	A = cy.axis
+	BP = base_to_camera = (ray.o - cy.base)
+	D = ray.direction
+
 	=> ||A x (BP + tD)||^2 == r^2  (1)
 	=> || t (AxD) + AxBP||^2 == r^2 (2)
 	=> (t (AxD) + AxBP), t (AxD) + AxBP)) == r2 (3)
