@@ -25,6 +25,7 @@
 #define MULTIPLE_LIGHTS_UNSUPPORTED_REPR "Multiple lights unsupported"
 #define VECTOR_NOT_NORMALIZED_REPR "Vector not normalized"
 #define OUT_OF_RANGE_REPR "Value out of range"
+#define BAD_PROGRAM_USAGE_REPR "Bad usage"
 
 #define OOM_REPR "Malloc"
 
@@ -60,6 +61,8 @@ const char* error_repr(t_error err) {
         return (VECTOR_NOT_NORMALIZED_REPR);
     if (err == E_OUT_OF_RANGE)
         return (OUT_OF_RANGE_REPR);
+    if (err == E_BAD_PROGRAM_USAGE)
+        return (BAD_PROGRAM_USAGE_REPR);
     if (err == E_OOM)
         return (OOM_REPR);
     if (err == E_READ)

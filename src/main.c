@@ -189,7 +189,7 @@ void render(const t_camera* camera,
 
 static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out);
 
-int main(void) {
+int main(int argc, char **argv) {
     t_renderer renderer;
     t_error err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
@@ -200,7 +200,12 @@ int main(void) {
 
     t_camera_specs specs;
     t_scene scene;
-    err = parse(tube(), &specs, &scene);
+    if (argc != 2)
+    {
+        printf("Error: %s\n", error_repr(E_BAD_PROGRAM_USAGE));
+        return (EXIT_FAILURE);
+    }
+    err = parse_from_file(argv[1], &specs, &scene);
     if (err != NO_ERROR)
     {
         printf("Error: %s\n", error_repr(err));
