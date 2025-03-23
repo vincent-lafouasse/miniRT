@@ -38,9 +38,10 @@
 
 bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
+	t_point3 cy_bottom = vec3_sub(cylinder.point, vec3_mul(cylinder.height / 2.0, cylinder.axis));
 	t_vec3 nca = vec3_cross(ray.direction, cylinder.axis);
-	t_vec3 bca = vec3_cross(cylinder.point, cylinder.axis);
-	double bdnca = vec3_dot(cylinder.point, nca);
+	t_vec3 bca = vec3_cross(cy_bottom, cylinder.axis);
+	double bdnca = vec3_dot(cy_bottom, nca);
 
 	double determinant = vec3_dot(nca, nca) * cylinder.radius * cylinder.radius - bdnca * bdnca;
 
@@ -56,11 +57,11 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 
 	if (interval_contains(range, t0)) {
 		t_point3 hit = ray_at(ray, t0);
-		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cy_bottom));
 		if (interval_contains(height_range, h))
 		{
 			t_vec3 projection = vec3_mul(h, cylinder.axis);
-			projection = vec3_add(projection, cylinder.point);
+			projection = vec3_add(projection, cy_bottom);
 			t_vec3 normal = vec3_sub(hit, projection);
 			normal = vec3_normalize(normal);
 			if (vec3_dot(normal, ray.direction) > 0.0)
@@ -78,11 +79,11 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 	// duplication
 	if (interval_contains(range, t1)) {
 		t_point3 hit = ray_at(ray, t1);
-		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cy_bottom));
 		if (interval_contains(height_range, h))
 		{
 			t_vec3 projection = vec3_mul(h, cylinder.axis);
-			projection = vec3_add(projection, cylinder.point);
+			projection = vec3_add(projection, cy_bottom);
 			t_vec3 normal = vec3_sub(hit, projection);
 			normal = vec3_normalize(normal);
 			if (vec3_dot(normal, ray.direction) > 0.0)
