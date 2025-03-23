@@ -75,10 +75,12 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 	double t1 = (-b + d) / a;
 
 	if (interval_contains(range, t0)) {
+		*rec = (t_hit_record){0};
 		return true;
 	}
 
 	if (interval_contains(range, t1)) {
+		*rec = (t_hit_record){0};
 		return true;
 	}
 
