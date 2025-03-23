@@ -54,6 +54,7 @@ t_material material_shiny(void) {
 static const char* atom(void);
 static const char* balls(void);
 static const char* buncha_balls(void);
+static const char* tube(void);
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
@@ -182,7 +183,7 @@ int main(void) {
 
     t_camera_specs specs;
     t_scene scene;
-    err = parse(buncha_balls(), &specs, &scene);
+    err = parse(tube(), &specs, &scene);
     if (err != NO_ERROR)
     {
         printf("Error: %s\n", error_repr(err));
@@ -339,4 +340,15 @@ static const char* buncha_balls(void) {
     "sp 12,0,-6   1   216,56,136\n" \
     "sp 12,0,-8   1   0,176,240\n" \
     "sp 12,0,-10   1   68,194,164\n";
+}
+
+static const char* tube(void) {
+    return \
+    "C 0,0,0 0,0,-1 120\n" \
+    "A 0.2 255,255,255\n" \
+    "L 0,0,1 0.7 255,255,255\n"
+    "" \
+    "cy 0,-1,-1 0,1,0 1 4 102,204,0\n" \
+    "sp 0,3,-1 1 102,204,0\n"
+    ;
 }
