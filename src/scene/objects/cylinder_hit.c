@@ -36,66 +36,81 @@
 	(A, tD + BP) \in [0, cy.h]
 */
 
+/*
+// infinite cylinder defined by a base point cb, a normalized axis ca and a radious cr
+vec2 cylIntersect( in vec3 ro, in vec3 rd, in vec3 cb, in vec3 ca, float cr )
+{
+    vec3  oc = ro - cb;
+    float card = dot(ca,rd);
+    float caoc = dot(ca,oc);
+    float a = 1.0 - card*card;
+    float b = dot( oc, rd) - caoc*card;
+    float c = dot( oc, oc) - caoc*caoc - cr*cr;
+    float h = b*b - a*c;
+    if( h<0.0 ) return vec2(-1.0); //no intersection
+    h = sqrt(h);
+    return vec2(-b-h,-b+h)/a;
+}
+*/
+bool double_eq(double, double);
+
+#include <stdio.h>
+
 bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
-	t_point3 cy_bottom = vec3_sub(cylinder.point, vec3_mul(cylinder.height / 2.0, cylinder.axis));
-	t_vec3 nca = vec3_cross(ray.direction, cylinder.axis);
-	t_vec3 bca = vec3_cross(cy_bottom, cylinder.axis);
-	double bdnca = vec3_dot(cy_bottom, nca);
+	printf("a");
+	t_vec3 oc = vec3_sub(ray.origin, cylinder.point);
+	double card = vec3_dot(cylinder.axis, ray.direction);
+	double caoc = vec3_dot(cylinder.axis, oc);
 
-	double determinant = vec3_dot(nca, nca) * cylinder.radius * cylinder.radius - bdnca * bdnca;
+	double a = 1.0 - card * card;
+	double b = vec3_dot(oc, ray.direction) - caoc * card;
+	double c = vec3_dot(oc, oc) - caoc * caoc - cylinder.radius * cylinder.radius;
 
-	if (determinant <= 0.0)
+	double d = b * b - a * c;
+
+	if (d <= 0.0)
 		return false;
 
-	double determinant_sqrt = sqrt(determinant);
+	d = sqrt(d);
 
-	double t0 = (vec3_dot(nca, bca) - determinant_sqrt) / vec3_dot(nca, nca);
-	double t1 = (vec3_dot(nca, bca) + determinant_sqrt) / vec3_dot(nca, nca);
-
-	t_interval height_range = interval_new(0.0, cylinder.height);
+	double t0 = (-b - d) / a;
+	double t1 = (-b + d) / a;
 
 	if (interval_contains(range, t0)) {
 		t_point3 hit = ray_at(ray, t0);
-		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cy_bottom));
-		if (interval_contains(height_range, h))
-		{
-			t_vec3 projection = vec3_mul(h, cylinder.axis);
-			projection = vec3_add(projection, cy_bottom);
-			t_vec3 normal = vec3_sub(hit, projection);
-			normal = vec3_normalize(normal);
-			if (vec3_dot(normal, ray.direction) > 0.0)
-				normal = vec3_negate(normal);
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		t_vec3 projection = vec3_mul(h, cylinder.axis);
+		projection = vec3_add(projection, cylinder.point);
+		t_vec3 normal = vec3_sub(hit, projection);
+		normal = vec3_normalize(normal);
+		if (vec3_dot(normal, ray.direction) > 0.0)
+			normal = vec3_negate(normal);
 
-			*rec = (t_hit_record){
-				.point = hit,
-				.t = t0,
-				.normal = normal,
-				.object = NULL,
-			};
-		}
+		*rec = (t_hit_record){
+			.point = hit,
+			.t = t1,
+			.normal = normal,
+			.object = NULL,
+		};
 	}
 
-	// duplication
 	if (interval_contains(range, t1)) {
 		t_point3 hit = ray_at(ray, t1);
-		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cy_bottom));
-		if (interval_contains(height_range, h))
-		{
-			t_vec3 projection = vec3_mul(h, cylinder.axis);
-			projection = vec3_add(projection, cy_bottom);
-			t_vec3 normal = vec3_sub(hit, projection);
-			normal = vec3_normalize(normal);
-			if (vec3_dot(normal, ray.direction) > 0.0)
-				normal = vec3_negate(normal);
+		double h = vec3_dot(cylinder.axis, vec3_sub(hit, cylinder.point));
+		t_vec3 projection = vec3_mul(h, cylinder.axis);
+		projection = vec3_add(projection, cylinder.point);
+		t_vec3 normal = vec3_sub(hit, projection);
+		normal = vec3_normalize(normal);
+		if (vec3_dot(normal, ray.direction) > 0.0)
+			normal = vec3_negate(normal);
 
-			*rec = (t_hit_record){
-				.point = hit,
-				.t = t1,
-				.normal = normal,
-				.object = NULL,
-			};
-		}
+		*rec = (t_hit_record){
+			.point = hit,
+			.t = t1,
+			.normal = normal,
+			.object = NULL,
+		};
 	}
 
 	return false;
