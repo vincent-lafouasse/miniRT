@@ -9,6 +9,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec);
+bool cylinder_endcap_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec);
+
 bool cylinder_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
 	return (false);
