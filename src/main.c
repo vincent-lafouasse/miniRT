@@ -273,8 +273,8 @@ static const char* atom(void) {
 }
 
 static const char* buncha_balls(void) {
-    return "A  0.5   255,255,255\n" \
-    "L  0,4,0   0.2   255,255,255\n" \
+    return "A  0.2   255,255,255\n" \
+    "L  0,4,0   0.5   255,255,255\n" \
     /*"L  6,4,-6   0.2   255,255,255\n" \
     "L  12,4,-12   0.2   255,255,255\n" */ \
     "\n" \
