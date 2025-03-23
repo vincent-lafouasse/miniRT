@@ -24,12 +24,19 @@ static char ft_strcmp(const char *s1, const char *s2) {
 	return ft_strncmp(s1, s2, ft_strlen(s1) + 1);
 }
 
+static bool line_is_commented_out(const char *line)
+{
+	return (*line == '#');
+}
+
 t_error match_element(const char *line, t_element *element_out)
 {
 	char	**parts;
 	size_t	parts_len;
 	t_error	err;
 
+	if (line_is_commented_out(line))
+		return (E_LINE_EMPTY);
 	parts = ft_split_charset(line, " \t\v\n\r\f");
 	if (!parts)
 		return (E_OOM);
