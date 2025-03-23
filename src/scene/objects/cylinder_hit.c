@@ -38,23 +38,19 @@
 
 bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
-	t_vec3 bp = vec3_sub(ray.origin, cylinder.point);
-	t_vec3 acd = vec3_cross(cylinder.axis, ray.direction);
-	t_vec3 acbp = vec3_cross(cylinder.axis, bp);
+	t_vec3 nca = vec3_cross(ray.direction, cylinder.axis);
+	t_vec3 bca = vec3_cross(cylinder.point, cylinder.axis);
+	double bdnca = vec3_dot(cylinder.point, nca);
 
-	double a = vec3_dot(acd, acd);
-	double b = 2.0 * vec3_dot(acd, acbp);
-	double c = vec3_dot(acbp, acbp) - cylinder.radius * cylinder.radius;
-
-	double determinant = a * a - 4.0 * b * c;
+	double determinant = vec3_dot(nca, nca) * cylinder.radius * cylinder.radius - bdnca * bdnca;
 
 	if (determinant <= 0.0)
 		return false;
 
 	double determinant_sqrt = sqrt(determinant);
 
-	double t0 = 0.5 * (-b - determinant_sqrt) / a;
-	double t1 = 0.5 * (-b + determinant_sqrt) / a;
+	double t0 = (vec3_dot(nca, bca) - determinant_sqrt) / vec3_dot(nca, nca);
+	double t1 = (vec3_dot(nca, bca) + determinant_sqrt) / vec3_dot(nca, nca);
 
 	t_interval height_range = interval_new(0.0, cylinder.height);
 
