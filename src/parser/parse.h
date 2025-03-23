@@ -5,6 +5,7 @@
 # include "camera/t_camera.h"
 # include "scene/t_scene.h"
 
+t_error	parse_from_file(const char *filname, t_camera_specs *cam_out, t_scene *scene_out);
 t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out);
 
 #endif // PARSE_H

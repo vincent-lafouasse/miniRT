@@ -1,3 +1,5 @@
+#include "./parse.h"
+
 #include "./t_element.h"
 #include "./t_element_list/t_element_list.h"
 #include "./t_partitioned_elements.h"
@@ -8,6 +10,7 @@
 #include "math/t_vec3/t_vec3.h"
 #include "camera/t_camera.h"
 
+#include "read/read_file.h"
 #include "scene/lights/t_ambient_light.h"
 #include "scene/lights/t_point_light.h"
 #include "scene/objects/t_hittable.h"
@@ -17,11 +20,26 @@
 
 #include "libft/ft_string.h"
 
+#include <stdlib.h>
+
 t_error partitioned_elements_validate(const t_partitioned_elements *p);
 
 static t_error parse_elements(const char *input, t_partitioned_elements *out);
 t_error match_element(const char *line, t_element *element_out);
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out);
+
+t_error	parse_from_file(const char *filename, t_camera_specs *cam_out, t_scene *scene_out)
+{
+	char *contents;
+	t_error err;
+
+	err = read_file(filename, &contents);
+	if (err != NO_ERROR)
+		return (err);
+	err = parse(contents, cam_out, scene_out);
+	free(contents);
+	return (err);
+}
 
 t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 {
