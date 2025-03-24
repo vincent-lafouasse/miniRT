@@ -54,23 +54,28 @@ bool double_eq(double, double);
 
 bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_record *rec)
 {
-	t_vec3 oc = vec3_sub(ray.origin, cylinder.point);
-	double card = vec3_dot(cylinder.axis, ray.direction);
-	double caoc = vec3_dot(cylinder.axis, oc);
+	t_vec3 rc = vec3_sub(ray.origin, cylinder.point);
 
-	double a = 1.0 - card * card;
-	double b = vec3_dot(oc, ray.direction) - caoc * card;
-	double c = vec3_dot(oc, oc) - caoc * caoc - cylinder.radius * cylinder.radius;
+	t_vec3 n = vec3_cross(ray.direction, cylinder.axis);
+	double n_len = vec3_length(n);
+	if (double_eq(n_len, 0))
+		return false;
+	n = vec3_div(n, n_len);
 
-	double d = b * b - a * c;
-
-	if (d <= 0.0)
+	// shortest distqnce
+	double d = fabs(vec3_dot(rc, n));
+	if (d >= cylinder.radius)
 		return false;
 
-	d = sqrt(d);
+	t_vec3 o = vec3_cross(rc, cylinder.axis);
+	double t_midpoint = -vec3_dot(o, n) / n_len;
 
-	double t0 = (-b - d) / a;
-	double t1 = (-b + d) / a;
+	o = vec3_cross(n, cylinder.axis);
+	o = vec3_normalize(o);
+	double t_shift = fabs(sqrt(cylinder.radius * cylinder.radius - d * d));
+
+	double t0 = t_midpoint - t_shift;
+	double t1 = t_midpoint + t_shift;
 
 	if (interval_contains(range, t0)) {
 		*rec = (t_hit_record){0};
