@@ -1,9 +1,9 @@
 #ifndef T_HITTABLE_H
 #define T_HITTABLE_H
 
-#include "./t_sphere.h"
-#include "./t_plane.h"
-#include "./t_cylinder.h"
+#include "./sphere/t_sphere.h"
+#include "./plane/t_plane.h"
+#include "./cylinder/t_cylinder.h"
 
 #include "ray/t_ray.h"
 #include "math/t_interval/t_interval.h"

@@ -1,8 +1,8 @@
 #include "./t_hittable.h"
 
-#include "./t_sphere.h"
-#include "./t_plane.h"
-#include "./t_cylinder.h"
+#include "./sphere/t_sphere.h"
+#include "./plane/t_plane.h"
+#include "./cylinder/t_cylinder.h"
 
 t_hittable	hittable_sphere_new(t_sphere sphere)
 {

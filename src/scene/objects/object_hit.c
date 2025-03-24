@@ -1,6 +1,8 @@
 #include "./t_hittable.h"
 
-#include "./t_sphere.h"
+#include "./sphere/t_sphere.h"
+#include "./plane/t_plane.h"
+#include "./cylinder/t_cylinder.h"
 
 #include "ray/t_ray.h"
 #include "math/t_interval/t_interval.h"

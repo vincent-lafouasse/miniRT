@@ -1,6 +1,6 @@
 #include "./t_plane.h"
 
-#include "./t_hittable.h"
+#include "../t_hittable.h"
 
 #include "math/t_interval/t_interval.h"
 #include "math/t_vec3/t_vec3.h"

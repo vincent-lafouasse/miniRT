@@ -15,7 +15,6 @@
 #include "scene/lights/t_point_light.h"
 #include "scene/objects/t_hittable.h"
 #include "scene/objects/t_hittable_array.h"
-#include "scene/objects/t_sphere.h"
 #include "scene/t_scene.h"
 
 #include "libft/ft_string.h"

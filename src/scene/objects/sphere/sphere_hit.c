@@ -1,5 +1,5 @@
-#include "t_sphere.h"
-#include "t_hittable.h"
+#include "./t_sphere.h"
+#include "../t_hittable.h"
 #include "math/t_interval/t_interval.h"
 
 #include <stddef.h>
