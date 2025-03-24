@@ -80,8 +80,12 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 	if (interval_contains(range, t0)) {
 		t_point3 p = ray_at(ray, t0);
 		double h = vec3_dot(cylinder.axis, vec3_sub(p, cylinder.point));
+		t_point3 projection = vec3_add(cylinder.point, vec3_mul(h, cylinder.axis));
+		t_vec3 normal = vec3_sub(p, projection);
 		if (-cylinder.height / 2 <= h && h <= cylinder.height / 2) {
-			*rec = (t_hit_record){0};
+			*rec = (t_hit_record){.point = p, .t = t0, .normal = vec3_normalize(normal)};
+			if (vec3_dot(ray.direction, rec->normal) > 0)
+				rec->normal = vec3_negate(rec->normal);
 			return true;
 		}
 	}
@@ -89,8 +93,12 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 	if (interval_contains(range, t1)) {
 		t_point3 p = ray_at(ray, t1);
 		double h = vec3_dot(cylinder.axis, vec3_sub(p, cylinder.point));
+		t_point3 projection = vec3_add(cylinder.point, vec3_mul(h, cylinder.axis));
+		t_vec3 normal = vec3_sub(p, projection);
 		if (-cylinder.height / 2 <= h && h <= cylinder.height / 2) {
-			*rec = (t_hit_record){0};
+			*rec = (t_hit_record){.point = p, .t = t1, .normal = vec3_normalize(normal)};
+			if (vec3_dot(ray.direction, rec->normal) > 0)
+				rec->normal = vec3_negate(rec->normal);
 			return true;
 		}
 	}
