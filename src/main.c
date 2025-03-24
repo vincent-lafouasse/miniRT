@@ -4,7 +4,7 @@
 #include "render/t_renderer.h"
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
-#include "scene/objects/t_hittable_array.h"
+#include "scene/objects/t_hittable_array/t_hittable_array.h"
 #include "scene/t_scene.h"
 
 #include <stdio.h>

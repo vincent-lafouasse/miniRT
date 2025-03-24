@@ -3,7 +3,7 @@
 
 #include "./lights/t_ambient_light.h"
 #include "./lights/t_point_light.h"
-#include "./objects/t_hittable_array.h"
+#include "./objects/t_hittable_array/t_hittable_array.h"
 
 struct s_scene {
 	t_ambient_light		ambient_light;

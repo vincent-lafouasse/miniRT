@@ -1,8 +1,8 @@
 #include "./t_hittable_array.h"
+#include "../t_hittable.h"
 
 #include "ray/t_ray.h"
 #include "math/t_interval/t_interval.h"
-#include "scene/objects/t_hittable.h"
 
 #include <stdbool.h>
 #include <stddef.h>

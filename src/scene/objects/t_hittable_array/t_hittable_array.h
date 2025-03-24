@@ -1,7 +1,7 @@
 #ifndef T_HITTABLE_ARRAY_H
 #define T_HITTABLE_ARRAY_H
 
-#include "./t_hittable.h"
+#include "../t_hittable.h"
 #include "math/t_interval/t_interval.h"
 #include <stddef.h>
 #include <stdbool.h>

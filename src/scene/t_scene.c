@@ -1,6 +1,6 @@
 #include "t_scene.h"
 
-#include "./objects/t_hittable_array.h"
+#include "./objects/t_hittable_array/t_hittable_array.h"
 
 t_scene scene_new(t_ambient_light ambient_light, t_point_light point_light, t_hittable_array *objects)
 {

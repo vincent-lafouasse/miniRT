@@ -14,7 +14,7 @@
 #include "scene/lights/t_ambient_light.h"
 #include "scene/lights/t_point_light.h"
 #include "scene/objects/t_hittable.h"
-#include "scene/objects/t_hittable_array.h"
+#include "scene/objects/t_hittable_array/t_hittable_array.h"
 #include "scene/t_scene.h"
 
 #include "libft/ft_string.h"
