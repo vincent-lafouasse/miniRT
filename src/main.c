@@ -206,7 +206,7 @@ int main(int argc, char **argv) {
     }
     t_camera camera = camera_new(specs, renderer.width, renderer.height);
 
-    render(&camera, &scene, &renderer, pixel_color_flat);
+    render(&camera, &scene, &renderer, pixel_color);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
 }
