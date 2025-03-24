@@ -59,7 +59,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
         return vec3_new(0,0,0);
     }
 
-    t_rgb object_color = rec.object->sphere.color;
+    t_rgb obj_color = object_color(rec.object);
     t_material material = material_shiny();
 
     t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
@@ -74,7 +74,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
 
     double diffuse_weight = scene->point_light.intensity * vec3_dot(rec.normal, hit_to_light_unit);
     diffuse_weight = fmax(0.0, diffuse_weight);
-    t_rgb diffuse = vec3_mul(diffuse_weight, object_color); // this supposes the point light is white
+    t_rgb diffuse = vec3_mul(diffuse_weight, obj_color); // this supposes the point light is white
                                                             // bonuses require that we mix the colors
 
     double specular_intensity = 1.0; // should come from .rt, should probably be a point light property
