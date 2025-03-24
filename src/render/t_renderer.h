@@ -19,6 +19,7 @@ struct s_renderer {
 };
 
 t_error renderer_init(size_t width, double aspect_ratio, t_renderer *out);
+t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out);
 t_error renderer_from_dimensions(size_t width, size_t height, t_renderer *out);
 
 void renderer_put_pixel(t_renderer* self,

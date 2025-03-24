@@ -182,8 +182,6 @@ void render(const t_camera* camera,
 
 #include <stdlib.h>
 
-static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out);
-
 int main(int argc, char **argv) {
     t_renderer renderer;
     t_error err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
@@ -211,15 +209,4 @@ int main(int argc, char **argv) {
     render(&camera, &scene, &renderer, pixel_color);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
-}
-
-static t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out)
-{
-    t_error err = renderer_init(width, aspect_ratio, out);
-    if (err == NO_ERROR) {
-        renderer_set_exit_loop_on_esc(out);
-        renderer_set_exit_loop_on_cross(out);
-    }
-
-    return (err);
 }

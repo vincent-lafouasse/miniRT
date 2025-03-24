@@ -5,6 +5,17 @@
 #include <mlx.h>
 #include <stddef.h>
 
+t_error renderer_init_with_exit_hooks(size_t width, double aspect_ratio, t_renderer *out)
+{
+    t_error err = renderer_init(width, aspect_ratio, out);
+    if (err == NO_ERROR) {
+        renderer_set_exit_loop_on_esc(out);
+        renderer_set_exit_loop_on_cross(out);
+    }
+
+    return (err);
+}
+
 t_error renderer_init(size_t width, double aspect_ratio, t_renderer *out) {
     const size_t height = (double)width / aspect_ratio;
 
