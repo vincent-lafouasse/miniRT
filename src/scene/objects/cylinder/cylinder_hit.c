@@ -78,13 +78,21 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 	double t1 = t_midpoint + t_shift;
 
 	if (interval_contains(range, t0)) {
-		*rec = (t_hit_record){0};
-		return true;
+		t_point3 p = ray_at(ray, t0);
+		double h = vec3_dot(cylinder.axis, vec3_sub(p, cylinder.point));
+		if (-cylinder.height / 2 <= h && h <= cylinder.height / 2) {
+			*rec = (t_hit_record){0};
+			return true;
+		}
 	}
 
 	if (interval_contains(range, t1)) {
-		*rec = (t_hit_record){0};
-		return true;
+		t_point3 p = ray_at(ray, t1);
+		double h = vec3_dot(cylinder.axis, vec3_sub(p, cylinder.point));
+		if (-cylinder.height / 2 <= h && h <= cylinder.height / 2) {
+			*rec = (t_hit_record){0};
+			return true;
+		}
 	}
 
 	return false;
