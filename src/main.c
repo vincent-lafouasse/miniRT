@@ -1,3 +1,4 @@
+#include "math/t_rgb/t_rgb.h"
 #include "math/t_vec3/t_vec3.h"
 #include "ray/t_ray.h"
 #include "parser/parse.h"
@@ -56,7 +57,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), r, &rec);
 
     if (!hit) {
-        return vec3_new(0,0,0);
+        return rgb_black();
     }
 
     t_rgb obj_color = object_color(rec.object);
