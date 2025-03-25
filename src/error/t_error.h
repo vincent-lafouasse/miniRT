@@ -27,6 +27,7 @@ enum e_error {
     E_TOO_MANY_AMBIENT_LIGHTS,
     E_MULTIPLE_LIGHTS_UNSUPPORTED,
     E_OUT_OF_RANGE,
+    E_UNEXPECTED_NULL_VECTOR,
     E_BAD_PROGRAM_USAGE,
 
     // library functions errors
