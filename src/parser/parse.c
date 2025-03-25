@@ -1,8 +1,8 @@
 #include "./parse.h"
 
-#include "./t_element.h"
-#include "./t_element_list/t_element_list.h"
-#include "./t_partitioned_elements.h"
+#include "./element/t_element.h"
+#include "./element/t_element_list/t_element_list.h"
+#include "./element/t_partitioned_elements.h"
 
 #include "error/t_error.h"
 
