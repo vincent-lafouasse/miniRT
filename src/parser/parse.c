@@ -68,9 +68,6 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	if (el_len(p->cameras) != 1)
 		return (E_TOO_MANY_CAMERAS);
 
-	if (el_len(p->lights) != 1)
-		return (E_MULTIPLE_LIGHTS_UNSUPPORTED);
-
 	return (NO_ERROR);
 }
 
