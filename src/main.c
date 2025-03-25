@@ -3,6 +3,8 @@
 #include "ray/t_ray.h"
 #include "parser/parse.h"
 #include "render/t_renderer.h"
+#include "scene/lights/t_ambient_light.h"
+#include "scene/lights/t_point_light.h"
 #include "scene/objects/t_hittable.h"
 #include "math/t_interval/t_interval.h"
 #include "scene/objects/t_hittable_array/t_hittable_array.h"
@@ -52,6 +54,60 @@ t_material material_shiny(void) {
 
 #define DBL_EPSILON 0.0000001
 
+bool hit_is_in_shadow(t_hit_record rec, const t_scene* scene) {
+
+    t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
+    double distance_to_light = vec3_length(hit_to_light);
+    t_vec3 hit_to_light_unit = vec3_div(hit_to_light, distance_to_light);
+
+    t_hit_record _;
+    return hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_);
+}
+
+t_rgb ambient_shading(t_ambient_light light) {
+    return vec3_mul(light.intensity, light.color);
+}
+
+t_rgb diffuse_shading(t_hit_record hit, t_point_light light) {
+    t_vec3 hit_to_light;
+    double diffuse_weight;
+
+    hit_to_light = vec3_sub(light.coordinates, hit.point);
+    hit_to_light = vec3_normalize(hit_to_light);
+    diffuse_weight = light.intensity * vec3_dot(hit.normal, hit_to_light);
+    diffuse_weight = fmax(0.0, diffuse_weight);
+    // this supposes the point light is white
+    // bonuses require that we mix the colors
+    return vec3_mul(diffuse_weight, object_color(hit.object));
+}
+
+t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double intensity, double alpha) {
+    t_vec3 hit_to_light;
+    hit_to_light = vec3_sub(light.coordinates, hit.point);
+    hit_to_light = vec3_normalize(hit_to_light);
+
+    t_vec3 perfect_specular_direction = vec3_mul(2.0 * vec3_dot(hit_to_light, hit.normal), hit.normal);
+    perfect_specular_direction = vec3_sub(perfect_specular_direction, hit_to_light);
+    perfect_specular_direction = vec3_normalize(perfect_specular_direction);
+    double specular_weight = intensity * pow(
+        vec3_dot(
+            perfect_specular_direction, vec3_normalize(r.direction)
+        ),
+        alpha
+    );
+    specular_weight = fmax(0.0, specular_weight);
+    return vec3_mul(specular_weight, rgb_white());
+}
+
+bool double_eq(double, double);
+
+t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb specular) {
+    t_rgb out = vec3_mul(material.ambient, ambient);
+    out = vec3_add(vec3_mul(material.diffuse, diffuse), out);
+    out = vec3_add(vec3_mul(material.specular, specular), out);
+    return out;
+}
+
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
     bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), r, &rec);
@@ -60,51 +116,17 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
         return rgb_black();
     }
 
-    t_rgb obj_color = object_color(rec.object);
-    t_material material = material_shiny();
+    t_material material = material_shiny(); // object property ?
 
-    t_vec3 hit_to_light = vec3_sub(scene->point_light.coordinates, rec.point);
-    double distance_to_light = vec3_length(hit_to_light);
-    t_vec3 hit_to_light_unit = vec3_normalize(hit_to_light);
-
-    t_rgb ambient = vec3_mul(scene->ambient_light.intensity, scene->ambient_light.color);
-
-    t_hit_record _;
-    if (hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_))
+    t_rgb ambient = ambient_shading(scene->ambient_light);
+    
+    if (hit_is_in_shadow(rec, scene))
         return vec3_mul(material.ambient, ambient);
 
-    double diffuse_weight = scene->point_light.intensity * vec3_dot(rec.normal, hit_to_light_unit);
-    diffuse_weight = fmax(0.0, diffuse_weight);
-    t_rgb diffuse = vec3_mul(diffuse_weight, obj_color); // this supposes the point light is white
-                                                            // bonuses require that we mix the colors
+    t_rgb diffuse = diffuse_shading(rec, scene->point_light);
+    t_rgb specular = specular_shading(rec, scene->point_light, r, 1.0, material.alpha);
 
-    double specular_intensity = 1.0; // should come from .rt, should probably be a point light property
-    t_vec3 perfect_specular_direction = vec3_mul(2.0 * vec3_dot(hit_to_light_unit, rec.normal), rec.normal);
-    perfect_specular_direction = vec3_sub(perfect_specular_direction, hit_to_light_unit);
-    perfect_specular_direction = vec3_normalize(perfect_specular_direction);
-    double specular_weight = specular_intensity * pow(
-        vec3_dot(
-            perfect_specular_direction, vec3_normalize(r.direction)
-        ),
-        material.alpha
-    );
-    specular_weight = fmax(0.0, specular_weight);
-    if (diffuse_weight == 0.0) // safe check as it is explicitely set to 0.0
-        specular_weight = 0.0;
-    t_rgb specular = vec3_mul(specular_weight, rgb_white());
-
-    t_rgb out = rgb_black();
-    out = vec3_add(
-        out,
-        vec3_mul(material.ambient, ambient));
-    out = vec3_add(
-        out,
-        vec3_mul(material.diffuse, diffuse));
-    out = vec3_add(
-        out,
-        vec3_mul(material.specular, specular));
-
-    return out;
+    return sum_shadings(material, ambient, diffuse, specular);
 }
 
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
