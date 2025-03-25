@@ -108,11 +108,11 @@ t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb spec
     return out;
 }
 
-t_rgb shade_hit(t_hit_record hit, t_ray r, const t_scene* scene) {
+t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
     t_material material = material_shiny(); // object property ?
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
-    
+
     if (hit_is_in_shadow(hit, scene))
         return vec3_mul(material.ambient, ambient);
 
@@ -127,7 +127,7 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), r, &rec);
 
     if (hit) {
-        return shade_hit(rec, r, scene);
+        return hit_color(rec, r, scene);
     } else {
         return rgb_black();
     }
