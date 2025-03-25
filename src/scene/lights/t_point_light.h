@@ -11,7 +11,7 @@ struct s_point_light {
 };
 typedef struct s_point_light t_point_light;
 
-static inline t_point_light point_light(t_vec3 coordinates, double intensity, t_rgb color) {
+static inline t_point_light point_light(t_point3 coordinates, double intensity, t_rgb color) {
 	return ((t_point_light){.coordinates = coordinates, .intensity = intensity, .color = color});
 }
 
