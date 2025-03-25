@@ -1,3 +1,4 @@
+#include "math/t_vec3/t_vec3.h"
 #include "t_camera.h"
 
 #include <math.h>
@@ -34,6 +35,8 @@ t_error	camera_new(t_camera_specs specs,
 
 	if (specs.fov_deg <= 0 || specs.fov_deg >= 180)
 		return (E_OUT_OF_RANGE);
+	if (vec3_eq(specs.direction, vec3_new(0, 0, 0)))
+		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(specs.direction))
 	{
 		specs.direction = vec3_normalize(specs.direction);
