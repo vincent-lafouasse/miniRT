@@ -82,7 +82,6 @@ clean:
 fclean: clean
 	@echo Cleaning up lib
 	@rm -rf $(LIB)
-	-@make -C test clean
 
 .PHONY: re
 re: fclean update
