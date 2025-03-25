@@ -49,26 +49,9 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 	err = parse_elements(input, &elements);
 	if (err != NO_ERROR)
 		return (err);
-	err = partitioned_elements_validate(&elements);
-	if (err != NO_ERROR)
-	{
-		partitioned_elements_clear(&elements);
-		return (err);
-	}
 	err = gather_camera_and_scene(&elements, cam_out, scene_out);
 	partitioned_elements_clear(&elements);
 	return (err);
-}
-
-t_error partitioned_elements_validate(const t_partitioned_elements *p)
-{
-	if (el_len(p->ambients) != 1)
-		return (E_TOO_MANY_AMBIENT_LIGHTS);
-
-	if (el_len(p->cameras) != 1)
-		return (E_TOO_MANY_CAMERAS);
-
-	return (NO_ERROR);
 }
 
 static t_hittable hittable_from_primitive(t_element element) {
@@ -121,6 +104,12 @@ static t_hittable_array *gather_objects(t_partitioned_elements *p) {
 
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
+	if (el_len(p->ambients) != 1)
+		return (E_TOO_MANY_AMBIENT_LIGHTS);
+
+	if (el_len(p->cameras) != 1)
+		return (E_TOO_MANY_CAMERAS);
+
 	const t_camera_element camera = p->cameras->element.camera;
 	const t_ambient_light_element ambient = p->ambients->element.ambient;
 	const t_light_element light = p->lights->element.light;
