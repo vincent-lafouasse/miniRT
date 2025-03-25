@@ -1,5 +1,7 @@
 #include "t_camera.h"
+
 #include <math.h>
+#include <stdio.h>
 
 typedef struct s_dimension
 {
@@ -19,12 +21,22 @@ static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen);
 static t_vec3		compute_pixel00(t_point3 camera_position, t_vec3 direction,
 									double fov_deg, t_viewport vp);
 
+static void report_non_unit_orientation(void)
+{
+	printf("camera_new: warning: camera orientation vector is not normalized\n");
+}
+
 t_camera	camera_new(t_camera_specs specs,
 		size_t screen_width, size_t screen_height)
 {
 	t_viewport	vp;
 	t_vec3		pixel00;
 
+	if (!vec3_is_unit(specs.direction))
+	{
+		specs.direction = vec3_normalize(specs.direction);
+		report_non_unit_orientation();
+	}
 	vp = construct_viewport(specs.direction, (t_dimension){.w = screen_width,
 			.h = screen_height});
 	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg, vp);

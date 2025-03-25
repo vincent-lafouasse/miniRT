@@ -62,8 +62,6 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 
 t_error partitioned_elements_validate(const t_partitioned_elements *p)
 {
-	const t_element_list *primitives;
-
 	if (el_len(p->ambients) != 1)
 		return (E_TOO_MANY_AMBIENT_LIGHTS);
 	const t_ambient_light_element ambient = p->ambients->element.ambient;
@@ -73,8 +71,6 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	if (el_len(p->cameras) != 1)
 		return (E_TOO_MANY_CAMERAS);
 	const t_camera_element camera = p->cameras->element.camera;
-	if (!vec3_is_unit(camera.orientation))
-		return (E_VECTOR_NOT_NORMALIZED);
 	if (camera.fov > 180)
 		return (E_OUT_OF_RANGE);
 
@@ -83,21 +79,6 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 	const t_light_element light = p->lights->element.light;
 	if (light.brightness_ratio < 0.0 || light.brightness_ratio > 1.0)
 		return (E_OUT_OF_RANGE);
-
-	primitives = p->primitives;
-	while (primitives)
-	{
-		t_element element = primitives->element;
-		if (element.kind == ELEM_SPHERE_PRIMITIVE) {
-		} else if (element.kind == ELEM_PLANE_PRIMITIVE) {
-			if (!vec3_is_unit(element.plane.normal))
-				return (E_VECTOR_NOT_NORMALIZED);
-		} else if (element.kind == ELEM_CYLINDER_PRIMITIVE) {
-			if (!vec3_is_unit(element.cylinder.axis))
-				return (E_VECTOR_NOT_NORMALIZED);
-		}
-		primitives = primitives->next;
-	}
 
 	return (NO_ERROR);
 }
