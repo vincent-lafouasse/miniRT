@@ -108,25 +108,29 @@ t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb spec
     return out;
 }
 
-t_rgb ray_color(t_ray r, const t_scene* scene) {
-    t_hit_record rec;
-    bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), r, &rec);
-
-    if (!hit) {
-        return rgb_black();
-    }
-
+t_rgb shade_hit(t_hit_record hit, t_ray r, const t_scene* scene) {
     t_material material = material_shiny(); // object property ?
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
     
-    if (hit_is_in_shadow(rec, scene))
+    if (hit_is_in_shadow(hit, scene))
         return vec3_mul(material.ambient, ambient);
 
-    t_rgb diffuse = diffuse_shading(rec, scene->point_light);
-    t_rgb specular = specular_shading(rec, scene->point_light, r, 1.0, material.alpha);
+    t_rgb diffuse = diffuse_shading(hit, scene->point_light);
+    t_rgb specular = specular_shading(hit, scene->point_light, r, 1.0, material.alpha);
 
     return sum_shadings(material, ambient, diffuse, specular);
+}
+
+t_rgb ray_color(t_ray r, const t_scene* scene) {
+    t_hit_record rec;
+    bool hit = hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, INFINITY), r, &rec);
+
+    if (hit) {
+        return shade_hit(rec, r, scene);
+    } else {
+        return rgb_black();
+    }
 }
 
 typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
