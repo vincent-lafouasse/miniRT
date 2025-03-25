@@ -57,8 +57,6 @@ const char* error_repr(t_error err) {
         return (TOO_MANY_AMBIENT_LIGHTS_REPR);
     if (err == E_MULTIPLE_LIGHTS_UNSUPPORTED)
         return (MULTIPLE_LIGHTS_UNSUPPORTED_REPR);
-    if (err == E_VECTOR_NOT_NORMALIZED)
-        return (VECTOR_NOT_NORMALIZED_REPR);
     if (err == E_OUT_OF_RANGE)
         return (OUT_OF_RANGE_REPR);
     if (err == E_BAD_PROGRAM_USAGE)
