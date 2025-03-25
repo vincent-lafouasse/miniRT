@@ -26,12 +26,14 @@ static void report_non_unit_orientation(void)
 	printf("camera_new: warning: camera orientation vector is not normalized\n");
 }
 
-t_camera	camera_new(t_camera_specs specs,
-		size_t screen_width, size_t screen_height)
+t_error	camera_new(t_camera_specs specs,
+		size_t screen_width, size_t screen_height, t_camera *out)
 {
 	t_viewport	vp;
 	t_vec3		pixel00;
 
+	if (specs.fov_deg <= 0 || specs.fov_deg >= 180)
+		return (E_OUT_OF_RANGE);
 	if (!vec3_is_unit(specs.direction))
 	{
 		specs.direction = vec3_normalize(specs.direction);
@@ -40,7 +42,7 @@ t_camera	camera_new(t_camera_specs specs,
 	vp = construct_viewport(specs.direction, (t_dimension){.w = screen_width,
 			.h = screen_height});
 	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg, vp);
-	return (t_camera){
+	*out = (t_camera){
 		.position = specs.position,
 		.pixel00 = pixel00,
 		.delta_u = vp.delta_u,
@@ -48,6 +50,7 @@ t_camera	camera_new(t_camera_specs specs,
 		.screen_width = screen_width,
 		.screen_height = screen_height,
 	};
+	return (NO_ERROR);
 }
 
 static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen)

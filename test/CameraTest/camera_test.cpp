@@ -30,6 +30,10 @@ static double rad_to_deg(double radians) {
     return radians * 180.0 / M_PI;
 }
 
+TEST(Camera, OutOfRangeFovFails) {
+    FAIL() << "unimplemented";
+}
+
 TEST(Camera, AlongOz_OneByOne) {
     size_t h = 1;
     size_t w = 1;
@@ -65,7 +69,9 @@ TEST(Camera, AlongOz_OneByOne) {
         .direction = orientation.get(),
         .fov_deg = fov_deg,
     };
-    t_camera actual = camera_new(specs, w, h);
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, NO_ERROR);
 
     EXPECT_CAM_EQ(expected, actual);
 }
@@ -109,7 +115,9 @@ TEST(Camera, AlongOz_TwoByTwo) {
         .direction = orientation.get(),
         .fov_deg = fov_deg,
     };
-    t_camera actual = camera_new(specs, w, h);
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, NO_ERROR);
 
     EXPECT_CAM_EQ(expected, actual);
 }
@@ -155,7 +163,9 @@ TEST(Camera, AlongOx_SixteenByNine) {
         .direction = orientation.get(),
         .fov_deg = fov_deg,
     };
-    t_camera actual = camera_new(specs, w, h);
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, NO_ERROR);
 
     EXPECT_CAM_EQ(expected, actual);
 }
@@ -201,7 +211,9 @@ TEST(Camera, OffFromOrigin) {
         .direction = orientation.get(),
         .fov_deg = fov_deg,
     };
-    t_camera actual = camera_new(specs, w, h);
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, NO_ERROR);
 
     EXPECT_CAM_EQ(expected, actual);
 }

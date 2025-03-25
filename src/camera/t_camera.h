@@ -1,6 +1,7 @@
 #ifndef T_CAMERA_H
 # define T_CAMERA_H
 
+# include "error/t_error.h"
 # include "math/t_vec3/t_vec3.h"
 # include <stddef.h>
 
@@ -22,8 +23,8 @@ struct s_camera_specs {
 };
 typedef struct s_camera_specs t_camera_specs;
 
-t_camera	camera_new(t_camera_specs specs,
+t_error	camera_new(t_camera_specs specs,
 				size_t screen_width,
-				size_t screen_height);
+				size_t screen_height, t_camera *out);
 
 #endif // T_CAMERA_H

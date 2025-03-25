@@ -231,7 +231,13 @@ int main(int argc, char **argv) {
         printf("Error: %s\n", error_repr(err));
         return (EXIT_FAILURE);
     }
-    t_camera camera = camera_new(specs, renderer.width, renderer.height);
+    t_camera camera;
+    err = camera_new(specs, renderer.width, renderer.height, &camera);
+    if (err != NO_ERROR)
+    {
+        printf("Error: camera: %s\n", error_repr(err));
+        return (EXIT_FAILURE);
+    }
 
     render(&camera, &scene, &renderer, pixel_color);
     scene_destroy(&scene);
