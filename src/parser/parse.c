@@ -64,18 +64,12 @@ t_error partitioned_elements_validate(const t_partitioned_elements *p)
 {
 	if (el_len(p->ambients) != 1)
 		return (E_TOO_MANY_AMBIENT_LIGHTS);
-	const t_ambient_light_element ambient = p->ambients->element.ambient;
-	if (ambient.lighting_ratio < 0.0 || ambient.lighting_ratio > 1.0)
-		return (E_OUT_OF_RANGE);
 
 	if (el_len(p->cameras) != 1)
 		return (E_TOO_MANY_CAMERAS);
 
 	if (el_len(p->lights) != 1)
 		return (E_MULTIPLE_LIGHTS_UNSUPPORTED);
-	const t_light_element light = p->lights->element.light;
-	if (light.brightness_ratio < 0.0 || light.brightness_ratio > 1.0)
-		return (E_OUT_OF_RANGE);
 
 	return (NO_ERROR);
 }
@@ -134,11 +128,21 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	const t_ambient_light_element ambient = p->ambients->element.ambient;
 	const t_light_element light = p->lights->element.light;
 	t_hittable_array *objects;
+	t_error err;
 
 	*cam_out = (t_camera_specs){.position = camera.coordinates, \
 		.direction = camera.orientation, .fov_deg = (double)camera.fov};
-	t_ambient_light amb_light = ambient_light(ambient.lighting_ratio, rgb_from_bytes(ambient.color));
-	t_point_light pt_light = point_light(light.coordinates, light.brightness_ratio, rgb_from_bytes(light.color));
+
+	t_ambient_light amb_light;
+	err = ambient_light(ambient.lighting_ratio, rgb_from_bytes(ambient.color), &amb_light);
+	if (err != NO_ERROR)
+		return (err);
+
+	t_point_light pt_light;
+	err = point_light(light.coordinates, light.brightness_ratio, rgb_from_bytes(light.color), &pt_light);
+	if (err != NO_ERROR)
+		return (err);
+
 	objects = gather_objects(p);
 	if (!objects)
 		return (E_OOM);
