@@ -16,6 +16,10 @@ t_error cylinder_new(t_point3 point, t_vec3 axis, double radius, double height, 
 		axis = vec3_normalize(axis);
 		report_non_unit_axis();
 	}
+	if (radius < 0.0)
+		return (E_OUT_OF_RANGE);
+	if (height < 0.0)
+		return (E_OUT_OF_RANGE);
 	*out = (t_cylinder){.point = point, .axis = axis, .radius = radius, .height = height, .color = color};
 	return (NO_ERROR);
 }
