@@ -2,7 +2,9 @@
 # define T_CAMERA_H
 
 # include "error/t_error.h"
+# include "math/t_rgb/t_rgb.h"
 # include "math/t_vec3/t_vec3.h"
+# include "scene/t_scene.h"
 # include <stddef.h>
 
 struct	s_camera
@@ -26,5 +28,9 @@ typedef struct s_camera_specs t_camera_specs;
 t_error	camera_new(t_camera_specs specs,
 				size_t screen_width,
 				size_t screen_height, t_camera *out);
+
+t_rgb camera_pixel_color(const t_camera* camera, const t_scene* scene, int x, int y);
+t_rgb camera_pixel_color_with_antialiasing(const t_camera* camera, const t_scene* scene, int x, int y);
+t_rgb camera_pixel_color_flat(const t_camera* camera, const t_scene* scene, int x, int y);
 
 #endif // T_CAMERA_H

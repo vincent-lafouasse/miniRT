@@ -13,7 +13,7 @@ void render(const t_camera* camera,
     for (size_t x = 0; x < renderer->width; x++) {
         printf("%zu/%zu\n", x, renderer->width);
         for (size_t y = 0; y < renderer->height; y++) {
-            t_rgb color = pixel_color(x, y, camera, scene);
+            t_rgb color = camera_pixel_color(camera, scene, x, y);
             renderer_put_pixel(renderer, x, y, rgb_to_bytes(color));
         }
     }
