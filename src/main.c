@@ -30,7 +30,7 @@ t_material material_default(void) {
     return (t_material){
         .ambient = 0.4,
         .diffuse = 1.0,
-        .specular = 0.5,
+        .specular = 15.0,
         .alpha = 10,
     };
 }
@@ -102,12 +102,11 @@ t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double in
     hit_to_light = vec3_sub(light.coordinates, hit.point);
     hit_to_light = vec3_normalize(hit_to_light);
 
-    t_vec3 perfect_specular_direction = vec3_mul(2.0 * vec3_dot(hit_to_light, hit.normal), hit.normal);
-    perfect_specular_direction = vec3_sub(perfect_specular_direction, hit_to_light);
-    perfect_specular_direction = vec3_normalize(perfect_specular_direction);
+    t_vec3 bissectrice = vec3_sub(hit_to_light, r.direction);
+    bissectrice = vec3_normalize(bissectrice);
     double specular_weight = intensity * pow(
         vec3_dot(
-            perfect_specular_direction, vec3_normalize(r.direction)
+            hit.normal, bissectrice
         ),
         alpha
     );
@@ -143,7 +142,7 @@ t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb spec
 }
 
 t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
-    t_material material = material_shiny(); // object property ?
+    t_material material = material_default(); // object property ?
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
 
