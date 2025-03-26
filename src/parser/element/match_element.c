@@ -13,6 +13,7 @@ t_error match_light(char *const *parts, size_t parts_len, t_element *element_out
 t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_out);
 t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out);
 t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_out);
+t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_out);
 
 t_error	u8_parse(const char *str, uint8_t *result_out);
 t_error double_parse(const char *str, double *result_out);
@@ -59,6 +60,8 @@ t_error match_element(const char *line, t_element *element_out)
 		err = match_plane(parts, parts_len, element_out);
 	else if (0 == ft_strcmp(parts[0], TAG_CYLINDER))
 		err = match_cylinder(parts, parts_len, element_out);
+	else if (0 == ft_strcmp(parts[0], TAG_TRIANGLE))
+		err = match_triangle(parts, parts_len, element_out);
 	else
 		err = E_UNKNOWN_ELEMENT;
 
@@ -198,5 +201,31 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 	if (err != NO_ERROR)
 		return (err);
 	*element_out = (t_element){.kind = ELEM_CYLINDER_PRIMITIVE, .cylinder = cylinder};
+	return (NO_ERROR);
+}
+
+
+t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_out)
+{
+	t_error err;
+	t_triangle_element triangle;
+
+	if (parts_len != 5)
+		return (E_MALFORMATTED_ELEMENT);
+
+	triangle = (typeof(triangle)){0};
+	err = element_vec3_parse(parts[1], &triangle.a);
+	if (err != NO_ERROR)
+		return (err);
+	err = element_vec3_parse(parts[2], &triangle.b);
+	if (err != NO_ERROR)
+		return (err);
+	err = element_vec3_parse(parts[3], &triangle.c);
+	if (err != NO_ERROR)
+		return (err);
+	err = element_color_parse(parts[4], triangle.color);
+	if (err != NO_ERROR)
+		return (err);
+	*element_out = (t_element){.kind = ELEM_TRIANGLE_PRIMITIVE, .triangle = triangle};
 	return (NO_ERROR);
 }
