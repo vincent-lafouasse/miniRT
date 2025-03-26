@@ -55,13 +55,13 @@ t_material material_shiny(void) {
 
 #define DBL_EPSILON 0.0000001
 
-bool hit_is_in_shadow(t_hit_record rec, const t_scene* scene, t_point_light light) {
+bool hit_is_in_shadow(t_hit_record rec, const t_hittable_array* objects, t_point_light light) {
     t_vec3 hit_to_light = vec3_sub(light.coordinates, rec.point);
     double distance_to_light = vec3_length(hit_to_light);
     t_vec3 hit_to_light_unit = vec3_div(hit_to_light, distance_to_light);
 
     t_hit_record _;
-    return hittable_array_hit(scene->objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_);
+    return hittable_array_hit(objects, interval_new(DBL_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_);
 }
 
 t_rgb ambient_shading(t_ambient_light light) {
@@ -81,7 +81,7 @@ t_rgb diffuse_shading(t_hit_record hit, t_point_light light) {
     return vec3_mul(diffuse_weight, object_color(hit.object));
 }
 
-t_rgb total_diffuse_shading(t_hit_record hit, t_point_light_array *lights) {
+t_rgb total_diffuse_shading(t_hit_record hit, const t_point_light_array *lights, const t_hittable_array* objects) {
     size_t i;
     t_rgb col;
     t_point_light current_light;
@@ -91,7 +91,9 @@ t_rgb total_diffuse_shading(t_hit_record hit, t_point_light_array *lights) {
     while (i < lights->len)
     {
         current_light = lights->data[i];
-        col = vec3_add(col, diffuse_shading(hit, current_light));
+        if (!hit_is_in_shadow(hit, objects, current_light)) {
+            col = vec3_add(col, diffuse_shading(hit, current_light));
+        }
         i++;
     }
     return col;
@@ -114,7 +116,7 @@ t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double al
     return vec3_mul(specular_weight, rgb_white());
 }
 
-t_rgb total_specular_shading(t_hit_record hit, t_point_light_array *lights, t_ray r, double alpha) {
+t_rgb total_specular_shading(t_hit_record hit, t_point_light_array *lights, t_ray r, double alpha, const t_hittable_array* objects) {
     size_t i;
     t_rgb col;
     t_point_light current_light;
@@ -124,7 +126,9 @@ t_rgb total_specular_shading(t_hit_record hit, t_point_light_array *lights, t_ra
     while (i < lights->len)
     {
         current_light = lights->data[i];
-        col = vec3_add(col, specular_shading(hit, current_light, r, alpha));
+        if (!hit_is_in_shadow(hit, objects, current_light)) {
+            col = vec3_add(col, specular_shading(hit, current_light, r, alpha));
+        }
         i++;
     }
     return col;
@@ -144,11 +148,8 @@ t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
 
-    if (hit_is_in_shadow(hit, scene, scene->point_lights->data[0]))
-        return vec3_mul(material.ambient, ambient);
-
-    t_rgb diffuse = total_diffuse_shading(hit, scene->point_lights);
-    t_rgb specular = total_specular_shading(hit, scene->point_lights, r, material.alpha);
+    t_rgb diffuse = total_diffuse_shading(hit, scene->point_lights, scene->objects);
+    t_rgb specular = total_specular_shading(hit, scene->point_lights, r, material.alpha, scene->objects);
 
     return sum_shadings(material, ambient, diffuse, specular);
 }
