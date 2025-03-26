@@ -8,8 +8,8 @@
 #include <stddef.h>
 
 bool triangle_hit(t_triangle triangle, t_interval range, t_ray ray, t_hit_record *rec) {
-	t_vec3 edge1 = vec3_sub(triangle.a, triangle.b);
-	t_vec3 edge2 = vec3_sub(triangle.a, triangle.c);
+	t_vec3 edge1 = vec3_sub(triangle.b, triangle.a);
+	t_vec3 edge2 = vec3_sub(triangle.c, triangle.a);
 	t_vec3 ray_cross_e2 = vec3_cross(ray.direction, edge2);
 	double det = vec3_dot(ray_cross_e2, edge1);
 	if (double_eq(0.0, det))
