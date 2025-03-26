@@ -18,6 +18,8 @@ t_rgb object_color(const t_hittable *object)
 		color = object->plane.color;
 	else if (object->type == HITTABLE_CYLINDER)
 		color = object->cylinder.color;
+	else if (object->type == HITTABLE_TRIANGLE)
+		color = object->triangle.color;
 	else
 		abort(); // other shapes are unimplemented
 	return (color);
