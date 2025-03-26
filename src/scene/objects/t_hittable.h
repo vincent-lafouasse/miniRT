@@ -5,6 +5,7 @@
 #include "./plane/t_plane.h"
 #include "./cylinder/t_cylinder.h"
 
+#include "error/t_error.h"
 #include "ray/t_ray.h"
 #include "math/t_interval/t_interval.h"
 #include "math/t_rgb/t_rgb.h"
@@ -26,9 +27,9 @@ struct s_hittable {
 	};
 };
 
-t_hittable	hittable_sphere_new(t_sphere sphere);
-t_hittable	hittable_plane_new(t_plane plane);
-t_hittable	hittable_cylinder_new(t_cylinder cylinder);
+t_error	hittable_sphere_new(t_point3 origin, t_rgb color, double radius, t_hittable *out);
+t_error	hittable_plane_new(t_point3 origin, t_vec3 normal, t_rgb color, t_hittable *out);
+t_error	hittable_cylinder_new(t_point3 point, t_vec3 axis, double radius, double height, t_rgb color, t_hittable *out);
 
 typedef struct s_hit_record t_hit_record;
 struct s_hit_record {

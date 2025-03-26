@@ -55,8 +55,8 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 	return (err);
 }
 
-static t_hittable hittable_from_primitive(t_element element) {
-	t_hittable hittable;
+static t_error hittable_from_primitive(t_element element, t_hittable *hittable) {
+	t_error err;
 	t_sphere_element s;
 	t_plane_element p;
 	t_cylinder_element c;
@@ -64,17 +64,17 @@ static t_hittable hittable_from_primitive(t_element element) {
 	if (element.kind == ELEM_SPHERE_PRIMITIVE)
 	{
 		s = element.sphere;
-		hittable = hittable_sphere_new(sphere_new(s.center, rgb_from_bytes(s.color), s.diameter / 2.0));
+		err = hittable_sphere_new(s.center, rgb_from_bytes(s.color), s.diameter / 2.0, hittable);
 	}
 	else if (element.kind == ELEM_PLANE_PRIMITIVE)
 	{
 		p = element.plane;
-		hittable = hittable_plane_new(plane_new(p.point, p.normal, rgb_from_bytes(p.color)));
+		err = hittable_plane_new(p.point, p.normal, rgb_from_bytes(p.color), hittable);
 	}
 	else if (element.kind == ELEM_CYLINDER_PRIMITIVE)
 	{
 		c = element.cylinder;
-		hittable = hittable_cylinder_new(cylinder_new(c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color)));
+		err = hittable_cylinder_new(c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color), hittable);
 	}
 #ifndef MINIRT_RELEASE_BUILD  // do not include this in final build
 	else
@@ -83,24 +83,31 @@ static t_hittable hittable_from_primitive(t_element element) {
 		assert(!"unknown primitive");
 	}
 #endif
-	return (hittable);
+	return (err);
 }
 
-static t_hittable_array *gather_objects(t_partitioned_elements *p) {
+static t_error gather_objects(t_partitioned_elements *p, t_hittable_array **out) {
+	t_error err;
 	t_hittable_array	*objects;
 	t_hittable			hittable;
 	t_element_list		*current;
 
 	objects = hittable_array_new(el_len(p->primitives));
 	if (!objects)
-		return (NULL);
+		return (E_OOM);
 	while (p->primitives) {
 		current = el_pop_front_link(&p->primitives);
-		hittable = hittable_from_primitive(current->element);
+		err = hittable_from_primitive(current->element, &hittable);
+		if (err != NO_ERROR)
+		{
+			hittable_array_destroy(&objects);
+			return (err);
+		}
 		hittable_array_push(objects, hittable);
 		el_delone(&current);
 	}
-	return (objects);
+	*out = objects;
+	return (NO_ERROR);
 }
 
 t_error gather_point_lights(t_partitioned_elements *p, t_point_light_array **out)
@@ -159,9 +166,9 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	if (err != NO_ERROR)
 		return (err);
 
-	objects = gather_objects(p);
-	if (!objects)
-		return (E_OOM);
+	err = gather_objects(p, &objects);
+	if (err != NO_ERROR)
+		return (err);
 	*scene_out = scene_new(amb_light, lights, objects);
 	return (NO_ERROR);
 }
