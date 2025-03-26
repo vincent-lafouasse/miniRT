@@ -134,8 +134,6 @@ t_rgb total_specular_shading(t_hit_record hit, t_point_light_array *lights, t_ra
     return col;
 }
 
-bool double_eq(double, double);
-
 t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb specular) {
     t_rgb out = vec3_mul(material.ambient, ambient);
     out = vec3_add(vec3_mul(material.diffuse, diffuse), out);

@@ -1,11 +1,9 @@
-#include <float.h>
+#include "double.h"
 #include <math.h>
-#include <limits.h>
-#include <stdbool.h>
 
 bool double_eq(double a, double b) {
-    double epsilon = 32 * DBL_EPSILON;
-    double abs_th = DBL_MIN;
+    double epsilon = 32 * DOUBLE_EPSILON;
+    double abs_th = DOUBLE_MIN;
 
     if (a == b) return true;
 

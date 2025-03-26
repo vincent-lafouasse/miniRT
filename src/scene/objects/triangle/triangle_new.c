@@ -1,6 +1,6 @@
 #include "t_triangle.h"
 
-bool double_eq(double, double);
+#include "math/double/double.h"
 
 t_error triangle_new(t_point3 a, t_point3 b, t_point3 c, t_rgb color, t_triangle* out) {
 

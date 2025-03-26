@@ -1,4 +1,5 @@
 #include "t_vec3.h"
+#include "math/double/double.h"
 #include <math.h>
 
 t_vec3	vec3_add(t_vec3 self, t_vec3 other)
@@ -72,8 +73,6 @@ bool	vec3_is_bogus(t_vec3 self)
 {
 	return (!(isfinite(self.x) && isfinite(self.y) && isfinite(self.z)));
 }
-
-bool double_eq(double, double);
 
 bool vec3_eq(t_vec3 self, t_vec3 other) {
     return double_eq(self.x, other.x) && double_eq(self.y, other.y) && double_eq(self.z, other.z);
