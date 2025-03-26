@@ -107,6 +107,7 @@ static t_error gather_objects(t_partitioned_elements *p, t_hittable_array **out)
 		if (err != NO_ERROR)
 		{
 			hittable_array_destroy(&objects);
+			el_delone(&current);
 			return (err);
 		}
 		hittable_array_push(objects, hittable);
@@ -134,6 +135,7 @@ t_error gather_point_lights(t_partitioned_elements *p, t_point_light_array **out
 		if (err != NO_ERROR)
 		{
 			point_light_array_destroy(&lights);
+			el_delone(&current);
 			return (err);
 		}
 		point_light_array_push(lights, pt_light);
@@ -174,7 +176,7 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 
 	err = gather_objects(p, &objects);
 	if (err != NO_ERROR)
-		return (err);
+		return (point_light_array_destroy(&lights), err);
 	*scene_out = scene_new(amb_light, lights, objects);
 	return (NO_ERROR);
 }
