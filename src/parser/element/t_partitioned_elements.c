@@ -17,7 +17,9 @@ t_error partitioned_elements_push_front(t_partitioned_elements *p, t_element ele
 		return el_push_front(&p->lights, element);
 	else if (kind == ELEM_SPHERE_PRIMITIVE || \
 			kind == ELEM_PLANE_PRIMITIVE || \
-			kind == ELEM_CYLINDER_PRIMITIVE)
+			kind == ELEM_CYLINDER_PRIMITIVE ||
+			kind == ELEM_TRIANGLE_PRIMITIVE
+		)
 		return el_push_front(&p->primitives, element);
 	return (E_UNREACHABLE);
 }
