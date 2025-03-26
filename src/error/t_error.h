@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 20:53:20 by poss              #+#    #+#             */
-/*   Updated: 2025/03/18 19:06:09 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/26 20:50:39 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum e_error {
     E_OUT_OF_RANGE,
     E_UNEXPECTED_NULL_VECTOR,
     E_BAD_PROGRAM_USAGE,
+    E_FLAT_TRIANGLE,
 
     // library functions errors
     E_OOM,
