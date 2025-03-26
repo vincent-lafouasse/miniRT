@@ -97,14 +97,14 @@ t_rgb total_diffuse_shading(t_hit_record hit, t_point_light_array *lights) {
     return col;
 }
 
-t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double intensity, double alpha) {
+t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double alpha) {
     t_vec3 hit_to_light;
     hit_to_light = vec3_sub(light.coordinates, hit.point);
     hit_to_light = vec3_normalize(hit_to_light);
 
     t_vec3 bissectrice = vec3_sub(hit_to_light, r.direction);
     bissectrice = vec3_normalize(bissectrice);
-    double specular_weight = intensity * pow(
+    double specular_weight = light.intensity * pow(
         vec3_dot(
             hit.normal, bissectrice
         ),
@@ -117,16 +117,14 @@ t_rgb specular_shading(t_hit_record hit, t_point_light light, t_ray r, double in
 t_rgb total_specular_shading(t_hit_record hit, t_point_light_array *lights, t_ray r, double alpha) {
     size_t i;
     t_rgb col;
-    double specular_intensity;
     t_point_light current_light;
 
     i = 0;
     col = rgb_black();
-    specular_intensity = 1.0;
     while (i < lights->len)
     {
         current_light = lights->data[i];
-        col = vec3_add(col, specular_shading(hit, current_light, r, specular_intensity, alpha));
+        col = vec3_add(col, specular_shading(hit, current_light, r, alpha));
         i++;
     }
     return col;
