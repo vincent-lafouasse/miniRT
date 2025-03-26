@@ -27,13 +27,7 @@ void render(const t_camera* camera,
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
-    t_renderer renderer;
-    t_error err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
-    if (err != NO_ERROR)
-    {
-        printf("Error: %s\n", error_repr(err));
-        return (EXIT_FAILURE);
-    }
+    t_error err;
 
     t_camera_specs specs;
     t_scene scene;
@@ -48,11 +42,20 @@ int main(int argc, char **argv) {
         printf("Error: %s\n", error_repr(err));
         return (EXIT_FAILURE);
     }
+
     t_camera camera;
-    err = camera_new(specs, renderer.width, renderer.height, &camera);
+    err = camera_new(specs, WIDTH, WIDTH / (double)ASPECT_RATIO, &camera);
     if (err != NO_ERROR)
     {
         printf("Error: camera: %s\n", error_repr(err));
+        return (EXIT_FAILURE);
+    }
+
+    t_renderer renderer;
+    err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
+    if (err != NO_ERROR)
+    {
+        printf("Error: %s\n", error_repr(err));
         return (EXIT_FAILURE);
     }
 
