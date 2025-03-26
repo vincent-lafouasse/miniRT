@@ -60,6 +60,7 @@ static t_error hittable_from_primitive(t_element element, t_hittable *hittable) 
 	t_sphere_element s;
 	t_plane_element p;
 	t_cylinder_element c;
+	t_triangle_element t;
 
 	if (element.kind == ELEM_SPHERE_PRIMITIVE)
 	{
@@ -75,6 +76,11 @@ static t_error hittable_from_primitive(t_element element, t_hittable *hittable) 
 	{
 		c = element.cylinder;
 		err = hittable_cylinder_new(c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color), hittable);
+	}
+	else if (element.kind == ELEM_TRIANGLE_PRIMITIVE)
+	{
+		t = element.triangle;
+		err = hittable_triangle_new(t.a, t.b, t.c, rgb_from_bytes(t.color), hittable);
 	}
 #ifndef MINIRT_RELEASE_BUILD  // do not include this in final build
 	else
