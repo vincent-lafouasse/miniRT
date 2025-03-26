@@ -35,7 +35,7 @@ t_error	camera_new(t_camera_specs specs,
 
 	if (specs.fov_deg <= 0 || specs.fov_deg >= 180)
 		return (E_OUT_OF_RANGE);
-	if (vec3_eq(specs.direction, vec3_new(0, 0, 0)))
+	if (vec3_length(specs.direction) == 0.0) // double_eq
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(specs.direction))
 	{
