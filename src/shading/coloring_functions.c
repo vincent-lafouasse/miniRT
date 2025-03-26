@@ -1,41 +1,7 @@
 #include "shading.h"
 
 #include "math/double/double.h"
-
-struct s_material {
-    double ambient;
-    double diffuse;
-    double specular;
-    double alpha;
-};
-typedef struct s_material t_material;
-
-t_material material_default(void) {
-    return (t_material){
-        .ambient = 0.4,
-        .diffuse = 1.0,
-        .specular = 1.0,
-        .alpha = 40,
-    };
-}
-
-t_material material_matte(void) {
-    return (t_material){
-        .ambient = 0.4,
-        .diffuse = 1.0,
-        .specular = 0.3,
-        .alpha = 20,
-    };
-}
-
-t_material material_shiny(void) {
-    return (t_material){
-        .ambient = 0.4,
-        .diffuse = 1.0,
-        .specular = 5.0,
-        .alpha = 200,
-    };
-}
+#include "./t_material.h"
 
 bool hit_is_in_shadow(t_hit_record rec, const t_hittable_array* objects, t_point_light light) {
     t_vec3 hit_to_light = vec3_sub(light.coordinates, rec.point);
