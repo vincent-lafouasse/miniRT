@@ -11,6 +11,7 @@
 # define TAG_SPHERE "sp"
 # define TAG_PLANE "pl"
 # define TAG_CYLINDER "cy"
+# define TAG_TRIANGLE "tr"
 
 typedef enum e_element_kind t_element_kind;
 enum e_element_kind {
@@ -20,6 +21,7 @@ enum e_element_kind {
 	ELEM_SPHERE_PRIMITIVE,
 	ELEM_PLANE_PRIMITIVE,
 	ELEM_CYLINDER_PRIMITIVE,
+	ELEM_TRIANGLE_PRIMITIVE,
 };
 
 typedef struct s_ambient_light_element t_ambient_light_element;
@@ -97,6 +99,7 @@ struct s_element {
 		t_sphere_element		sphere;
 		t_plane_element			plane;
 		t_cylinder_element		cylinder;
+		t_triangle_element		triangle;
 	};
 };
 
