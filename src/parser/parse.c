@@ -13,6 +13,7 @@
 #include "read/read_file.h"
 #include "scene/lights/t_ambient_light.h"
 #include "scene/lights/t_point_light.h"
+#include "scene/lights/t_point_light_array/t_point_light_array.h"
 #include "scene/objects/t_hittable.h"
 #include "scene/objects/t_hittable_array/t_hittable_array.h"
 #include "scene/t_scene.h"
@@ -102,6 +103,33 @@ static t_hittable_array *gather_objects(t_partitioned_elements *p) {
 	return (objects);
 }
 
+t_error gather_point_lights(t_partitioned_elements *p, t_point_light_array **out)
+{
+	t_point_light_array	*lights;
+	t_light_element		light;
+	t_point_light		pt_light;
+	t_error				err;
+	t_element_list		*current;
+
+	lights = point_light_array_new(el_len(p->lights));
+	if (!lights)
+		return (E_OOM);
+	while (p->lights) {
+		current = el_pop_front_link(&p->lights);
+		light = current->element.light;
+		err = point_light(light.coordinates, light.brightness_ratio, rgb_from_bytes(light.color), &pt_light);
+		if (err != NO_ERROR)
+		{
+			point_light_array_destroy(&lights);
+			return (err);
+		}
+		point_light_array_push(lights, pt_light);
+		el_delone(&current);
+	}
+	*out = lights;
+	return (NO_ERROR);
+}
+
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
 	if (el_len(p->ambients) != 1)
@@ -110,9 +138,12 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	if (el_len(p->cameras) != 1)
 		return (E_TOO_MANY_CAMERAS);
 
+	if (el_len(p->lights) == 0)
+		return (E_NO_POINT_LIGHT);
+
 	const t_camera_element camera = p->cameras->element.camera;
 	const t_ambient_light_element ambient = p->ambients->element.ambient;
-	const t_light_element light = p->lights->element.light;
+	t_point_light_array *lights;
 	t_hittable_array *objects;
 	t_error err;
 
@@ -124,15 +155,14 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	if (err != NO_ERROR)
 		return (err);
 
-	t_point_light pt_light;
-	err = point_light(light.coordinates, light.brightness_ratio, rgb_from_bytes(light.color), &pt_light);
+	err = gather_point_lights(p, &lights);
 	if (err != NO_ERROR)
 		return (err);
 
 	objects = gather_objects(p);
 	if (!objects)
 		return (E_OOM);
-	*scene_out = scene_new(amb_light, pt_light, objects);
+	*scene_out = scene_new(amb_light, lights, objects);
 	return (NO_ERROR);
 }
 
