@@ -35,7 +35,7 @@
 #define MLX_NEW_IMAGE_REPR "MLX new image"
 
 #define READ_REPR "Read"
-#define OPEN_REPR "Read"
+#define OPEN_REPR "Open"
 
 #define UNREACHABLE_REPR "Programming error"
 
