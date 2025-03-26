@@ -1,5 +1,7 @@
 #include "./t_plane.h"
 
+#include "math/double/double.h"
+
 #include <stdio.h>
 
 static void report_non_unit_normal(void)
@@ -9,7 +11,7 @@ static void report_non_unit_normal(void)
 
 t_error plane_new(t_point3 origin, t_vec3 normal, t_rgb color, t_plane *out)
 {
-	if (vec3_length(normal) == 0.0) // double_eq
+	if (double_eq(vec3_length(normal), 0.0))
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(normal))
 	{

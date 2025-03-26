@@ -1,5 +1,7 @@
 #include "./t_cylinder.h"
 
+#include "math/double/double.h"
+
 #include <stdio.h>
 
 static void report_non_unit_axis(void)
@@ -9,7 +11,7 @@ static void report_non_unit_axis(void)
 
 t_error cylinder_new(t_point3 point, t_vec3 axis, double radius, double height, t_rgb color, t_cylinder *out)
 {
-	if (vec3_length(axis) == 0.0) // double_eq
+	if (double_eq(vec3_length(axis), 0.0))
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(axis))
 	{
