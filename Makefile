@@ -6,12 +6,14 @@ CC        = cc
 CFLAGS    = -Wall -Wextra
 # CFLAGS   += -Werror
 DEBUG_FLAGS = -g3
+ifdef RELEASE_MODE
 OPTIMIZATION_FLAGS = -O3 -flto
+endif
 CFLAGS += $(OPTIMIZATION_FLAGS)
 
 CPPFLAGS  = -Isrc -MMD -MP
 LDLIBS = -lm
-LDFLAGS =
+LDFLAGS = $(OPTIMIZATION_FLAGS)
 
 SRCS  = $(shell find src -name '*.c')
 OBJS := $(SRCS:%=build/%.o)
