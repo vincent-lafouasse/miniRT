@@ -30,7 +30,7 @@ t_material material_default(void) {
     return (t_material){
         .ambient = 0.4,
         .diffuse = 1.0,
-        .specular = 15.0,
+        .specular = 0.5,
         .alpha = 10,
     };
 }
@@ -142,7 +142,7 @@ t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb spec
 }
 
 t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
-    t_material material = material_default(); // object property ?
+    t_material material = material_shiny(); // object property ?
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
 
