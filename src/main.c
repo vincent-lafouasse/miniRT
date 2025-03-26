@@ -14,11 +14,6 @@
 
 #include <stdio.h>
 
-typedef struct {
-    int x;
-    int y;
-} Point2;
-
 struct s_material {
     double ambient;
     double diffuse;
@@ -141,7 +136,7 @@ t_rgb sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse, t_rgb spec
 }
 
 t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
-    t_material material = material_matte(); // object property ?
+    t_material material = material_default(); // object property ?
 
     t_rgb ambient = ambient_shading(scene->ambient_light);
 
@@ -162,13 +157,11 @@ t_rgb ray_color(t_ray r, const t_scene* scene) {
     }
 }
 
-typedef t_rgb (*t_coloring_ft)(Point2, const t_camera*, const t_scene*);
-
 // alternative entry point
-t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_scene* scene) {
+t_rgb pixel_color_with_antialiasing(int x, int y, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel_center = vec3_add(
-        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
-        vec3_mul((double)px.y, camera->delta_v));
+        vec3_add(camera->pixel00, vec3_mul(x, camera->delta_u)),
+        vec3_mul(y, camera->delta_v));
 
     t_point3 sub_pixel = vec3_add(pixel_center, vec3_div(vec3_add(camera->delta_u, camera->delta_v), 4.0));
     t_ray ray = ray_new(camera->position, vec3_sub(sub_pixel, camera->position));
@@ -189,10 +182,10 @@ t_rgb pixel_color_with_antialiasing(Point2 px, const t_camera* camera, const t_s
     return vec3_div(color, 4.0);
 }
 
-t_rgb pixel_color_flat(Point2 px, const t_camera* camera, const t_scene* scene) {
+t_rgb pixel_color_flat(int x, int y, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
-        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
-        vec3_mul((double)px.y, camera->delta_v));
+        vec3_add(camera->pixel00, vec3_mul(x, camera->delta_u)),
+        vec3_mul(y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
     t_ray ray = ray_new(camera->position, ray_direction);
 
@@ -207,10 +200,10 @@ t_rgb pixel_color_flat(Point2 px, const t_camera* camera, const t_scene* scene) 
 }
 
 // main entry point
-t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
+t_rgb pixel_color(int x, int y, const t_camera* camera, const t_scene* scene) {
     t_point3 pixel = vec3_add(
-        vec3_add(camera->pixel00, vec3_mul((double)px.x, camera->delta_u)),
-        vec3_mul((double)px.y, camera->delta_v));
+        vec3_add(camera->pixel00, vec3_mul(x, camera->delta_u)),
+        vec3_mul(y, camera->delta_v));
     t_vec3 ray_direction = vec3_sub(pixel, camera->position);
     t_ray ray = ray_new(camera->position, ray_direction);
     return ray_color(ray, scene);
@@ -219,12 +212,11 @@ t_rgb pixel_color(Point2 px, const t_camera* camera, const t_scene* scene) {
 // will be hidden
 void render(const t_camera* camera,
             const t_scene* scene,
-            t_renderer* renderer,
-            t_coloring_ft coloring_ft) {
+            t_renderer* renderer) {
     for (size_t x = 0; x < renderer->width; x++) {
+        printf("%zu/%zu\n", x, renderer->width);
         for (size_t y = 0; y < renderer->height; y++) {
-            Point2 pixel = (Point2){.x = (int)x, .y = (int)y};
-            t_rgb color = (*coloring_ft)(pixel, camera, scene);
+            t_rgb color = pixel_color(x, y, camera, scene);
             renderer_put_pixel(renderer, x, y, rgb_to_bytes(color));
         }
     }
@@ -233,7 +225,7 @@ void render(const t_camera* camera,
     renderer_enter_loop(renderer);
 }
 
-#define WIDTH 2000
+#define WIDTH 1000
 #define ASPECT_RATIO (16.0 / 9.0)
 
 #include <stdlib.h>
@@ -268,7 +260,7 @@ int main(int argc, char **argv) {
         return (EXIT_FAILURE);
     }
 
-    render(&camera, &scene, &renderer, pixel_color);
+    render(&camera, &scene, &renderer);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
 }
