@@ -39,3 +39,14 @@ t_error	hittable_cylinder_new(t_point3 point, t_vec3 axis, double radius, double
 	*out = ((t_hittable){.type = HITTABLE_CYLINDER, .cylinder = cylinder});
 	return (NO_ERROR);
 }
+
+t_error	hittable_triangle_new(t_point3 a, t_point3 b, t_point3 c, t_rgb color, t_hittable *out) {
+	t_triangle triangle;
+	t_error err;
+
+	err = triangle_new(a, b, c, color, &triangle);
+	if (err != NO_ERROR)
+		return err;
+	*out = (t_hittable){.type = HITTABLE_TRIANGLE, .triangle = triangle};
+	return NO_ERROR;
+}
