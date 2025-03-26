@@ -76,6 +76,16 @@ struct s_cylinder_element {
 	uint8_t		color[3];
 };
 
+typedef struct s_triangle_element t_triangle_element;
+struct s_triangle_element {
+	// these points cannot be colinear
+	t_point3	a;
+	t_point3	b;
+	t_point3	c;
+	// 0 <= color[n] <= 255
+	uint8_t		color[3];
+};
+
 typedef struct s_element t_element;
 struct s_element {
 	t_element_kind	kind;
