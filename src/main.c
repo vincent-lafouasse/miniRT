@@ -2,7 +2,6 @@
 #include "parser/parse.h"
 #include "render/t_renderer.h"
 #include "scene/t_scene.h"
-#include "shading/shading.h"
 
 #include <stdio.h>
 

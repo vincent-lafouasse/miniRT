@@ -6,6 +6,8 @@
 #include "./lights/t_point_light_array/t_point_light_array.h"
 #include "./objects/t_hittable_array/t_hittable_array.h"
 
+#include "math/t_rgb/t_rgb.h"
+
 struct s_scene {
 	t_ambient_light			ambient_light;
 	t_point_light_array		*point_lights;
@@ -14,6 +16,8 @@ struct s_scene {
 typedef struct s_scene	t_scene;
 
 t_scene scene_new(t_ambient_light ambient_light, t_point_light_array *point_lights, t_hittable_array *objects);
+
+t_rgb scene_ray_color(const t_scene* scene, t_ray r);
 
 void scene_destroy(t_scene *scene);
 
