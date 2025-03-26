@@ -28,18 +28,18 @@ t_error renderer_from_dimensions(size_t width, size_t height, t_renderer *out) {
     r = (t_renderer){.height = height, .width = width, 0};
     r.mlx = mlx_init();
     if (!r.mlx)
-        return (E_OOM);
+        return (E_MLX_INIT);
     r.window = mlx_new_window(r.mlx, width, r.height, "miniRT");
     if (!r.window)
     {
         renderer_destroy(&r);
-        return (E_OOM);
+        return (E_MLX_NEW_WINDOW);
     }
     r.img = mlx_new_image(r.mlx, width, r.height);
     if (!r.img)
     {
         renderer_destroy(&r);
-        return (E_OOM);
+        return (E_MLX_NEW_IMAGE);
     }
     r.addr = mlx_get_data_addr(r.img, &r.bits_per_pixel,
                                    &r.line_length, &r.endian);

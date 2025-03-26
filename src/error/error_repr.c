@@ -30,6 +30,9 @@
 #define FLAT_TRIANGLE_REPR "Triangle vertices cannot be colinear"
 
 #define OOM_REPR "Malloc"
+#define MLX_INIT_REPR "MLX init"
+#define MLX_NEW_WINDOW_REPR "MLX new window"
+#define MLX_NEW_IMAGE_REPR "MLX new image"
 
 #define READ_REPR "Read"
 #define OPEN_REPR "Read"
@@ -69,6 +72,12 @@ const char* error_repr(t_error err) {
         return (FLAT_TRIANGLE_REPR);
     if (err == E_OOM)
         return (OOM_REPR);
+    if (err == E_MLX_INIT)
+        return (MLX_INIT_REPR);
+    if (err == E_MLX_NEW_WINDOW)
+        return (MLX_NEW_WINDOW_REPR);
+    if (err == E_MLX_NEW_IMAGE)
+        return (MLX_NEW_IMAGE_REPR);
     if (err == E_READ)
         return (READ_REPR);
     if (err == E_OPEN)

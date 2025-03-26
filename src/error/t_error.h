@@ -33,6 +33,9 @@ enum e_error {
 
     // library functions errors
     E_OOM,
+    E_MLX_INIT,
+    E_MLX_NEW_WINDOW,
+    E_MLX_NEW_IMAGE,
 
     // system call errors
     E_OPEN,
