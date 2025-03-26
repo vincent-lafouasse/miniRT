@@ -3,8 +3,7 @@ NAME = miniRT
 ### definitions
 
 CC        = cc
-CFLAGS    = -Wall -Wextra
-# CFLAGS   += -Werror
+CFLAGS    = -Wall -Wextra -Werror
 DEBUG_FLAGS = -g3
 ifdef RELEASE_MODE
 OPTIMIZATION_FLAGS = -O3 -flto
