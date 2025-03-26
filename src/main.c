@@ -60,7 +60,7 @@ bool hit_is_in_shadow(t_hit_record rec, const t_hittable_array* objects, t_point
     t_vec3 hit_to_light_unit = vec3_div(hit_to_light, distance_to_light);
 
     t_hit_record _;
-    return hittable_array_hit(objects, interval_new(32 * DOUBLE_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_);
+    return hittable_array_hit(objects, interval_new(1024 * distance_to_light * DOUBLE_EPSILON, distance_to_light), (t_ray){.origin = rec.point, .direction = hit_to_light_unit} , &_);
 }
 
 t_rgb ambient_shading(t_ambient_light light) {
@@ -153,7 +153,7 @@ t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
 
 t_rgb ray_color(t_ray r, const t_scene* scene) {
     t_hit_record rec;
-    bool hit = hittable_array_hit(scene->objects, interval_new(32 * DOUBLE_EPSILON, INFINITY), r, &rec);
+    bool hit = hittable_array_hit(scene->objects, interval_new(1024 * DOUBLE_EPSILON, INFINITY), r, &rec);
 
     if (hit) {
         return hit_color(rec, r, scene);
@@ -197,7 +197,7 @@ t_rgb pixel_color_flat(Point2 px, const t_camera* camera, const t_scene* scene) 
     t_ray ray = ray_new(camera->position, ray_direction);
 
     t_hit_record _;
-    bool hit = hittable_array_hit(scene->objects, interval_new(32 * DOUBLE_EPSILON, INFINITY), ray, &_);
+    bool hit = hittable_array_hit(scene->objects, interval_new(1024 * DOUBLE_EPSILON, INFINITY), ray, &_);
 
     if (!hit) {
         return vec3_new(0,0,0);
