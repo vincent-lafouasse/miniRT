@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 19:43:07 by poss              #+#    #+#             */
-/*   Updated: 2025/03/27 19:52:38 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/27 19:54:34 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static t_sph_hit_ctx	compute(t_sphere sph, t_ray ray)
 
 static t_hit_record	construct_hit_record(double t, t_ray ray, t_sphere sph)
 {
-	t_hit_record	out;
 	t_vec3			hit;
 	t_vec3			normal;
 
