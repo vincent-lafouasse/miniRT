@@ -82,6 +82,9 @@ test: $(LIBS)
 	GTEST_COLOR=1 ctest --test-dir build/test $(CTEST_OPT)
 
 .PHONY: vtest
+ifdef TEST_WITH_MEMCHECK
+vtest: CTEST_OPT += -T memcheck
+endif
 vtest: CTEST_OPT += -V
 vtest: test
 
