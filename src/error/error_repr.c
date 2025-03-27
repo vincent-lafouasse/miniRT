@@ -20,8 +20,8 @@
 #define MALFORMATTED_COLOR_REPR "Malformatted color"
 #define MALFORMATTED_VECTOR_REPR "Malformatted vector"
 #define INVALID_NUMBER_REPR "Invalid number"
-#define TOO_MANY_CAMERAS_REPR "Too many cameras"
-#define TOO_MANY_AMBIENT_LIGHTS_REPR "Too many ambient lights"
+#define MUST_HAVE_ONE_CAMERA_REPR "Must have one camera"
+#define MUST_HAVE_ONE_AMBIENT_LIGHT_REPR "Must have one ambient light"
 #define NO_POINT_LIGHT_REPR "No point light"
 #define VECTOR_NOT_NORMALIZED_REPR "Vector not normalized"
 #define OUT_OF_RANGE_REPR "Value out of range"
@@ -56,10 +56,10 @@ const char* error_repr(t_error err) {
         return (MALFORMATTED_VECTOR_REPR);
     if (err == E_INVALID_NUMBER)
         return (INVALID_NUMBER_REPR);
-    if (err == E_TOO_MANY_CAMERAS)
-        return (TOO_MANY_CAMERAS_REPR);
-    if (err == E_TOO_MANY_AMBIENT_LIGHTS)
-        return (TOO_MANY_AMBIENT_LIGHTS_REPR);
+    if (err == E_MUST_HAVE_ONE_CAMERA)
+        return (MUST_HAVE_ONE_CAMERA_REPR);
+    if (err == E_MUST_HAVE_ONE_AMBIENT_LIGHT)
+        return (MUST_HAVE_ONE_AMBIENT_LIGHT_REPR);
     if (err == E_NO_POINT_LIGHT)
         return (NO_POINT_LIGHT_REPR);
     if (err == E_OUT_OF_RANGE)

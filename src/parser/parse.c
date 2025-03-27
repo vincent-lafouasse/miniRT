@@ -148,10 +148,10 @@ t_error gather_point_lights(t_partitioned_elements *p, t_point_light_array **out
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
 	if (el_len(p->ambients) != 1)
-		return (E_TOO_MANY_AMBIENT_LIGHTS);
+		return (E_MUST_HAVE_ONE_AMBIENT_LIGHT);
 
 	if (el_len(p->cameras) != 1)
-		return (E_TOO_MANY_CAMERAS);
+		return (E_MUST_HAVE_ONE_CAMERA);
 
 	if (el_len(p->lights) == 0)
 		return (E_NO_POINT_LIGHT);
