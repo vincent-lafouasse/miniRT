@@ -1,11 +1,11 @@
 #include <cmath>
 #include <iostream>
 #include "Vector.hpp"
-#include "error/t_error.h"
 #include "gtest/gtest.h"
 
 extern "C" {
 #include "camera/t_camera.h"
+#include "error/t_error.h"
 #include "math/t_vec3/t_vec3.h"
 };
 
