@@ -2,6 +2,7 @@
 
 extern "C" {
 #include "error/t_error.h"
+#include "scene/t_scene.h"
 #include "parser/parse.h"
 };
 
@@ -64,6 +65,8 @@ TEST(Parser, BasicSceneWithoutHittablesWorks) {
     EXPECT_POINT_LIGHT_EQ(scene.point_lights->data[0], expected_point_light);
 
     EXPECT_EQ(scene.objects->len, 0u);
+
+    scene_destroy(&scene);
 }
 
 TEST(Parser, BasicSceneWithOneSphereWorks) {
@@ -112,6 +115,8 @@ TEST(Parser, BasicSceneWithOneSphereWorks) {
     ASSERT_EQ(scene.objects->data[0].type, HITTABLE_SPHERE);
     t_sphere sphere = scene.objects->data[0].sphere;
     EXPECT_SPHERE_EQ(sphere, expected_sphere);
+
+    scene_destroy(&scene);
 }
 
 TEST(Parser, UnknownElementFails) {
