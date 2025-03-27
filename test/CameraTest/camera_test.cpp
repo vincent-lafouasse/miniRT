@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include "Vector.hpp"
+#include "error/t_error.h"
 #include "gtest/gtest.h"
 
 extern "C" {
@@ -30,8 +31,80 @@ static double rad_to_deg(double radians) {
     return radians * 180.0 / M_PI;
 }
 
-TEST(Camera, OutOfRangeFovFails) {
-    FAIL() << "unimplemented";
+TEST(Camera, NegativeFovFails) {
+    size_t h = 1;
+    size_t w = 1;
+
+    Vector origin = Vector::Origin();
+    Vector orientation = -Vector::E_Z();
+
+    double fov_deg = -1;
+
+    t_camera_specs specs = (t_camera_specs){
+        .position = origin.get(),
+        .direction = orientation.get(),
+        .fov_deg = fov_deg,
+    };
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, E_OUT_OF_RANGE);
+}
+
+TEST(Camera, TooBigFovFails) {
+    size_t h = 1;
+    size_t w = 1;
+
+    Vector origin = Vector::Origin();
+    Vector orientation = -Vector::E_Z();
+
+    double fov_deg = 420;
+
+    t_camera_specs specs = (t_camera_specs){
+        .position = origin.get(),
+        .direction = orientation.get(),
+        .fov_deg = fov_deg,
+    };
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, E_OUT_OF_RANGE);
+}
+
+TEST(Camera, ZeroFovFails) {
+    size_t h = 1;
+    size_t w = 1;
+
+    Vector origin = Vector::Origin();
+    Vector orientation = -Vector::E_Z();
+
+    double fov_deg = 0;
+
+    t_camera_specs specs = (t_camera_specs){
+        .position = origin.get(),
+        .direction = orientation.get(),
+        .fov_deg = fov_deg,
+    };
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, E_OUT_OF_RANGE);
+}
+
+TEST(Camera, NullVectorAsDirectionFails) {
+    size_t h = 1;
+    size_t w = 1;
+
+    Vector origin = Vector::Origin();
+    Vector orientation = Vector(0, 0, 0);
+
+    double fov_deg = 90;
+
+    t_camera_specs specs = (t_camera_specs){
+        .position = origin.get(),
+        .direction = orientation.get(),
+        .fov_deg = fov_deg,
+    };
+    t_camera actual;
+    t_error err = camera_new(specs, w, h, &actual);
+    ASSERT_EQ(err, E_UNEXPECTED_NULL_VECTOR);
 }
 
 TEST(Camera, AlongOz_OneByOne) {
