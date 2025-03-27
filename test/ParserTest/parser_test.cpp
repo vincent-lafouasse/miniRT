@@ -60,7 +60,8 @@ TEST(Parser, BasicSceneWithoutHittablesWorks) {
 
     EXPECT_CAM_EQ(camera, expected_camera);
     EXPECT_AMBIENT_EQ(scene.ambient_light, expected_ambient_light);
-    EXPECT_POINT_LIGHT_EQ(scene.point_light, expected_point_light);
+    EXPECT_EQ(scene.point_lights->len, 1);
+    EXPECT_POINT_LIGHT_EQ(scene.point_lights->data[0], expected_point_light);
 
     EXPECT_EQ(scene.objects->len, 0u);
 }
@@ -103,7 +104,8 @@ TEST(Parser, BasicSceneWithOneSphereWorks) {
 
     EXPECT_CAM_EQ(camera, expected_camera);
     EXPECT_AMBIENT_EQ(scene.ambient_light, expected_ambient_light);
-    EXPECT_POINT_LIGHT_EQ(scene.point_light, expected_point_light);
+    EXPECT_EQ(scene.point_lights->len, 1);
+    EXPECT_POINT_LIGHT_EQ(scene.point_lights->data[0], expected_point_light);
 
     ASSERT_EQ(scene.objects->len, 1u);
 
