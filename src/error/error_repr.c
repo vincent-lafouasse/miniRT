@@ -22,6 +22,7 @@
 #define INVALID_NUMBER_REPR "Invalid number"
 #define MUST_HAVE_ONE_CAMERA_REPR "Must have one camera"
 #define MUST_HAVE_ONE_AMBIENT_LIGHT_REPR "Must have one ambient light"
+#define BAD_MAP_SUFFIX_REPR "Map filename must end in \".rt\""
 #define NO_POINT_LIGHT_REPR "No point light"
 #define VECTOR_NOT_NORMALIZED_REPR "Vector not normalized"
 #define OUT_OF_RANGE_REPR "Value out of range"
@@ -60,6 +61,8 @@ const char* error_repr(t_error err) {
         return (MUST_HAVE_ONE_CAMERA_REPR);
     if (err == E_MUST_HAVE_ONE_AMBIENT_LIGHT)
         return (MUST_HAVE_ONE_AMBIENT_LIGHT_REPR);
+    if (err == E_BAD_MAP_SUFFIX)
+        return (BAD_MAP_SUFFIX_REPR);
     if (err == E_NO_POINT_LIGHT)
         return (NO_POINT_LIGHT_REPR);
     if (err == E_OUT_OF_RANGE)

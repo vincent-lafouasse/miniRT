@@ -30,6 +30,17 @@ extern "C" {
     EXPECT_VEC3_EQ(a.color, b.color); \
     EXPECT_DOUBLE_EQ(a.radius, b.radius)
 
+TEST(Parser, ParseFromFileRejectsNonRtFile) {
+    const char* filename = "./balls";
+
+    t_camera_specs camera;
+    t_scene scene;
+
+    t_error err = parse_from_file(filename, &camera, &scene);
+    EXPECT_NE(err, NO_ERROR) << "expected fail from parse_from_file, got: " << error_repr(err);
+    ASSERT_EQ(err, E_BAD_MAP_SUFFIX) << "received wrong error from parse_from_file method: " << error_repr(err);
+}
+
 TEST(Parser, BasicSceneWithoutHittablesWorks) {
     const char* input =
         "C 1,2,3 1,0,0 90\n"

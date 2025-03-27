@@ -29,6 +29,7 @@ enum e_error {
     E_OUT_OF_RANGE,
     E_UNEXPECTED_NULL_VECTOR,
     E_BAD_PROGRAM_USAGE,
+    E_BAD_MAP_SUFFIX,
     E_FLAT_TRIANGLE,
 
     // library functions errors
