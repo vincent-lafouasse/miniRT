@@ -27,7 +27,7 @@ bool cylinder_shaft_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit_
 
 	o = vec3_cross(n, cylinder.axis);
 	o = vec3_normalize(o);
-	double t_shift = fabs(sqrt(cylinder.radius * cylinder.radius - d * d));
+	double t_shift = fabs(sqrt(cylinder.radius * cylinder.radius - d * d) / vec3_dot(ray.direction, o));
 
 	double t0 = t_midpoint - t_shift;
 	double t1 = t_midpoint + t_shift;
