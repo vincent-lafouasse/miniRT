@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 19:43:07 by poss              #+#    #+#             */
-/*   Updated: 2025/03/27 19:54:34 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/28 16:45:24 by vlafouas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_hit_record	construct_hit_record(double t, t_ray ray, t_sphere sph)
 
 	hit = ray_at(ray, t);
 	normal = vec3_normalize(vec3_sub(hit, sph.origin));
-	if (vec3_dot(ray.origin, normal) > 0.0)
+	if (vec3_dot(ray.direction, normal) > 0.0)
 	{
 		normal = vec3_negate(normal);
 	}
