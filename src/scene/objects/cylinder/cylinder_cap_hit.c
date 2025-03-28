@@ -54,5 +54,34 @@ bool cylinder_endcap_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit
 	t_disk cap1;
 	t_disk cap2;
 	get_endcaps(cylinder, &cap1, &cap2);
+
+	t_hit_record rec1;
+	t_hit_record rec2;
+	bool hit1 = disk_hit(cap1, range, ray, &rec1);
+	bool hit2 = disk_hit(cap2, range, ray, &rec2);
+
+	if (hit1 && hit2) {
+		if (rec2.t < rec1.t)
+		{
+			*rec = rec2;
+			return true;
+		}
+		else
+		{
+			*rec = rec1;
+			return true;
+		}
+	}
+	else if (hit1)
+	{
+		*rec = rec2;
+		return true;
+	}
+	else if (hit2)
+	{
+		*rec = rec1;
+		return true;
+	}
+
 	return false;
 }
