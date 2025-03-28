@@ -74,12 +74,12 @@ bool cylinder_endcap_hit(t_cylinder cylinder, t_interval range, t_ray ray, t_hit
 	}
 	else if (hit1)
 	{
-		*rec = rec2;
+		*rec = rec1;
 		return true;
 	}
 	else if (hit2)
 	{
-		*rec = rec1;
+		*rec = rec2;
 		return true;
 	}
 
