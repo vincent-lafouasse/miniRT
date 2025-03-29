@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   double.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/30 00:22:42 by poss              #+#    #+#             */
+/*   Updated: 2025/03/30 00:22:43 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DOUBLE_H
-#define DOUBLE_H
+# define DOUBLE_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
-#define DOUBLE_EPSILON 2.2204460492503131e-016
-#define DOUBLE_MIN 2.2250738585072014e-308
+# define DOUBLE_EPSILON 2.2204460492503131e-016
+# define DOUBLE_MIN 2.2250738585072014e-308
 
-bool double_eq(double a, double b);
+bool	double_eq(double a, double b);
 
 #endif
