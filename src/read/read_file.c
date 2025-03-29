@@ -1,17 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 21:05:21 by poss              #+#    #+#             */
+/*   Updated: 2025/03/29 21:05:23 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./read_file.h"
-
 #include "./t_string/t_string.h"
-
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
 
-static t_error read_from_fd(int fd, t_string **output);
+static t_error	read_from_fd(int fd, t_string **output);
 
-t_error read_file(const char *filename, char **output)
+t_error	read_file(const char *filename, char **output)
 {
-	int fd;
-	t_error err;
-	t_string *file;
+	int			fd;
+	t_error		err;
+	t_string	*file;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -35,7 +45,7 @@ t_error read_file(const char *filename, char **output)
 	return (err);
 }
 
-static t_error read_from_fd(int fd, t_string **output)
+static t_error	read_from_fd(int fd, t_string **output)
 {
 	ssize_t	bytes_read;
 
@@ -44,7 +54,8 @@ static t_error read_from_fd(int fd, t_string **output)
 	{
 		if (string_reserve(output, READ_FILE_BUFFER_SIZE))
 			return (E_OOM);
-		bytes_read = read(fd, &(*output)->data[(*output)->len], READ_FILE_BUFFER_SIZE);
+		bytes_read = read(fd, &(*output)->data[(*output)->len],
+				READ_FILE_BUFFER_SIZE);
 		if (bytes_read > 0)
 			(*output)->len += bytes_read;
 	}
