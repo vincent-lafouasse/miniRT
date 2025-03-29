@@ -5,16 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 00:31:05 by poss              #+#    #+#             */
-/*   Updated: 2025/03/30 00:31:06 by poss             ###   ########.fr       */
+/*   Created: 2025/03/30 00:32:37 by poss              #+#    #+#             */
+/*   Updated: 2025/03/30 00:34:00 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math/double/double.h"
 #include "t_vec3.h"
+#include <math.h>
 
-bool	vec3_eq(t_vec3 self, t_vec3 other)
+t_vec3	vec3_bogus(void)
 {
-	return (double_eq(self.x, other.x) && double_eq(self.y, other.y)
-		&& double_eq(self.z, other.z));
+	return (vec3_new(INFINITY, INFINITY, INFINITY));
+}
+
+bool	vec3_is_bogus(t_vec3 self)
+{
+	return (!(isfinite(self.x) && isfinite(self.y) && isfinite(self.z)));
 }
