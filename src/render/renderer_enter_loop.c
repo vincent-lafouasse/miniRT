@@ -1,8 +1,19 @@
-#include "./t_renderer.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   renderer_enter_loop.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/29 21:04:22 by poss              #+#    #+#             */
+/*   Updated: 2025/03/29 21:04:23 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "./t_renderer.h"
 #include <mlx.h>
 
-void renderer_enter_loop(t_renderer *self)
+void	renderer_enter_loop(t_renderer *self)
 {
 	mlx_loop(self->mlx);
 }
