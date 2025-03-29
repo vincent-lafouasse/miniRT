@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 21:21:47 by poss              #+#    #+#             */
-/*   Updated: 2025/03/18 21:24:34 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/30 00:26:43 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static uint8_t	clamp_and_cast_float(double value)
 
 uint32_t	rgb_to_bytes(t_rgb self)
 {
-	return (clamp_and_cast_float(self.x
-			* 256.0) << 16) | (clamp_and_cast_float(self.y
-			* 256.0) << 8) | clamp_and_cast_float(self.z * 256.0);
+	return ((clamp_and_cast_float(self.x
+				* 256.0) << 16) | (clamp_and_cast_float(self.y
+				* 256.0) << 8) | clamp_and_cast_float(self.z * 256.0));
 }
