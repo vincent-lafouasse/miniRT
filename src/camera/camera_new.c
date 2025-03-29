@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:35:05 by poss              #+#    #+#             */
-/*   Updated: 2025/03/30 00:40:07 by poss             ###   ########.fr       */
+/*   Updated: 2025/03/30 00:40:30 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@
 
 typedef struct s_dimension
 {
-	double			w;
-	double			h;
-}					t_dimension;
+	double	w;
+	double	h;
+}	t_dimension;
 
 typedef struct s_viewport
 {
-	t_vec3			u;
-	t_vec3			v;
-	t_vec3			delta_u;
-	t_vec3			delta_v;
-}					t_viewport;
+	t_vec3	u;
+	t_vec3	v;
+	t_vec3	delta_u;
+	t_vec3	delta_v;
+}	t_viewport;
 
 static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen);
 static t_vec3		compute_pixel00(t_point3 camera_position, t_vec3 direction,
