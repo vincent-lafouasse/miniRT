@@ -1,18 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_vec3.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/30 00:27:30 by poss              #+#    #+#             */
+/*   Updated: 2025/03/30 00:27:30 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef T_VEC3_H
 # define T_VEC3_H
 
 # include <stdbool.h>
 
-struct s_vec3 {
-	double x;
-	double y;
-	double z;
+struct	s_vec3
+{
+	double	x;
+	double	y;
+	double	z;
 };
 typedef struct s_vec3	t_vec3;
 typedef struct s_vec3	t_point3;
 
-static inline t_vec3	vec3_new(double x, double y, double z) {
-	return (t_vec3){.x = x, .y = y, .z = z};
+static inline t_vec3	vec3_new(double x, double y, double z)
+{
+	return ((t_vec3){.x = x, .y = y, .z = z});
 }
 
 t_vec3	vec3_add(t_vec3 self, t_vec3 other);
@@ -25,7 +39,7 @@ double	vec3_dot(t_vec3 self, t_vec3 other);
 t_vec3	vec3_cross(t_vec3 self, t_vec3 other);
 t_vec3	vec3_normalize(t_vec3 self);
 
-bool vec3_eq(t_vec3 self, t_vec3 other);
+bool	vec3_eq(t_vec3 self, t_vec3 other);
 bool	vec3_is_unit(t_vec3 self);
 bool	vec3_is_bogus(t_vec3 self);
 
