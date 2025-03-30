@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 19:43:07 by poss              #+#    #+#             */
-/*   Updated: 2025/03/28 16:45:24 by vlafouas         ###   ########.fr       */
+/*   Updated: 2025/03/30 01:20:34 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static t_sph_hit_ctx	compute(t_sphere sph, t_ray ray)
 
 static t_hit_record	construct_hit_record(double t, t_ray ray, t_sphere sph)
 {
-	t_vec3			hit;
-	t_vec3			normal;
+	t_vec3	hit;
+	t_vec3	normal;
 
 	hit = ray_at(ray, t);
 	normal = vec3_normalize(vec3_sub(hit, sph.origin));
@@ -63,9 +63,7 @@ bool	sphere_hit(t_sphere sphere, t_interval range, t_ray ray,
 	ctx = compute(sphere, ray);
 	delta = ctx.b * ctx.b - 4.0 * ctx.a * ctx.c;
 	if (delta < 0.0)
-	{
 		return (false);
-	}
 	delta = sqrt(delta);
 	x0 = (-ctx.b - delta) / (2.0 * ctx.a);
 	x1 = (-ctx.b + delta) / (2.0 * ctx.a);
