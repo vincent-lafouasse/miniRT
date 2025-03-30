@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ambient.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/30 01:13:29 by poss              #+#    #+#             */
+/*   Updated: 2025/03/30 01:13:30 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shading.h"
 
-t_rgb ambient_shading(t_ambient_light light) {
-    return vec3_mul(light.intensity, light.color);
+t_rgb	ambient_shading(t_ambient_light light)
+{
+	return (vec3_mul(light.intensity, light.color));
 }

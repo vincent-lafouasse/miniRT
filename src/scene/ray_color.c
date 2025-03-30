@@ -26,7 +26,7 @@ t_rgb hit_color(t_hit_record hit, t_ray r, const t_scene* scene) {
     t_rgb ambient = ambient_shading(scene->ambient_light);
 
     t_rgb diffuse = total_diffuse_shading(hit, scene->point_lights, scene->objects);
-    t_rgb specular = total_specular_shading(hit, scene->point_lights, r, material.alpha, scene->objects);
+    t_rgb specular = total_specular_shading(hit, scene->point_lights, (t_specular_ctx){.r=r, .alpha=material.alpha, .objects=scene->objects});
 
     return sum_shadings(material, ambient, diffuse, specular);
 }
