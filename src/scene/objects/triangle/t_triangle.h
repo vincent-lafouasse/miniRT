@@ -15,6 +15,14 @@ struct s_triangle {
 };
 typedef struct s_triangle t_triangle;
 
-t_error triangle_new(t_point3 a, t_point3 b, t_point3 c, t_rgb color, t_triangle* out);
+struct s_triangle_specs {
+	t_point3 a;
+	t_point3 b;
+	t_point3 c;
+	t_rgb color;
+};
+typedef struct s_triangle_specs t_triangle_specs;
+
+t_error triangle_new(t_triangle_specs specs, t_triangle* out);
 
 #endif

@@ -19,13 +19,20 @@
 
 struct	s_plane
 {
-	t_point3	origin;
-	t_vec3		normal;
-	t_rgb		color;
+	t_point3					origin;
+	t_vec3						normal;
+	t_rgb						color;
 };
-typedef struct s_plane	t_plane;
+typedef struct s_plane			t_plane;
 
-t_error		plane_new(t_point3 origin, t_vec3 normal, t_rgb color,
-				t_plane *out);
+struct	s_plane_specs
+{
+	t_point3					origin;
+	t_vec3						normal;
+	t_rgb						color;
+};
+typedef struct s_plane_specs	t_plane_specs;
+
+t_error		plane_new(t_plane_specs specs, t_plane *out);
 
 #endif // T_PLANE_H

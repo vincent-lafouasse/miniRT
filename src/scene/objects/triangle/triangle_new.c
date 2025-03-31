@@ -2,11 +2,11 @@
 
 #include "math/double/double.h"
 
-t_error triangle_new(t_point3 a, t_point3 b, t_point3 c, t_rgb color, t_triangle* out) {
+t_error triangle_new(t_triangle_specs specs, t_triangle* out) {
 
-	t_vec3 edge1 = vec3_sub(a, b);
-	t_vec3 edge2 = vec3_sub(a, c);
-	t_vec3 edge3 = vec3_sub(b, c);
+	t_vec3 edge1 = vec3_sub(specs.a, specs.b);
+	t_vec3 edge2 = vec3_sub(specs.a, specs.c);
+	t_vec3 edge3 = vec3_sub(specs.b, specs.c);
 
 	if (
 		double_eq(0.0, vec3_length(edge1))
@@ -23,9 +23,9 @@ t_error triangle_new(t_point3 a, t_point3 b, t_point3 c, t_rgb color, t_triangle
 	}
 
 	*out = (t_triangle) {
-		.a=a, .b=b, .c=c,
+		.a=specs.a, .b=specs.b, .c=specs.c,
 		.normal = vec3_div(normal, normal_len),
-		.color = color,
+		.color = specs.color,
 	};
 	return NO_ERROR;
 }

@@ -44,17 +44,10 @@ struct	s_hittable
 	};
 };
 
-t_error	hittable_sphere_new(t_point3 origin,
-			t_rgb color, double radius,
-			t_hittable *out);
-t_error	hittable_plane_new(t_point3 origin,
-			t_vec3 normal, t_rgb color,
-			t_hittable *out);
-t_error	hittable_cylinder_new(t_point3 point,
-			t_vec3 axis, double radius, double height,
-			t_rgb color, t_hittable *out);
-t_error	hittable_triangle_new(t_point3 a, t_point3 b,
-			t_point3 c, t_rgb color, t_hittable *out);
+t_error	hittable_sphere_new(t_sphere_specs specs, t_hittable *out);
+t_error	hittable_plane_new(t_plane_specs specs, t_hittable *out);
+t_error	hittable_cylinder_new(t_cylinder_specs specs, t_hittable *out);
+t_error	hittable_triangle_new(t_triangle_specs specs, t_hittable *out);
 
 typedef struct s_hit_record		t_hit_record;
 struct	s_hit_record

@@ -69,29 +69,37 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 static t_error hittable_from_primitive(t_element element, t_hittable *hittable) {
 	t_error err;
 	t_sphere_element s;
+	t_sphere_specs sp_specs;
 	t_plane_element p;
+	t_plane_specs pl_specs;
 	t_cylinder_element c;
+	t_cylinder_specs cy_specs;
 	t_triangle_element t;
+	t_triangle_specs tri_specs;
 
 	if (element.kind == ELEM_SPHERE_PRIMITIVE)
 	{
 		s = element.sphere;
-		err = hittable_sphere_new(s.center, rgb_from_bytes(s.color), s.diameter / 2.0, hittable);
+		sp_specs = (t_sphere_specs){s.center, rgb_from_bytes(s.color), s.diameter / 2.0};
+		err = hittable_sphere_new(sp_specs, hittable);
 	}
 	else if (element.kind == ELEM_PLANE_PRIMITIVE)
 	{
 		p = element.plane;
-		err = hittable_plane_new(p.point, p.normal, rgb_from_bytes(p.color), hittable);
+		pl_specs = (t_plane_specs){p.point, p.normal, rgb_from_bytes(p.color)};
+		err = hittable_plane_new(pl_specs, hittable);
 	}
 	else if (element.kind == ELEM_CYLINDER_PRIMITIVE)
 	{
 		c = element.cylinder;
-		err = hittable_cylinder_new(c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color), hittable);
+		cy_specs = (t_cylinder_specs){c.point, c.axis, c.diameter / 2.0, c.height, rgb_from_bytes(c.color)};
+		err = hittable_cylinder_new(cy_specs, hittable);
 	}
 	else if (element.kind == ELEM_TRIANGLE_PRIMITIVE)
 	{
 		t = element.triangle;
-		err = hittable_triangle_new(t.a, t.b, t.c, rgb_from_bytes(t.color), hittable);
+		tri_specs = (t_triangle_specs){t.a, t.b, t.c, rgb_from_bytes(t.color)};
+		err = hittable_triangle_new(tri_specs, hittable);
 	}
 #ifndef MINIRT_RELEASE_BUILD  // do not include this in final build
 	else

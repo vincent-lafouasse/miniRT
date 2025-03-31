@@ -19,14 +19,21 @@
 
 struct	s_sphere
 {
-	t_point3	origin;
-	t_rgb		color;
-	double		radius;
+	t_point3					origin;
+	t_rgb						color;
+	double						radius;
 };
-typedef struct s_sphere	t_sphere;
+typedef struct s_sphere			t_sphere;
 
-t_error	sphere_new(t_point3 origin, t_rgb color, double radius,
-			t_sphere *out);
+struct	s_sphere_specs
+{
+	t_point3					origin;
+	t_rgb						color;
+	double						radius;
+};
+typedef struct s_sphere_specs	t_sphere_specs;
+
+t_error	sphere_new(t_sphere_specs specs, t_sphere *out);
 // t_hit_record sphere_hit(t_camera cam, t_ray ray);
 
 #endif // T_SPHERE_H
