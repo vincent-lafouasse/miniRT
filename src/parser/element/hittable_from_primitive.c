@@ -23,13 +23,8 @@ t_error	hittable_from_primitive(t_element element, t_hittable *hittable)
 		err = cylinder_from_primitive(element.cylinder, hittable);
 	else if (element.kind == ELEM_TRIANGLE_PRIMITIVE)
 		err = triangle_from_primitive(element.triangle, hittable);
-#ifndef MINIRT_RELEASE_BUILD // do not include this in final build
 	else
-	{
-# include <assert.h>
-		assert(!"unknown primitive");
-	}
-#endif
+		return (E_UNREACHABLE);
 	return (err);
 }
 
