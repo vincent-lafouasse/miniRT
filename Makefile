@@ -3,7 +3,7 @@ NAME = miniRT
 ### definitions
 
 CC        = cc
-CFLAGS    = -Wall -Wextra -Werror
+CFLAGS    += -Wall -Wextra -Werror
 ifdef DEBUG_MODE
 	DEBUG_FLAGS = -g3
 	OPTIMIZATION_FLAGS =
