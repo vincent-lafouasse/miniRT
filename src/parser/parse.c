@@ -58,9 +58,24 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 	return (err);
 }
 
-t_error make_ambient_light(t_ambient_light_element amb, t_ambient_light *out)
+t_error make_ambient_light(t_element_list *amb, t_ambient_light *out)
 {
-	return ambient_light(amb.lighting_ratio, rgb_from_bytes(amb.color), out);
+	t_ambient_light_element ambient;
+	t_rgb color;
+	double intensity;
+
+	if (!amb)
+	{
+		color = rgb_black();
+		intensity = 0.0;
+	}
+	else
+	{
+		ambient = amb->element.ambient;
+		color = rgb_from_bytes(ambient.color);
+		intensity = ambient.lighting_ratio;
+	}
+	return ambient_light(intensity, color, out);
 }
 
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
@@ -71,14 +86,12 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	t_ambient_light amb_light;
 	t_error err;
 
-	if (el_len(p->ambients) != 1)
-		return (E_MUST_HAVE_ONE_AMBIENT_LIGHT);
 	if (el_len(p->cameras) != 1)
 		return (E_MUST_HAVE_ONE_CAMERA);
 	camera = p->cameras->element.camera;
 	*cam_out = (t_camera_specs){.position = camera.coordinates, \
 		.direction = camera.orientation, .fov_deg = (double)camera.fov};
-	err = make_ambient_light(p->ambients->element.ambient, &amb_light);
+	err = make_ambient_light(p->ambients, &amb_light);
 	if (err != NO_ERROR)
 		return (err);
 	err = gather_point_lights(p, &lights);
