@@ -55,22 +55,15 @@ int main(int argc, char **argv) {
     t_renderer renderer;
 
     if (argc != 2)
-    {
-        log_error(E_BAD_PROGRAM_USAGE);
-        return (EXIT_FAILURE);
-    }
+        die(E_BAD_PROGRAM_USAGE, EXIT_FAILURE);
     err  = parse_map(argv[1], &camera, &scene);
     if (err != NO_ERROR)
-    {
-        log_error(err);
-        return (EXIT_FAILURE);
-    }
+        die(err, EXIT_FAILURE);
     err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
     {
-        log_error(err);
         scene_destroy(&scene);
-        return (EXIT_FAILURE);
+        die(err, EXIT_FAILURE);
     }
     render(&camera, &scene, &renderer);
     scene_destroy(&scene);
