@@ -43,5 +43,6 @@ typedef enum e_error	t_error;
 
 const char	*error_repr(t_error err);
 void		log_error(t_error err);
+void		die(t_error err, int exit_code);
 
 #endif
