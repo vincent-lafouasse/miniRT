@@ -28,9 +28,11 @@ void render(const t_camera* camera,
 
 int main(int argc, char **argv) {
     t_error err;
-
     t_camera_specs specs;
     t_scene scene;
+    t_camera camera;
+    t_renderer renderer;
+
     if (argc != 2)
     {
         log_error(E_BAD_PROGRAM_USAGE);
@@ -42,8 +44,6 @@ int main(int argc, char **argv) {
         log_error(err);
         return (EXIT_FAILURE);
     }
-
-    t_camera camera;
     err = camera_new(specs, WIDTH, WIDTH / (double)ASPECT_RATIO, &camera);
     if (err != NO_ERROR)
     {
@@ -51,8 +51,6 @@ int main(int argc, char **argv) {
         scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
-
-    t_renderer renderer;
     err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
     {
@@ -60,7 +58,6 @@ int main(int argc, char **argv) {
         scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
-
     render(&camera, &scene, &renderer);
     scene_destroy(&scene);
     renderer_destroy(&renderer);
