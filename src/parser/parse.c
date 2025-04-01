@@ -6,7 +6,6 @@
 
 #include "error/t_error.h"
 
-#include "libft/string.h"
 #include "math/t_rgb/t_rgb.h"
 #include "math/t_vec3/t_vec3.h"
 #include "camera/t_camera.h"
@@ -28,13 +27,7 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 t_error gather_objects(t_partitioned_elements *p, t_hittable_array **out);
 t_error gather_point_lights(t_partitioned_elements *p, t_point_light_array **out);
 
-bool ends_in_dot_rt(const char *str)
-{
-	size_t len;
-
-	len = ft_strlen(str);
-	return (len >= 3 && ft_strncmp(&str[len-3], ".rt", 3) == 0);
-}
+bool	ends_in_dot_rt(const char *str);
 
 t_error	parse_from_file(const char *filename, t_camera_specs *cam_out, t_scene *scene_out)
 {
