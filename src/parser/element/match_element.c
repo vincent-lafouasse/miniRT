@@ -6,6 +6,8 @@
 #include "libft/string.h"
 #include "libft/ft_string.h"
 
+#include "bonus.h"
+
 #include <stddef.h>
 
 t_error match_ambient_light(char *const *parts, size_t parts_len, t_element *element_out);
@@ -61,7 +63,7 @@ t_error match_element(const char *line, t_element *element_out)
 		err = match_plane(parts, parts_len, element_out);
 	else if (0 == ft_strcmp(parts[0], TAG_CYLINDER))
 		err = match_cylinder(parts, parts_len, element_out);
-	else if (0 == ft_strcmp(parts[0], TAG_TRIANGLE))
+	else if (BONUS_MODE && 0 == ft_strcmp(parts[0], TAG_TRIANGLE))
 		err = match_triangle(parts, parts_len, element_out);
 	else
 		err = E_UNKNOWN_ELEMENT;
