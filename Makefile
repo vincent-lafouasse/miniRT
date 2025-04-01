@@ -62,6 +62,10 @@ $(MLX):
 	(cd $(MLX_DIR); ./configure)
 	make -C $(MLX_MAKE_DIR)
 
+.PHONY: bonus
+bonus: CFLAGS += -D BONUS_MODE
+bonus: build
+
 .PHONY: re
 re: clean build
 
