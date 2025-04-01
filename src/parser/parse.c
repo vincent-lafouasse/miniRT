@@ -58,35 +58,32 @@ t_error	parse(const char *input, t_camera_specs *cam_out, t_scene *scene_out)
 	return (err);
 }
 
+t_error make_ambient_light(t_ambient_light_element amb, t_ambient_light *out)
+{
+	return ambient_light(amb.lighting_ratio, rgb_from_bytes(amb.color), out);
+}
+
 t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_out, t_scene *scene_out)
 {
-	if (el_len(p->ambients) != 1)
-		return (E_MUST_HAVE_ONE_AMBIENT_LIGHT);
-
-	if (el_len(p->cameras) != 1)
-		return (E_MUST_HAVE_ONE_CAMERA);
-
-	if (el_len(p->lights) == 0)
-		return (E_NO_POINT_LIGHT);
-
-	const t_camera_element camera = p->cameras->element.camera;
-	const t_ambient_light_element ambient = p->ambients->element.ambient;
+	t_camera_element camera;
 	t_point_light_array *lights;
 	t_hittable_array *objects;
+	t_ambient_light amb_light;
 	t_error err;
 
+	if (el_len(p->ambients) != 1)
+		return (E_MUST_HAVE_ONE_AMBIENT_LIGHT);
+	if (el_len(p->cameras) != 1)
+		return (E_MUST_HAVE_ONE_CAMERA);
+	camera = p->cameras->element.camera;
 	*cam_out = (t_camera_specs){.position = camera.coordinates, \
 		.direction = camera.orientation, .fov_deg = (double)camera.fov};
-
-	t_ambient_light amb_light;
-	err = ambient_light(ambient.lighting_ratio, rgb_from_bytes(ambient.color), &amb_light);
+	err = make_ambient_light(p->ambients->element.ambient, &amb_light);
 	if (err != NO_ERROR)
 		return (err);
-
 	err = gather_point_lights(p, &lights);
 	if (err != NO_ERROR)
 		return (err);
-
 	err = gather_objects(p, &objects);
 	if (err != NO_ERROR)
 		return (point_light_array_destroy(&lights), err);
@@ -108,22 +105,17 @@ static t_error parse_elements(const char *input, t_partitioned_elements *out)
 	while (nonempty_lines[i] != NULL)
 	{
 		err = match_element(nonempty_lines[i], &element);
-		if (err == E_LINE_EMPTY) {
+		if (err == E_LINE_EMPTY)
+		{
 			i++;
 			continue;
-		} else if (err != NO_ERROR) {
-			ft_split_destroy(nonempty_lines);
-			partitioned_elements_clear(out);
-			return (err);
 		}
+		else if (err != NO_ERROR)
+			return (ft_split_destroy(nonempty_lines), partitioned_elements_clear(out), err);
 		err = partitioned_elements_push_front(out, element);
-		if (err != NO_ERROR) {
-			ft_split_destroy(nonempty_lines);
-			partitioned_elements_clear(out);
-			return (err);
-		}
+		if (err != NO_ERROR)
+			return (ft_split_destroy(nonempty_lines), partitioned_elements_clear(out), err);
 		i++;
 	}
-	ft_split_destroy(nonempty_lines);
-	return (NO_ERROR);
+	return (ft_split_destroy(nonempty_lines), NO_ERROR);
 }
