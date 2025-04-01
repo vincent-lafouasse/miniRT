@@ -1,10 +1,7 @@
 #include "error/t_error.h"
-#include "math/t_rgb/t_rgb.h"
 #include "parser/parse.h"
 #include "render/t_renderer.h"
 #include "scene/t_scene.h"
-
-#include <stdio.h>
 
 #define WIDTH 1000
 #define ASPECT_RATIO (16.0 / 9.0)
