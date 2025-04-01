@@ -93,6 +93,8 @@ static const char	*error_repr_continued(t_error err)
 		return (READ_REPR);
 	if (err == E_OPEN)
 		return (OPEN_REPR);
+	if (err == E_VECTOR_NOT_NORMALIZED)
+		return (VECTOR_NOT_NORMALIZED_REPR);
 	if (err == E_UNREACHABLE)
 		return (UNREACHABLE_REPR);
 	return (UNKNOWN_VARIANT_REPR);
