@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-__attribute__((noreturn))
+_Noreturn
 void	die(t_error err, int exit_code)
 {
 	log_error(err);
