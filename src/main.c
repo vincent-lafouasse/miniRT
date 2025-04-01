@@ -48,6 +48,7 @@ int main(int argc, char **argv) {
     if (err != NO_ERROR)
     {
         printf("Error: camera: %s\n", error_repr(err));
+        scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
 
@@ -56,6 +57,7 @@ int main(int argc, char **argv) {
     if (err != NO_ERROR)
     {
         printf("Error: %s\n", error_repr(err));
+        scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
 
