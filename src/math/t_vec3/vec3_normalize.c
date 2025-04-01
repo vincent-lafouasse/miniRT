@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "t_vec3.h"
+#include "../double/double.h"
+
 #include <math.h>
 
 double	vec3_length(t_vec3 self)
@@ -32,5 +34,5 @@ t_vec3	vec3_normalize(t_vec3 self)
 
 bool	vec3_is_unit(t_vec3 self)
 {
-	return (vec3_dot(self, self) == 1.0);
+	return (double_eq(vec3_dot(self, self), 1.0));
 }
