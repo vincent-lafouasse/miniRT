@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   log_error.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamar <jamar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 19:13:23 by jamar             #+#    #+#             */
+/*   Updated: 2025/04/01 19:13:24 by jamar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./t_error.h"
 
 #include <stdio.h>
 
-void log_error(t_error err)
+void	log_error(t_error err)
 {
 	printf("Error\n");
 	printf("%s\n", error_repr(err));
