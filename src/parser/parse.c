@@ -14,6 +14,8 @@
 #include "scene/lights/t_ambient_light.h"
 #include "scene/t_scene.h"
 
+#include "bonus.h"
+
 #include "libft/ft_string.h"
 
 #include <stdlib.h>
@@ -88,6 +90,8 @@ t_error gather_camera_and_scene(t_partitioned_elements *p, t_camera_specs *cam_o
 	t_ambient_light amb_light;
 	t_error err;
 
+	if (!BONUS_MODE && el_len(p->lights) > 1)
+		return (E_MUST_HAVE_ONE_POINT_LIGHT);
 	if (el_len(p->cameras) != 1)
 		return (E_MUST_HAVE_ONE_CAMERA);
 	camera = p->cameras->element.camera;
