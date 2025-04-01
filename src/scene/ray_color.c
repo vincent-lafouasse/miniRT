@@ -19,6 +19,7 @@
 #include "math/t_interval/t_interval.h"
 #include "math/t_rgb/t_rgb.h"
 #include "ray/t_ray.h"
+#include "bonus.h"
 #include <math.h>
 
 t_rgb	sum_shadings(t_material material, t_rgb ambient, t_rgb diffuse,
@@ -42,9 +43,12 @@ t_rgb	hit_color(t_hit_record hit, t_ray r, const t_scene *scene)
 	material = material_default();
 	ambient = ambient_shading(scene->ambient_light);
 	diffuse = total_diffuse_shading(hit, scene->point_lights, scene->objects);
-	specular = total_specular_shading(hit, scene->point_lights,
-			(t_specular_ctx){.r = r, .alpha = material.alpha,
-			.objects = scene->objects});
+	if (BONUS_MODE)
+		specular = total_specular_shading(hit, scene->point_lights,
+				(t_specular_ctx){.r = r, .alpha = material.alpha,
+				.objects = scene->objects});
+	else
+		specular = rgb_black();
 	return (sum_shadings(material, ambient, diffuse, specular));
 }
 
