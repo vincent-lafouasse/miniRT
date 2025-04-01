@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 19:05:38 by poss              #+#    #+#             */
-/*   Updated: 2025/04/01 19:17:40 by poss             ###   ########.fr       */
+/*   Updated: 2025/04/01 19:18:01 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "ray/t_ray.h"
 #include <stdbool.h>
 
-bool				cylinder_endcap_hit(t_cylinder cylinder, t_interval range,
-						t_ray ray, t_hit_record *rec);
-bool				cylinder_shaft_hit(t_cylinder cylinder, t_interval range,
-						t_ray ray, t_hit_record *rec);
+bool	cylinder_endcap_hit(t_cylinder cylinder, t_interval range,
+			t_ray ray, t_hit_record *rec);
+bool	cylinder_shaft_hit(t_cylinder cylinder, t_interval range,
+			t_ray ray, t_hit_record *rec);
 
 static t_hit_record	closest_hit(t_hit_record h1, t_hit_record h2)
 {
