@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "./t_plane.h"
+
+#include "parser/lenient.h"
+#include "error/t_error.h"
+
 #include "math/double/double.h"
 #include <stdio.h>
 
@@ -25,6 +29,8 @@ t_error	plane_new(t_plane_specs specs, t_plane *out)
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(specs.normal))
 	{
+		if (!LENIENT_PARSER)
+			return (E_VECTOR_NOT_NORMALIZED);
 		specs.normal = vec3_normalize(specs.normal);
 		report_non_unit_normal();
 	}

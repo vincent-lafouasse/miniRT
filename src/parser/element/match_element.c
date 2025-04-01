@@ -1,4 +1,5 @@
 #include "./t_element.h"
+#include "../lenient.h"
 
 #include "error/t_error.h"
 
@@ -74,7 +75,9 @@ t_error match_ambient_light(char *const *parts, size_t parts_len, t_element *ele
 	t_error err;
 	t_ambient_light_element ambient;
 
-	if (parts_len != 3)
+	if (parts_len < 3)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 3)
 		return (E_MALFORMATTED_ELEMENT);
 
 	ambient = (typeof(ambient)){0};
@@ -93,7 +96,9 @@ t_error match_camera(char *const *parts, size_t parts_len, t_element *element_ou
 	t_error err;
 	t_camera_element camera;
 
-	if (parts_len != 4)
+	if (parts_len < 4)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
 
 	camera = (typeof(camera)){0};
@@ -115,7 +120,9 @@ t_error match_light(char *const *parts, size_t parts_len, t_element *element_out
 	t_error err;
 	t_light_element light;
 
-	if (parts_len != 4)
+	if (parts_len < 4)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
 
 	light = (typeof(light)){0};
@@ -137,7 +144,9 @@ t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_ou
 	t_error err;
 	t_sphere_element sphere;
 
-	if (parts_len != 4)
+	if (parts_len < 4)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
 
 	sphere = (typeof(sphere)){0};
@@ -159,7 +168,9 @@ t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out
 	t_error err;
 	t_plane_element plane;
 
-	if (parts_len != 4)
+	if (parts_len < 4)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
 
 	plane = (typeof(plane)){0};
@@ -181,7 +192,9 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 	t_error err;
 	t_cylinder_element cylinder;
 
-	if (parts_len != 6)
+	if (parts_len < 6)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 6)
 		return (E_MALFORMATTED_ELEMENT);
 
 	cylinder = (typeof(cylinder)){0};
@@ -210,7 +223,9 @@ t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_
 	t_error err;
 	t_triangle_element triangle;
 
-	if (parts_len != 5)
+	if (parts_len < 5)
+		return (E_MALFORMATTED_ELEMENT);
+	if (!LENIENT_PARSER && parts_len > 5)
 		return (E_MALFORMATTED_ELEMENT);
 
 	triangle = (typeof(triangle)){0};

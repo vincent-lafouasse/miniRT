@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "./t_cylinder.h"
+
+#include "error/t_error.h"
+#include "parser/lenient.h"
+
 #include "math/double/double.h"
 #include <stdio.h>
 
@@ -25,6 +29,8 @@ t_error	cylinder_new(t_cylinder_specs specs, t_cylinder *out)
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(specs.axis))
 	{
+		if (!LENIENT_PARSER)
+			return (E_VECTOR_NOT_NORMALIZED);
 		specs.axis = vec3_normalize(specs.axis);
 		report_non_unit_axis();
 	}

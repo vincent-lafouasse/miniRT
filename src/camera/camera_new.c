@@ -10,9 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "t_camera.h"
+
+#include "parser/lenient.h"
 #include "math/double/double.h"
 #include "math/t_vec3/t_vec3.h"
-#include "t_camera.h"
+
 #include <math.h>
 #include <stdio.h>
 
@@ -52,6 +55,8 @@ t_error	camera_new(t_camera_specs specs, size_t screen_width,
 		return (E_UNEXPECTED_NULL_VECTOR);
 	if (!vec3_is_unit(specs.direction))
 	{
+		if (!LENIENT_PARSER)
+			return (E_VECTOR_NOT_NORMALIZED);
 		specs.direction = vec3_normalize(specs.direction);
 		report_non_unit_orientation();
 	}
