@@ -10,28 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "t_camera.h"
-
-#include "parser/lenient.h"
 #include "math/double/double.h"
 #include "math/t_vec3/t_vec3.h"
-
+#include "parser/lenient.h"
+#include "t_camera.h"
 #include <math.h>
 #include <stdio.h>
 
 typedef struct s_dimension
 {
-	double	w;
-	double	h;
-}	t_dimension;
+	double			w;
+	double			h;
+}					t_dimension;
 
 typedef struct s_viewport
 {
-	t_vec3	u;
-	t_vec3	v;
-	t_vec3	delta_u;
-	t_vec3	delta_v;
-}	t_viewport;
+	t_vec3			u;
+	t_vec3			v;
+	t_vec3			delta_u;
+	t_vec3			delta_v;
+}					t_viewport;
 
 static t_viewport	construct_viewport(t_vec3 direction, t_dimension screen);
 static t_vec3		compute_pixel00(t_point3 camera_position, t_vec3 direction,
@@ -64,13 +62,9 @@ t_error	camera_new(t_camera_specs specs, size_t screen_width,
 			.h = screen_height});
 	pixel00 = compute_pixel00(specs.position, specs.direction, specs.fov_deg,
 			vp);
-	*out = (t_camera){
-		.position = specs.position,
-		.pixel00 = pixel00,
-		.delta_u = vp.delta_u,
-		.delta_v = vp.delta_v,
-		.screen_width = screen_width,
-		.screen_height = screen_height,
+	*out = (t_camera){.position = specs.position, .pixel00 = pixel00,
+		.delta_u = vp.delta_u, .delta_v = vp.delta_v,
+		.screen_width = screen_width, .screen_height = screen_height,
 	};
 	return (NO_ERROR);
 }
