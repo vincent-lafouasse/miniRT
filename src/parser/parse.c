@@ -64,6 +64,8 @@ t_error make_ambient_light(t_element_list *amb, t_ambient_light *out)
 	t_rgb color;
 	double intensity;
 
+	if (el_len(amb) > 1)
+		return (E_MUST_HAVE_ONE_AMBIENT_LIGHT);
 	if (!amb)
 	{
 		color = rgb_black();
