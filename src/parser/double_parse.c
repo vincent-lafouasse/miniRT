@@ -1,8 +1,18 @@
-#include "error/t_error.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   double_parse.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamar <jamar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 19:42:21 by jamar             #+#    #+#             */
+/*   Updated: 2025/04/01 19:42:22 by jamar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "error/t_error.h"
 #include "libft/ctype.h"
 #include "libft/string.h"
-
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -12,11 +22,11 @@ static double	whole_part(const char *str);
 static double	fractional_part(const char *str);
 static uint8_t	parse_digit(char ch);
 
-t_error double_parse(const char *str, double *result_out)
+t_error	double_parse(const char *str, double *result_out)
 {
-	char *dot;
-	double result;
-	bool negate;
+	char	*dot;
+	double	result;
+	bool	negate;
 
 	if (!is_valid_double(str))
 		return (E_INVALID_NUMBER);
@@ -64,11 +74,12 @@ static double	whole_part(const char *str)
 
 	i = 0;
 	whole = 0.0;
-	while (str[i] && str[i] != '.') {
+	while (str[i] && str[i] != '.')
+	{
 		whole = (whole * 10.0) + (double)parse_digit(str[i]);
 		i++;
 	}
-	return whole;
+	return (whole);
 }
 
 static double	fractional_part(const char *str)
@@ -81,13 +92,14 @@ static double	fractional_part(const char *str)
 	i = 0;
 	fractional = 0.0;
 	offset = 10.0;
-	while (str[i] != '\0') {
+	while (str[i] != '\0')
+	{
 		current_fraction = (double)parse_digit(str[i]) / offset;
 		fractional = fractional + current_fraction;
 		offset *= 10.0;
 		i++;
 	}
-	return fractional;
+	return (fractional);
 }
 
 static uint8_t	parse_digit(char ch)

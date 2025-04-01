@@ -1,26 +1,36 @@
-#include "./t_element.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   match_primitive.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamar <jamar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 19:27:39 by jamar             #+#    #+#             */
+/*   Updated: 2025/04/01 19:30:49 by jamar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../lenient.h"
-
+#include "./t_element.h"
 #include "error/t_error.h"
-
 #include <stddef.h>
 
 t_error	u8_parse(const char *str, uint8_t *result_out);
-t_error double_parse(const char *str, double *result_out);
+t_error	double_parse(const char *str, double *result_out);
 
-t_error element_vec3_parse(const char *str, t_vec3 *result_out);
-t_error element_color_parse(const char *str, uint8_t result_out[3]);
+t_error	element_vec3_parse(const char *str, t_vec3 *result_out);
+t_error	element_color_parse(const char *str, uint8_t result_out[3]);
 
-t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_out)
+t_error	match_sphere(char *const *parts, size_t parts_len,
+		t_element *element_out)
 {
-	t_error err;
-	t_sphere_element sphere;
+	t_error				err;
+	t_sphere_element	sphere;
 
 	if (parts_len < 4)
 		return (E_MALFORMATTED_ELEMENT);
 	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
-
 	sphere = (typeof(sphere)){0};
 	err = element_vec3_parse(parts[1], &sphere.center);
 	if (err != NO_ERROR)
@@ -35,16 +45,16 @@ t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_ou
 	return (NO_ERROR);
 }
 
-t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out)
+t_error	match_plane(char *const *parts, size_t parts_len,
+		t_element *element_out)
 {
-	t_error err;
-	t_plane_element plane;
+	t_error			err;
+	t_plane_element	plane;
 
 	if (parts_len < 4)
 		return (E_MALFORMATTED_ELEMENT);
 	if (!LENIENT_PARSER && parts_len > 4)
 		return (E_MALFORMATTED_ELEMENT);
-
 	plane = (typeof(plane)){0};
 	err = element_vec3_parse(parts[1], &plane.point);
 	if (err != NO_ERROR)
@@ -59,16 +69,14 @@ t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out
 	return (NO_ERROR);
 }
 
-t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_out)
+t_error	match_cylinder(char *const *parts, size_t parts_len,
+		t_element *element_out)
 {
-	t_error err;
-	t_cylinder_element cylinder;
+	t_error				err;
+	t_cylinder_element	cylinder;
 
-	if (parts_len < 6)
+	if ((parts_len < 6) || (!LENIENT_PARSER && parts_len > 6))
 		return (E_MALFORMATTED_ELEMENT);
-	if (!LENIENT_PARSER && parts_len > 6)
-		return (E_MALFORMATTED_ELEMENT);
-
 	cylinder = (typeof(cylinder)){0};
 	err = element_vec3_parse(parts[1], &cylinder.point);
 	if (err != NO_ERROR)
@@ -85,20 +93,21 @@ t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_
 	err = element_color_parse(parts[5], cylinder.color);
 	if (err != NO_ERROR)
 		return (err);
-	*element_out = (t_element){.kind = ELEM_CYLINDER_PRIMITIVE, .cylinder = cylinder};
+	*element_out = (t_element){.kind = ELEM_CYLINDER_PRIMITIVE,
+		.cylinder = cylinder};
 	return (NO_ERROR);
 }
 
-t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_out)
+t_error	match_triangle(char *const *parts, size_t parts_len,
+		t_element *element_out)
 {
-	t_error err;
-	t_triangle_element triangle;
+	t_error				err;
+	t_triangle_element	triangle;
 
 	if (parts_len < 5)
 		return (E_MALFORMATTED_ELEMENT);
 	if (!LENIENT_PARSER && parts_len > 5)
 		return (E_MALFORMATTED_ELEMENT);
-
 	triangle = (typeof(triangle)){0};
 	err = element_vec3_parse(parts[1], &triangle.a);
 	if (err != NO_ERROR)
@@ -112,6 +121,7 @@ t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_
 	err = element_color_parse(parts[4], triangle.color);
 	if (err != NO_ERROR)
 		return (err);
-	*element_out = (t_element){.kind = ELEM_TRIANGLE_PRIMITIVE, .triangle = triangle};
+	*element_out = (t_element){.kind = ELEM_TRIANGLE_PRIMITIVE,
+		.triangle = triangle};
 	return (NO_ERROR);
 }

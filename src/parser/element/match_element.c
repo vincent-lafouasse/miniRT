@@ -1,34 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   match_element.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamar <jamar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 19:26:59 by jamar             #+#    #+#             */
+/*   Updated: 2025/04/01 19:26:59 by jamar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./t_element.h"
-
-#include "error/t_error.h"
-
-#include "libft/string.h"
-#include "libft/ft_string.h"
-
 #include "bonus.h"
-
+#include "error/t_error.h"
+#include "libft/ft_string.h"
+#include "libft/string.h"
 #include <stddef.h>
 
-t_error match_ambient_light(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_camera(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_light(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_sphere(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_plane(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_cylinder(char *const *parts, size_t parts_len, t_element *element_out);
-t_error match_triangle(char *const *parts, size_t parts_len, t_element *element_out);
+t_error			match_ambient_light(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_camera(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_light(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_sphere(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_plane(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_cylinder(char *const *parts, size_t parts_len,
+					t_element *element_out);
+t_error			match_triangle(char *const *parts, size_t parts_len,
+					t_element *element_out);
 
-static char ft_strcmp(const char *s1, const char *s2) {
-	return ft_strncmp(s1, s2, ft_strlen(s1) + 1);
+static char	ft_strcmp(const char *s1, const char *s2)
+{
+	return (ft_strncmp(s1, s2, ft_strlen(s1) + 1));
 }
 
-static bool line_is_commented_out(const char *line)
+static bool	line_is_commented_out(const char *line)
 {
 	return (*line == '#');
 }
 
-static t_error match_element_dispatch(char **parts, size_t parts_len, t_element *out);
+static t_error	match_element_dispatch(char **parts, size_t parts_len,
+					t_element *out);
 
-t_error match_element(const char *line, t_element *element_out)
+t_error	match_element(const char *line, t_element *element_out)
 {
 	char	**parts;
 	size_t	parts_len;
@@ -50,9 +67,10 @@ t_error match_element(const char *line, t_element *element_out)
 	return (err);
 }
 
-static t_error match_element_dispatch(char **parts, size_t parts_len, t_element *out)
+static t_error	match_element_dispatch(char **parts, size_t parts_len,
+		t_element *out)
 {
-	t_error err;
+	t_error	err;
 
 	if (0 == ft_strcmp(parts[0], TAG_AMBIENT_LIGHT))
 		err = match_ambient_light(parts, parts_len, out);
