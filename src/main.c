@@ -33,13 +33,13 @@ int main(int argc, char **argv) {
     t_scene scene;
     if (argc != 2)
     {
-        printf("Error: %s\n", error_repr(E_BAD_PROGRAM_USAGE));
+        log_error(E_BAD_PROGRAM_USAGE);
         return (EXIT_FAILURE);
     }
     err = parse_from_file(argv[1], &specs, &scene);
     if (err != NO_ERROR)
     {
-        printf("Error: %s\n", error_repr(err));
+        log_error(err);
         return (EXIT_FAILURE);
     }
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
     err = camera_new(specs, WIDTH, WIDTH / (double)ASPECT_RATIO, &camera);
     if (err != NO_ERROR)
     {
-        printf("Error: camera: %s\n", error_repr(err));
+        log_error(err);
         scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
     err = renderer_init_with_exit_hooks(WIDTH, ASPECT_RATIO, &renderer);
     if (err != NO_ERROR)
     {
-        printf("Error: %s\n", error_repr(err));
+        log_error(err);
         scene_destroy(&scene);
         return (EXIT_FAILURE);
     }
