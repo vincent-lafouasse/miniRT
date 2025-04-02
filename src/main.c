@@ -6,7 +6,7 @@
 /*   By: jamar <jamar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:11:12 by jamar             #+#    #+#             */
-/*   Updated: 2025/04/01 20:11:13 by jamar            ###   ########.fr       */
+/*   Updated: 2025/04/02 15:15:35 by vlafouas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "render/t_renderer.h"
 #include "scene/t_scene.h"
 
+#include <stdlib.h>
+
 #define WIDTH 1000
 #define ASPECT_RATIO 1.77
-
-#include <stdlib.h>
 
 t_error	parse_map(const char *filename, t_camera *cam_out, t_scene *scene_out)
 {
