@@ -16,7 +16,87 @@ CPPFLAGS  = -Isrc -MMD -MP
 LDLIBS = -lm
 LDFLAGS = $(OPTIMIZATION_FLAGS)
 
-SRCS  = $(shell find src -name '*.c')
+SRCS  = src/main.c
+
+SRCS += src/camera/camera_new.c
+SRCS += src/camera/cast_rays.c
+SRCS += src/camera/render_scene.c
+
+SRCS += src/parser/element/t_element_list/constructor.c
+SRCS += src/parser/element/t_element_list/destructors.c
+SRCS += src/parser/element/t_element_list/operations.c
+SRCS += src/parser/element/t_element_list/properties.c
+SRCS += src/parser/element/element_property_parse.c
+SRCS += src/parser/element/hittable_from_primitive.c
+SRCS += src/parser/element/match_element.c
+SRCS += src/parser/element/match_primitive.c
+SRCS += src/parser/element/match_properties.c
+SRCS += src/parser/element/t_partitioned_elements.c
+SRCS += src/parser/double_parse.c
+SRCS += src/parser/ends_in_dot_rt.c
+SRCS += src/parser/gather_objects_lights.c
+SRCS += src/parser/parse.c
+SRCS += src/parser/u8_parse.c
+
+SRCS += src/read/t_string/alloc.c
+SRCS += src/read/t_string/c_string.c
+SRCS += src/read/t_string/constructor.c
+SRCS += src/read/t_string/destructor.c
+SRCS += src/read/t_string/insert.c
+SRCS += src/read/t_string/realloc.c
+SRCS += src/read/read_file.c
+
+SRCS += src/ray/t_ray.c
+
+SRCS += src/scene/lights/t_point_light_array/point_light_array_destroy.c
+SRCS += src/scene/lights/t_point_light_array/point_light_array_new.c
+SRCS += src/scene/lights/t_point_light_array/point_light_array_push.c
+SRCS += src/scene/lights/light_constructor.c
+SRCS += src/scene/objects/cylinder/cylinder_cap_hit.c
+SRCS += src/scene/objects/cylinder/cylinder_hit.c
+SRCS += src/scene/objects/cylinder/cylinder_shaft_hit.c
+SRCS += src/scene/objects/cylinder/t_cylinder.c
+SRCS += src/scene/objects/plane/plane_hit.c
+SRCS += src/scene/objects/plane/plane_new.c
+SRCS += src/scene/objects/sphere/sphere_hit.c
+SRCS += src/scene/objects/sphere/t_sphere.c
+SRCS += src/scene/objects/t_hittable_array/hittable_array_destroy.c
+SRCS += src/scene/objects/t_hittable_array/hittable_array_hit.c
+SRCS += src/scene/objects/t_hittable_array/hittable_array_new.c
+SRCS += src/scene/objects/t_hittable_array/hittable_array_push.c
+SRCS += src/scene/objects/triangle/triangle_hit.c
+SRCS += src/scene/objects/triangle/triangle_new.c
+SRCS += src/scene/objects/object_color.c
+SRCS += src/scene/objects/object_hit.c
+SRCS += src/scene/objects/t_hittable_constructor.c
+SRCS += src/scene/shading/ambient.c
+SRCS += src/scene/shading/diffuse.c
+SRCS += src/scene/shading/hit_is_in_the_shadow.c
+SRCS += src/scene/shading/specular.c
+SRCS += src/scene/shading/t_material.c
+SRCS += src/scene/ray_color.c
+SRCS += src/scene/t_scene.c
+
+SRCS += src/render/display.c
+SRCS += src/render/exit_loop.c
+SRCS += src/render/hooks.c
+SRCS += src/render/renderer_destroy.c
+SRCS += src/render/renderer_enter_loop.c
+SRCS += src/render/renderer_init.c
+
+SRCS += src/math/double/double_eq.c
+SRCS += src/math/t_interval/t_interval.c
+SRCS += src/math/t_rgb/rgb_convertion.c
+SRCS += src/math/t_vec3/vec3_arithmetic.c
+SRCS += src/math/t_vec3/vec3_bogus.c
+SRCS += src/math/t_vec3/vec3_eq.c
+SRCS += src/math/t_vec3/vec3_normalize.c
+SRCS += src/math/t_vec3/vec3_products.c
+
+SRCS += src/error/die.c
+SRCS += src/error/error_repr.c
+SRCS += src/error/log_error.c
+
 OBJS := $(SRCS:%=build/%.o)
 DEPS := $(OBJS:.o=.d)
 
